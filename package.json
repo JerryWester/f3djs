@@ -1,12 +1,12 @@
 {
   "name": "f3djs",
   "version": "1.0.0",
-  "description": "",
+  "description": "A TypeScript implementation of the N64 GBI",
   "main": "index.js",
   "scripts": {
     "test": "ts-node index.ts"
   },
-  "author": "",
+  "author": "Nick Sanguinetti <nickjs.site>",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {

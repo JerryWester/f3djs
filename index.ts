@@ -52,7 +52,7 @@ export enum GeometryModes {
 
 export function gsSPNoOp() {
     let command = newBuffer();
-    console.log(command);
+    //console.log(command);
     return command;
 }
 
@@ -60,7 +60,7 @@ export function gsSPVertex(v: number, n: number, v0: number) {
     commandBuffer[BufferPosition.BUF_HI] = _shiftl(DisplayOpcodes.G_VTX, 24, 8) | _shiftl(n, 12, 8) | _shiftl((v0 + n), 1, 7);
     commandBuffer[BufferPosition.BUF_LO] = v;
     let command = Buffer.from(commandBuffer.buffer).swap32();
-    console.log(command);
+    //console.log(command);
     return command;
 }
 
@@ -68,7 +68,7 @@ export function gsSPPopMatrix(n: number) {
     commandBuffer[BufferPosition.BUF_HI] = _shiftl(DisplayOpcodes.G_POPMTX, 24, 8) | 0x00380002;
     commandBuffer[BufferPosition.BUF_LO] = n * 64;
     let command = Buffer.from(commandBuffer.buffer).swap32();
-    console.log(command);
+    //console.log(command);
     return command;
 }
 
@@ -76,7 +76,7 @@ export function gsSPGeometryMode(clearbits: number, setbits: number) {
     commandBuffer[BufferPosition.BUF_HI] = _shiftl(DisplayOpcodes.G_GEOMETRYMODE, 24, 8) | _shiftl(~clearbits, 0, 24);
     commandBuffer[BufferPosition.BUF_LO] = setbits;
     let command = Buffer.from(commandBuffer.buffer).swap32();
-    console.log(command);
+    //console.log(command);
     return command;
 }
 
@@ -84,7 +84,7 @@ export function gsSPMatrix(mtxaddr: number, params: any) {
     commandBuffer[BufferPosition.BUF_HI] = _shiftl(DisplayOpcodes.G_MTX, 24, 8) | 0x00380000 | (params) ^ MatrixParams.G_MTX_PUSH;
     commandBuffer[BufferPosition.BUF_LO] = mtxaddr;
     let command = Buffer.from(commandBuffer.buffer).swap32();
-    console.log(command);
+    //console.log(command);
     return command;
 }
 
@@ -92,7 +92,7 @@ export function gsSPDisplayList(dl: number) {
     commandBuffer[BufferPosition.BUF_HI] = _shiftl(DisplayOpcodes.G_DL, 24, 8);
     commandBuffer[BufferPosition.BUF_LO] = dl;
     let command = Buffer.from(commandBuffer.buffer).swap32();
-    console.log(command);
+    //console.log(command);
     return command;
 }
 
@@ -101,7 +101,7 @@ export function gsSPBranchList(dl: number) {
     commandBuffer[BufferPosition.BUF_HI] |= _shiftl(0x01, 16, 8);
     commandBuffer[BufferPosition.BUF_LO] = dl;
     let command = Buffer.from(commandBuffer.buffer).swap32();
-    console.log(command);
+    //console.log(command);
     return command;
 }
 
@@ -109,7 +109,7 @@ export function gsSPEndDisplayList() {
     commandBuffer[BufferPosition.BUF_HI] = _shiftl(DisplayOpcodes.G_ENDDL, 24, 8);
     commandBuffer[BufferPosition.BUF_LO] = 0;
     let command = Buffer.from(commandBuffer.buffer).swap32();
-    console.log(command);
+    //console.log(command);
     return command;
 }
 
