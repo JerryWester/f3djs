@@ -1,4 +1,5 @@
 // F3DZEX2
+/** @enum {number} */
 export enum DisplayOpcodes {
     G_NOOP = 0x00
     , G_VTX = 0x01
@@ -55,6 +56,7 @@ export enum DisplayOpcodes {
     , G_SETCIMG = 0xFF
 };
 
+/** @enum {number} */
 export enum ModifyVtxParams {
     G_MWO_POINT_RGBA = 0x10
     , G_MWO_POINT_ST = 0x14
@@ -62,6 +64,7 @@ export enum ModifyVtxParams {
     , G_MWO_POINT_ZSCREEN = 0x1C
 }
 
+/** @enum {number} */
 export enum PrimaryVertex {
     V0      // v0 -> v1 -> v2 (-> v3)
     , V1    // v1 -> v2 (-> v3) -> v0
@@ -69,6 +72,7 @@ export enum PrimaryVertex {
     , V3    // v3 -> v0 -> v1 -> v2 (Quad only)
 }
 
+/** @enum {number} */
 export enum MatrixParams {
     G_MTX_NOPUSH = 0x00
     , G_MTX_PUSH = 0x01
@@ -78,6 +82,7 @@ export enum MatrixParams {
     , G_MTX_PROJECTION = 0x04
 };
 
+/** @enum {number} */
 export enum GeometryModes {
     G_ZBUFFER = 0b00000000000000000000000000000001
     , G_SHADE = 0b00000000000000000000000000000100
@@ -91,6 +96,7 @@ export enum GeometryModes {
     , G_CLIPPING = 0b00000000100000000000000000000000
 }
 
+/** @enum {number} */
 export enum ZValFlag {
     G_BZ_PERSP
     , G_BZ_ORTHO
@@ -105,13 +111,13 @@ export function FTOFIX32(x: number) {
  * 
  * - `G_BZ_PERSP` = perspective projection
  * - `G_BZ_ORTHO` = orthographic projection
- * @param zval The Z value the programmer is thinking of comparing against
- * @param flag Projection type
- * @param near Distance of near clipping plane
- * @param far Distance of far clipping plane
- * @param zmin Minimum possible Z value
- * @param zmax Maximum possible Z value
- * @returns Calculated zVal for gsSPBranchLessZraw
+ * @param {number} zval The Z value the programmer is thinking of comparing against
+ * @param {ZValFlag} flag Projection type
+ * @param {number} near Distance of near clipping plane
+ * @param {number} far Distance of far clipping plane
+ * @param {number} zmin Minimum possible Z value
+ * @param {number} zmax Maximum possible Z value
+ * @returns {number} Calculated zVal for gsSPBranchLessZraw
  */
 export function calcZVal(zval: number, flag: ZValFlag, near: number, far: number, zmin: number = 0x0, zmax: number = 0x3FF) {
     let part1 = flag == ZValFlag.G_BZ_PERSP
@@ -122,8 +128,8 @@ export function calcZVal(zval: number, flag: ZValFlag, near: number, far: number
 
 /**
  * Does nothing except stall the RDP for a few cycles. Typically used in debugging. In the Z64 games (specifically the debug builds), `tag` is set to a pointer to a string commenting the display list, which would then likely be output when calling the SDK's guParseGbiDL function. 
- * @param tag Pointer to a string tag
- * @returns Display list command
+ * @param {number} tag Pointer to a string tag
+ * @returns {Buffer} Display list command
  */
 export function gsSPNoOp(tag: number = 0) {
     let command = Buffer.alloc(8);
@@ -133,10 +139,10 @@ export function gsSPNoOp(tag: number = 0) {
 
 /**
  * Loads `numv` vertices from address `vaddr` to the RSP's vertex buffer, starting at buffer index `vbidx`. For F3DEX2.NoN, `numv` must be in the range 1 ≤ `numv` ≤ 32, and `vbidx` in the range 0 ≤ `vbidx` ≤ 31. Vertex transformations and lighting calculations (if any) are calculated upon load. 
- * @param numv Number of vertices to load
- * @param vbidx Index of vertex buffer to begin storing vertices to
- * @param vaddr Address of vertices
- * @returns Display list command
+ * @param {number} numv Number of vertices to load
+ * @param {number} vbidx Index of vertex buffer to begin storing vertices to
+ * @param {number} vaddr Address of vertices
+ * @returns {Buffer} Display list command
  */
 export function gsSPVertex(vaddr: number, numv: number, vbidx: number) {
     let command = Buffer.alloc(8);
@@ -158,10 +164,10 @@ export function gsSPVertex(vaddr: number, numv: number, vbidx: number) {
  * - `G_MWO_POINT_ZSCREEN` = Modifies the Z position (lower four nybbles of `val` should always be zero for this modification)
  * 
  * The exact nature of these values is unclear. The SDK documentation describes them as "byte offsets", however they don't match offsets in the vertex structure. 
- * @param where Enumerated set of values specifying what to change
- * @param vbidx Vertex buffer index of vertex to modify
- * @param val New value to inserts
- * @returns Display list command
+ * @param {ModifyVtxParams} where Enumerated set of values specifying what to change
+ * @param {number} vbidx Vertex buffer index of vertex to modify
+ * @param {number} val New value to inserts
+ * @returns {Buffer} Display list command
  */
 export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: number) {
     let command = Buffer.alloc(8);
@@ -176,9 +182,9 @@ export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: num
  * This command takes the vertices in the vertex buffer from `vfirst` through `vlast` as describing the volume of the object being rendered (called the "bounding value"). If the bounding volume does not intersect with the current viewing volume (aka if the bounding volume is entirely offscreen), then the display list ends, equivalent to a DF opcode. Otherwise, the display list continues as though nothing happened (equivalent to 00, then).
  * 
  * For F3DEX2.NoN, Each of `vfirst` and `vlast` must be in the range `0 ≤ x ≤ 31`. Additionally, `vfirst < vlast` must be true (thus a minimum of two vertices must be specified, and range of vertices cannot be reversed). It's not specified what the behavior is when all the vertices are coplanar. 
- * @param vfirst Vertex buffer index of first vertex for bounding volume
- * @param vlast Vertex buffer index of last vertex for bounding volume
- * @returns Display list command
+ * @param {number} vfirst Vertex buffer index of first vertex for bounding volume
+ * @param {number} vlast Vertex buffer index of last vertex for bounding volume
+ * @returns {Buffer} Display list command
  */
 export function gsSPCullDisplayList(vfirst: number, vlast: number) {
     let command = Buffer.alloc(8);
@@ -196,10 +202,10 @@ export function gsSPCullDisplayList(vfirst: number, vlast: number) {
  * Although not stated in the documentation, `vbidx` is presumably limited to the range `0 ≤ vbidx ≤ 31` just like other buffer indices. It's unknown why the opcode needs `vbidx` twice, and multiplied by different amounts.
  * 
  * Also, `zval` is usually calculated for the N64 programmer (only the `*Zraw` form specifies a raw `zval`). See also `calcZVal`.
- * @param newdl Address of display list to branch to
- * @param vbidx Vertex buffer index of vertex to test
- * @param zval Z value to test against
- * @returns Display list command
+ * @param {number} newdl Address of display list to branch to
+ * @param {number} vbidx Vertex buffer index of vertex to test
+ * @param {number} zval Z value to test against
+ * @returns {Buffer} Display list command
  */
 export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number) {
     // E1000000 dddddddd
@@ -228,11 +234,11 @@ export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number) {
  * Vertices are drawn in the order `aa -> bb -> cc`. `aa` is considered the "primary" vertex of the triangle, which matters in certain situations (for example, its color is taken as the color of the whole triangle when doing flat shading).
  * 
  * The given macro (`gsSP1Triangle`) reorders its arguments depending on the value of `flag`.
- * @param v0 Vertex 1
- * @param v1 Vertex 2
- * @param v2 Vertex 3
- * @param flag Primary vertex
- * @returns Display list command
+ * @param {number} v0 Vertex 1
+ * @param {number} v1 Vertex 2
+ * @param {number} v2 Vertex 3
+ * @param {PrimaryVertex} flag Primary vertex
+ * @returns {Buffer} Display list command
  */
 export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: PrimaryVertex) {
     let command = Buffer.alloc(8);
@@ -265,15 +271,15 @@ export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: PrimaryV
  * The first triangle is drawn in the order `aa -> bb -> cc`, with `aa` being the "primary" vertex. The second triangle is similar, drawn in `dd -> ee -> ff` order and `dd` being its "primary" vertex.
  * 
  * `flag0` reorders the vertices for the first triangle, and `flag1` reorders them for the second triangle.
- * @param v00 Tri 1, Vertex 1
- * @param v01 Tri 1, Vertex 2
- * @param v02 Tri 1, Vertex 3
- * @param flag0 Tri 1, Primary Vertex
- * @param v10 Tri 2, Vertex 1
- * @param v11 Tri 2, Vertex 2
- * @param v12 Tri 2, Vertex 3
- * @param flag1 Tri 2, Primary Vertex
- * @returns Display list command
+ * @param {number} v00 Tri 1, Vertex 1
+ * @param {number} v01 Tri 1, Vertex 2
+ * @param {number} v02 Tri 1, Vertex 3
+ * @param {PrimaryVertex} flag0 Tri 1, Primary Vertex
+ * @param {number} v10 Tri 2, Vertex 1
+ * @param {number} v11 Tri 2, Vertex 2
+ * @param {number} v12 Tri 2, Vertex 3
+ * @param {PrimaryVertex} flag1 Tri 2, Primary Vertex
+ * @returns {Buffer} Display list command
  */
 export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: PrimaryVertex, v10: number, v11: number, v12: number, flag1: PrimaryVertex) {
     let command = Buffer.alloc(8);
@@ -327,12 +333,12 @@ export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: Pri
  * The macro given takes the four vertices and rearranges them according to `flag`, and as per the opcode writes it as two triangles. The draw order is `aa -> bb -> cc` for the first triangle, `aa -> cc -> dd`, with `aa` being the "primary" vertex for both (thus maintaining a single "primary" vertex for the quadrangle). Both occurrences of `aa` should be equal, as well as both of `cc`, since the purpose of this opcode is to draw a quadrilateral polygon. 
  * 
  * The flag determines the vertices order.
- * @param v0 Vertex 1
- * @param v1 Vertex 2
- * @param v2 Vertex 3
- * @param v3 Vertex 4
- * @param flag Primary Vertex
- * @returns Display list command
+ * @param {number} v0 Vertex 1
+ * @param {number} v1 Vertex 2
+ * @param {number} v2 Vertex 3
+ * @param {number} v3 Vertex 4
+ * @param {PrimaryVertex} flag Primary Vertex
+ * @returns {Buffer} Display list command
  */
 export function gsSPQuadrangle(v0: number, v1: number, v2: number, v3: number, flag: PrimaryVertex) {
     let command = Buffer.alloc(8);
