@@ -5,10 +5,6 @@ export enum BufferPosition {
     , BUF_LO = 1
 }
 
-export function newBuffer() {
-    return Buffer.from('\0\0\0\0\0\0\0\0');
-}
-
 export function _shiftl(v: number, s: number, w: number) {
     return ((((v) & ((0x01 << (w)) - 1)) << (s)));
 }
@@ -97,7 +93,7 @@ export enum GeometryModes {
 }
 
 export function gsSPNoOp() {
-    let command = newBuffer();
+    let command = Buffer.alloc(8);
     //console.log(command);
     return command;
 }
