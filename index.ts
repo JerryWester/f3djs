@@ -146,6 +146,8 @@ export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: num
  */
 export function gsSPCullDisplayList(vfirst: number, vlast: number) {
     let command = Buffer.alloc(8);
-
+    command.writeUInt8(0x03);
+    command.writeUInt16BE(vfirst, 2);
+    command.writeUInt16BE(vlast, 6);
     return command;
 }
