@@ -195,11 +195,22 @@ export function gsSPCullDisplayList(vfirst: number, vlast: number) {
  * @returns Display list command
  */
 export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number) {
+    // E1000000 dddddddd
+    // 04aaabbb zzzzzzzz
+
     let command = Buffer.alloc(16);
+
+    // E1000000
     command.writeUInt8(0xE1)
+
+    // dddddddd
     command.writeUInt32BE(newdl, 4);
+
+    // 04aaabbb
     command.writeUInt32BE(((vbidx * 5) << 12) + (vbidx * 2), 8)
     command.writeUInt8(0x04, 8);
+
+    // zzzzzzzz
     command.writeUInt32BE(zval, 12);
     return command;
 }
