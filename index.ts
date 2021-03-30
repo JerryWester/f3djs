@@ -386,3 +386,33 @@ export function gsSPQuadrangle(v0: number, v1: number, v2: number, v3: number, f
     }
     return command;
 }
+
+/**
+ * Appears to be an explicitly reserved command.
+ * @returns {Buffer} Display list commands
+ */
+export function G_SPECIAL_3(...unk: any[]): Buffer {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(0xD3);
+    return command;
+}
+
+/**
+ * Appears to be an explicitly reserved command.
+ * @returns {Buffer} Display list commands
+ */
+export function G_SPECIAL_2(...unk: any[]): Buffer {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(0xD4);
+    return command;
+}
+
+/**
+ * Appears to be an explicitly reserved command.
+ * @returns {Buffer} Display list commands
+ */
+export function G_SPECIAL_1(...unk: any[]): Buffer {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(0xD5);
+    return command;
+}
