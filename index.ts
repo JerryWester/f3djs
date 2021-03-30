@@ -40,16 +40,16 @@ export enum MatrixParams {
 };
 
 export enum GeometryModes {
-    G_ZBUFFER =              0b00000000000000000000000000000001
-    , G_SHADE =              0b00000000000000000000000000000100
-    , G_CULL_FRONT =         0b00000000000000000000001000000000
-    , G_CULL_BACK =          0b00000000000000000000010000000000
-    , G_FOG =                0b00000000000000010000000000000000
-    , G_LIGHTING =           0b00000000000000100000000000000000
-    , G_TEXTURE_GEN =        0b00000000000001000000000000000000
+    G_ZBUFFER = 0b00000000000000000000000000000001
+    , G_SHADE = 0b00000000000000000000000000000100
+    , G_CULL_FRONT = 0b00000000000000000000001000000000
+    , G_CULL_BACK = 0b00000000000000000000010000000000
+    , G_FOG = 0b00000000000000010000000000000000
+    , G_LIGHTING = 0b00000000000000100000000000000000
+    , G_TEXTURE_GEN = 0b00000000000001000000000000000000
     , G_TEXTURE_GEN_LINEAR = 0b00000000000010000000000000000000
-    , G_SHADING_SMOOTH =     0b00000000001000000000000000000000
-    , G_CLIPPING =           0b00000000100000000000000000000000
+    , G_SHADING_SMOOTH = 0b00000000001000000000000000000000
+    , G_CLIPPING = 0b00000000100000000000000000000000
 }
 
 export function gsSPNoOp() {
@@ -141,10 +141,10 @@ export function gsDPSetEnvColor(r: number, g: number, b: number, a: number) {
 
 
 export function bufferToString(buf: Buffer) {
+    let cmd = buf.readUInt8(0);
     commandBuffer[BufferPosition.BUF_HI] = buf.readUInt32BE(0);
     commandBuffer[BufferPosition.BUF_LO] = buf.readUInt32BE(4);
-
-    switch(buf[0]) {
+    switch (cmd) {
         case 0x00: {
             console.log(`gsSPNoOp();`)
         } break;
@@ -153,6 +153,13 @@ export function bufferToString(buf: Buffer) {
             let n = _shiftr(commandBuffer[BufferPosition.BUF_HI], 12, 8);
             let v0 = _shiftr(commandBuffer[BufferPosition.BUF_HI], 1, 7);
             console.log(`gsSPVertex(0x${v.toString(16).toUpperCase()}, ${n}, ${v0 - n});`);
+        } break;
+        case 0xFB: {
+            let r: number = _shiftr(commandBuffer[BufferPosition.BUF_LO], 24, 8);
+            let g: number = _shiftr(commandBuffer[BufferPosition.BUF_LO], 16, 8);
+            let b: number = _shiftr(commandBuffer[BufferPosition.BUF_LO], 8, 8);
+            let a: number = _shiftr(commandBuffer[BufferPosition.BUF_LO], 0, 8);
+            console.log(`gsDPSetEnvColor(${r}, ${g}, ${b}, ${a});`);
         } break;
     }
 }
