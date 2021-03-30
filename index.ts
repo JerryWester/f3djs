@@ -55,6 +55,13 @@ export enum DisplayOpcodes {
     , G_SETCIMG = 0xFF
 };
 
+export enum ModifyVtxParams {
+    G_MWO_POINT_RGBA = 0x10
+    , G_MWO_POINT_ST = 0x14
+    , G_MWO_POINT_XYSCREEN = 0x18
+    , G_MWO_POINT_ZSCREEN = 0x1C
+}
+
 export enum MatrixParams {
     G_MTX_NOPUSH = 0x00
     , G_MTX_PUSH = 0x01
@@ -77,24 +84,50 @@ export enum GeometryModes {
     , G_CLIPPING = 0b00000000100000000000000000000000
 }
 
-// 0x00
+/**
+ * Does nothing except stall the RDP for a few cycles. Typically used in debugging. In the Z64 games (specifically the debug builds), `tag` is set to a pointer to a string commenting the display list, which would then likely be output when calling the SDK's guParseGbiDL function. 
+ * @param tag Pointer to a string tag
+ * @returns Display list command
+ */
 export function gsSPNoOp(tag: number = 0) {
     let command = Buffer.alloc(8);
     command.writeUInt32BE(tag, 4);
     return command;
 }
 
-// 0x01
-export function gsSPVertex(v: number, n: number, v0: number) {
-    commandBuffer[BufferPosition.BUF_HI] = _shiftl(DisplayOpcodes.G_VTX, 24, 8) | _shiftl(n, 12, 8) | _shiftl((v0 + n), 1, 7);
-    commandBuffer[BufferPosition.BUF_LO] = v;
-    let command = Buffer.from(commandBuffer.buffer).swap32();
-    //console.log(command);
+/**
+ * Loads `numv` vertices from address `vaddr` to the RSP's vertex buffer, starting at buffer index `vbidx`. For F3DEX2.NoN, `numv` must be in the range 1 ≤ `numv` ≤ 32, and `vbidx` in the range 0 ≤ `vbidx` ≤ 31. Vertex transformations and lighting calculations (if any) are calculated upon load. 
+ * @param numv Number of vertices to load
+ * @param vbidx Index of vertex buffer to begin storing vertices to
+ * @param vaddr Address of vertices
+ * @returns Display list command
+ */
+export function gsSPVertex(vaddr: number, numv: number, vbidx: number) {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(0x01, 0);
+    command.writeUInt16BE(numv << 4, 1);
+    command.writeUInt8(((vbidx + numv) & 0x7F) << 1, 3);
+    command.writeUInt32BE(vaddr, 4);
     return command;
 }
 
-// 0x02
-export function gsSPModifyVertex(vbidx: number, where: number, val: number) {
+/**
+ * Modifies a four-byte portion of the vertex specified by `vbidx`. The portion modified is specified by `where`, and the new value is given in `val`. Lighting calculations (if enabled) and position transformations are not calculated by the RSP after use of this command, so modifications modify final color and vertices.
+ *
+ * The valid values for where have names as follows:
+ * 
+ * - `G_MWO_POINT_RGBA` = Modifies the color of the vertex
+ * - `G_MWO_POINT_ST` = Modifies the texture coordinates
+ * - `G_MWO_POINT_XYSCREEN` = Modifies the X and Y position
+ * - `G_MWO_POINT_ZSCREEN` = Modifies the Z position (lower four nybbles of `val` should always be zero for this modification)
+ * 
+ * The exact nature of these values is unclear. The SDK documentation describes them as "byte offsets", however they don't match offsets in the vertex structure. 
+ * @param where Enumerated set of values specifying what to change
+ * @param vbidx Vertex buffer index of vertex to modify
+ * @param val New value to inserts
+ * @returns 
+ */
+export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: number) {
     let command = Buffer.alloc(8);
     command.writeUInt8(0x02);
     command.writeUInt8(where, 1);
