@@ -181,7 +181,19 @@ export function gsSPCullDisplayList(vfirst: number, vlast: number) {
     return command;
 }
 
-
+/**
+ * Tests the Z value of the vertex at buffer index `vbidx` (described as `vbidx.z` here) against `zval`. If `vbidx.z ≤ zval`, then the processor switches over to the display list at address `newdl` (equivalent to `gsSPBranchList(newdl)`). Otherwise continues through the display list. Useful for LOD-related model processing, where several occurrences of this can be stacked to branch to progressively closer versions of the model.
+ * 
+ * Note that the 04 opcode actually pulls the address of the branching display list from the high half of the "RDP word" (16 bytes used for generic value storage, as far as is known). The italicized opcode given above is set by the "basic function" listed for this opcode, immediately before the actual 04 opcode.
+ * 
+ * Although not stated in the documentation, `vbidx` is presumably limited to the range `0 ≤ vbidx ≤ 31` just like other buffer indices. It's unknown why the opcode needs `vbidx` twice, and multiplied by different amounts.
+ * 
+ * Also, `zval` is usually calculated for the N64 programmer (only the `*Zraw` form specifies a raw `zval`). See also `calcZVal`.
+ * @param newdl Address of display list to branch to
+ * @param vbidx Vertex buffer index of vertex to test
+ * @param zval Z value to test against
+ * @returns Display list command
+ */
 export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number) {
     let command = Buffer.alloc(16);
     command.writeUInt8(0xE1)
