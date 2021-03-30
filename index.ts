@@ -233,7 +233,7 @@ export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number) {
  * @param flag Primary vertex
  * @returns Display list command
  */
-export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: TriPrimaryVertex = TriPrimaryVertex.V0) {
+export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: TriPrimaryVertex) {
     let command = Buffer.alloc(8);
     command.writeUInt8(0x05);
     switch (flag) {
@@ -253,6 +253,66 @@ export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: TriPrima
             command.writeUInt8(v2, 1);
             command.writeUInt8(v0, 2);
             command.writeUInt8(v1, 3);
+        } break;
+    }
+    return command;
+}
+
+/**
+ * Draws two triangles at once. All six given indices must be in the range `0 ≤ v ≤ 31` for F3DEX2.NoN.
+ * 
+ * The first triangle is drawn in the order `aa -> bb -> cc`, with `aa` being the "primary" vertex. The second triangle is similar, drawn in `dd -> ee -> ff` order and `dd` being its "primary" vertex.
+ * 
+ * `flag0` reorders the vertices for the first triangle, and `flag1` reorders them for the second triangle.
+ * @param v00 Tri 1, Vertex 1
+ * @param v01 Tri 1, Vertex 2
+ * @param v02 Tri 1, Vertex 3
+ * @param flag0 Tri 1, Primary Vertex
+ * @param v10 Tri 2, Vertex 1
+ * @param v11 Tri 2, Vertex 2
+ * @param v12 Tri 2, Vertex 3
+ * @param flag1 Tri 2, Primary Vertex
+ * @returns Display list command
+ */
+export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: TriPrimaryVertex, v10: number, v11: number, v12: number, flag1: TriPrimaryVertex) {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(0x06);
+    switch (flag0) {
+        case TriPrimaryVertex.V0: {
+            command.writeUInt8(v00, 1);
+            command.writeUInt8(v01, 2);
+            command.writeUInt8(v02, 3);
+        } break;
+
+        case TriPrimaryVertex.V1: {
+            command.writeUInt8(v01, 1);
+            command.writeUInt8(v02, 2);
+            command.writeUInt8(v00, 3);
+        } break;
+
+        case TriPrimaryVertex.V2: {
+            command.writeUInt8(v02, 1);
+            command.writeUInt8(v00, 2);
+            command.writeUInt8(v01, 3);
+        } break;
+    }
+    switch (flag1) {
+        case TriPrimaryVertex.V0: {
+            command.writeUInt8(v10, 5);
+            command.writeUInt8(v11, 6);
+            command.writeUInt8(v12, 7);
+        } break;
+
+        case TriPrimaryVertex.V1: {
+            command.writeUInt8(v11, 5);
+            command.writeUInt8(v12, 6);
+            command.writeUInt8(v10, 7);
+        } break;
+
+        case TriPrimaryVertex.V2: {
+            command.writeUInt8(v12, 5);
+            command.writeUInt8(v10, 6);
+            command.writeUInt8(v11, 7);
         } break;
     }
     return command;
