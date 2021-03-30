@@ -334,7 +334,7 @@ export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: Pri
  * @param flag Primary Vertex
  * @returns Display list command
  */
-export function gsSPQuadrangle(v0, v1, v2, v3, flag) {
+export function gsSPQuadrangle(v0: number, v1: number, v2: number, v3: number, flag: PrimaryVertex) {
     let command = Buffer.alloc(8);
     command.writeUInt8(0x07);
     switch (flag) {
