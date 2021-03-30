@@ -62,6 +62,12 @@ export enum ModifyVtxParams {
     , G_MWO_POINT_ZSCREEN = 0x1C
 }
 
+export enum TriPrimaryVertex {
+    V0      // v0 -> v1 -> v2
+    , V1    // v2 -> v0 -> v1
+    , V2    // v1 -> v2 -> v0
+}
+
 export enum MatrixParams {
     G_MTX_NOPUSH = 0x00
     , G_MTX_PUSH = 0x01
@@ -212,5 +218,42 @@ export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number) {
 
     // zzzzzzzz
     command.writeUInt32BE(zval, 12);
+    return command;
+}
+
+/**
+ * Draws one triangle to screen. `v0`, `v1`, and `v2` specify vertex buffer indices, all in the range `0 ≤ v ≤ 31` for F3DEX2.NoN.
+ * 
+ * Vertices are drawn in the order `aa -> bb -> cc`. `aa` is considered the "primary" vertex of the triangle, which matters in certain situations (for example, its color is taken as the color of the whole triangle when doing flat shading).
+ * 
+ * The given macro (`gsSP1Triangle`) reorders its arguments depending on the value of `flag`.
+ * @param v0 Vertex 1
+ * @param v1 Vertex 2
+ * @param v2 Vertex 3
+ * @param flag Primary vertex
+ * @returns Display list command
+ */
+export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: TriPrimaryVertex = TriPrimaryVertex.V0) {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(0x05);
+    switch (flag) {
+        case TriPrimaryVertex.V0: {
+            command.writeUInt8(v0, 1);
+            command.writeUInt8(v1, 2);
+            command.writeUInt8(v2, 3);
+        } break;
+
+        case TriPrimaryVertex.V1: {
+            command.writeUInt8(v1, 1);
+            command.writeUInt8(v2, 2);
+            command.writeUInt8(v0, 3);
+        } break;
+
+        case TriPrimaryVertex.V2: {
+            command.writeUInt8(v2, 1);
+            command.writeUInt8(v0, 2);
+            command.writeUInt8(v1, 3);
+        } break;
+    }
     return command;
 }
