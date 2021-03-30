@@ -20,12 +20,14 @@ export function _shiftr(v: number, s: number, w: number) {
 // F3DZEX2
 export enum DisplayOpcodes {
     G_NOOP = 0x00
+    , G_VTX = 0x01
     , G_POPMTX = 0xD8
     , G_GEOMETRYMODE = 0xD9
     , G_MTX = 0xDA
-    , G_VTX = 0x01
     , G_DL = 0xDE
     , G_ENDDL = 0xDF
+    , G_SETPRIMCOLOR = 0xFA
+    , G_SETENVCOLOR = 0xFB
 };
 
 export enum MatrixParams {
@@ -113,6 +115,31 @@ export function gsSPEndDisplayList() {
     return command;
 }
 
+export function gsDPSetPrimColor(minlevel: number, lodfrac: number, r: number, g: number, b: number, a: number) {
+    commandBuffer[BufferPosition.BUF_HI] = _shiftl(DisplayOpcodes.G_SETPRIMCOLOR, 24, 8);
+    commandBuffer[BufferPosition.BUF_HI] |= _shiftl(minlevel, 8, 8);
+    commandBuffer[BufferPosition.BUF_HI] |= _shiftl(lodfrac, 0, 8);
+    commandBuffer[BufferPosition.BUF_LO] = _shiftl(r, 24, 8);
+    commandBuffer[BufferPosition.BUF_LO] |= _shiftl(g, 16, 8);
+    commandBuffer[BufferPosition.BUF_LO] |= _shiftl(b, 8, 8);
+    commandBuffer[BufferPosition.BUF_LO] |= _shiftl(a, 0, 8);
+    let command = Buffer.from(commandBuffer.buffer).swap32();
+    //console.log(command);
+    return command;
+}
+
+export function gsDPSetEnvColor(r: number, g: number, b: number, a: number) {
+    commandBuffer[BufferPosition.BUF_HI] = _shiftl(DisplayOpcodes.G_SETENVCOLOR, 24, 8);
+    commandBuffer[BufferPosition.BUF_LO] = _shiftl(r, 24, 8);
+    commandBuffer[BufferPosition.BUF_LO] |= _shiftl(g, 16, 8);
+    commandBuffer[BufferPosition.BUF_LO] |= _shiftl(b, 8, 8);
+    commandBuffer[BufferPosition.BUF_LO] |= _shiftl(a, 0, 8);
+    let command = Buffer.from(commandBuffer.buffer).swap32();
+    //console.log(command);
+    return command;
+}
+
+
 export function bufferToString(buf: Buffer) {
     commandBuffer[BufferPosition.BUF_HI] = buf.readUInt32BE(0);
     commandBuffer[BufferPosition.BUF_LO] = buf.readUInt32BE(4);
@@ -130,12 +157,14 @@ export function bufferToString(buf: Buffer) {
     }
 }
 
-/*gsSPNoOp();
-gsSPVertex(0xDEADBEEF, 20, 0);
-gsSPPopMatrix(1);
-gsSPGeometryMode(GeometryModes.G_SHADE, GeometryModes.G_SHADING_SMOOTH);
-gsSPMatrix(0xDEADBEEF, MatrixParams.G_MTX_LOAD | MatrixParams.G_MTX_NOPUSH | MatrixParams.G_MTX_MODELVIEW);
-gsSPDisplayList(0xDEADBEEF);
-gsSPBranchList(0xDEADBEEF);
-gsSPEndDisplayList();
+/*console.log(gsSPNoOp());
+console.log(gsSPVertex(0xDEADBEEF, 20, 0));
+console.log(gsSPPopMatrix(1));
+console.log(gsSPGeometryMode(GeometryModes.G_SHADE, GeometryModes.G_SHADING_SMOOTH));
+console.log(gsSPMatrix(0xDEADBEEF, MatrixParams.G_MTX_LOAD | MatrixParams.G_MTX_NOPUSH | MatrixParams.G_MTX_MODELVIEW));
+console.log(gsSPDisplayList(0xDEADBEEF));
+console.log(gsSPBranchList(0xDEADBEEF));
+console.log(gsSPEndDisplayList());
+console.log(gsDPSetPrimColor(0, 0, 255, 255, 255, 255));
+console.log(gsDPSetEnvColor(255, 255, 255, 255));
 bufferToString(Buffer.from([0x01, 0x01, 0x40, 0x28, 0xde, 0xad, 0xbe, 0xef]));*/
