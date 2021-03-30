@@ -62,10 +62,11 @@ export enum ModifyVtxParams {
     , G_MWO_POINT_ZSCREEN = 0x1C
 }
 
-export enum TriPrimaryVertex {
-    V0      // v0 -> v1 -> v2
-    , V1    // v2 -> v0 -> v1
-    , V2    // v1 -> v2 -> v0
+export enum PrimaryVertex {
+    V0      // v0 -> v1 -> v2 (-> v3)
+    , V1    // v1 -> v2 (-> v3) -> v0
+    , V2    // v2 (-> v3) -> v0 -> v1
+    , V3    // v3 -> v0 -> v1 -> v2 (Quad only)
 }
 
 export enum MatrixParams {
@@ -233,23 +234,23 @@ export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number) {
  * @param flag Primary vertex
  * @returns Display list command
  */
-export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: TriPrimaryVertex) {
+export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: PrimaryVertex) {
     let command = Buffer.alloc(8);
     command.writeUInt8(0x05);
     switch (flag) {
-        case TriPrimaryVertex.V0: {
+        case PrimaryVertex.V0: {
             command.writeUInt8(v0, 1);
             command.writeUInt8(v1, 2);
             command.writeUInt8(v2, 3);
         } break;
 
-        case TriPrimaryVertex.V1: {
+        case PrimaryVertex.V1: {
             command.writeUInt8(v1, 1);
             command.writeUInt8(v2, 2);
             command.writeUInt8(v0, 3);
         } break;
 
-        case TriPrimaryVertex.V2: {
+        case PrimaryVertex.V2: {
             command.writeUInt8(v2, 1);
             command.writeUInt8(v0, 2);
             command.writeUInt8(v1, 3);
@@ -274,42 +275,42 @@ export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: TriPrima
  * @param flag1 Tri 2, Primary Vertex
  * @returns Display list command
  */
-export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: TriPrimaryVertex, v10: number, v11: number, v12: number, flag1: TriPrimaryVertex) {
+export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: PrimaryVertex, v10: number, v11: number, v12: number, flag1: PrimaryVertex) {
     let command = Buffer.alloc(8);
     command.writeUInt8(0x06);
     switch (flag0) {
-        case TriPrimaryVertex.V0: {
+        case PrimaryVertex.V0: {
             command.writeUInt8(v00, 1);
             command.writeUInt8(v01, 2);
             command.writeUInt8(v02, 3);
         } break;
 
-        case TriPrimaryVertex.V1: {
+        case PrimaryVertex.V1: {
             command.writeUInt8(v01, 1);
             command.writeUInt8(v02, 2);
             command.writeUInt8(v00, 3);
         } break;
 
-        case TriPrimaryVertex.V2: {
+        case PrimaryVertex.V2: {
             command.writeUInt8(v02, 1);
             command.writeUInt8(v00, 2);
             command.writeUInt8(v01, 3);
         } break;
     }
     switch (flag1) {
-        case TriPrimaryVertex.V0: {
+        case PrimaryVertex.V0: {
             command.writeUInt8(v10, 5);
             command.writeUInt8(v11, 6);
             command.writeUInt8(v12, 7);
         } break;
 
-        case TriPrimaryVertex.V1: {
+        case PrimaryVertex.V1: {
             command.writeUInt8(v11, 5);
             command.writeUInt8(v12, 6);
             command.writeUInt8(v10, 7);
         } break;
 
-        case TriPrimaryVertex.V2: {
+        case PrimaryVertex.V2: {
             command.writeUInt8(v12, 5);
             command.writeUInt8(v10, 6);
             command.writeUInt8(v11, 7);
