@@ -146,7 +146,7 @@ export function gsSPNoOp(tag: number = 0): Buffer {
  */
 export function gsSPVertex(vaddr: number, numv: number, vbidx: number): Buffer {
     let command = Buffer.alloc(8);
-    command.writeUInt8(0x01, 0);
+    command.writeUInt8(DisplayOpcodes.G_VTX);
     command.writeUInt16BE(numv << 4, 1);
     command.writeUInt8(((vbidx + numv) & 0x7F) << 1, 3);
     command.writeUInt32BE(vaddr, 4);
@@ -171,7 +171,7 @@ export function gsSPVertex(vaddr: number, numv: number, vbidx: number): Buffer {
  */
 export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: number): Buffer {
     let command = Buffer.alloc(8);
-    command.writeUInt8(0x02);
+    command.writeUInt8(DisplayOpcodes.G_MODIFYVTX);
     command.writeUInt8(where, 1);
     command.writeUInt16BE(vbidx * 2, 2);
     command.writeUInt32BE(val, 4);
@@ -188,7 +188,7 @@ export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: num
  */
 export function gsSPCullDisplayList(vfirst: number, vlast: number): Buffer {
     let command = Buffer.alloc(8);
-    command.writeUInt8(0x03);
+    command.writeUInt8(DisplayOpcodes.G_CULLDL);
     command.writeUInt16BE(vfirst, 2);
     command.writeUInt16BE(vlast, 6);
     return command;
@@ -214,14 +214,14 @@ export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number): 
     let command = Buffer.alloc(16);
 
     // E1000000
-    command.writeUInt8(0xE1)
+    command.writeUInt8(DisplayOpcodes.G_RDPHALF_1)
 
     // dddddddd
     command.writeUInt32BE(newdl, 4);
 
     // 04aaabbb
     command.writeUInt32BE(((vbidx * 5) << 12) + (vbidx * 2), 8)
-    command.writeUInt8(0x04, 8);
+    command.writeUInt8(DisplayOpcodes.G_BRANCH_Z, 8);
 
     // zzzzzzzz
     command.writeUInt32BE(zval, 12);
@@ -242,7 +242,7 @@ export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number): 
  */
 export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: PrimaryVertex): Buffer {
     let command = Buffer.alloc(8);
-    command.writeUInt8(0x05);
+    command.writeUInt8(DisplayOpcodes.G_TRI1);
     switch (flag) {
         case PrimaryVertex.V0: {
             command.writeUInt8(v0, 1);
@@ -283,7 +283,7 @@ export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: PrimaryV
  */
 export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: PrimaryVertex, v10: number, v11: number, v12: number, flag1: PrimaryVertex): Buffer {
     let command = Buffer.alloc(8);
-    command.writeUInt8(0x06);
+    command.writeUInt8(DisplayOpcodes.G_TRI2);
     switch (flag0) {
         case PrimaryVertex.V0: {
             command.writeUInt8(v00, 1);
@@ -342,7 +342,7 @@ export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: Pri
  */
 export function gsSPQuadrangle(v0: number, v1: number, v2: number, v3: number, flag: PrimaryVertex): Buffer {
     let command = Buffer.alloc(8);
-    command.writeUInt8(0x07);
+    command.writeUInt8(DisplayOpcodes.G_QUAD);
     switch (flag) {
         case PrimaryVertex.V0: {
             command.writeUInt8(v0, 1);
@@ -393,7 +393,7 @@ export function gsSPQuadrangle(v0: number, v1: number, v2: number, v3: number, f
  */
 export function G_SPECIAL_3(...unk: any[]): Buffer {
     let command = Buffer.alloc(8);
-    command.writeUInt8(0xD3);
+    command.writeUInt8(DisplayOpcodes.G_SPECIAL_3);
     return command;
 }
 
@@ -403,7 +403,7 @@ export function G_SPECIAL_3(...unk: any[]): Buffer {
  */
 export function G_SPECIAL_2(...unk: any[]): Buffer {
     let command = Buffer.alloc(8);
-    command.writeUInt8(0xD4);
+    command.writeUInt8(DisplayOpcodes.G_SPECIAL_2);
     return command;
 }
 
@@ -413,6 +413,6 @@ export function G_SPECIAL_2(...unk: any[]): Buffer {
  */
 export function G_SPECIAL_1(...unk: any[]): Buffer {
     let command = Buffer.alloc(8);
-    command.writeUInt8(0xD5);
+    command.writeUInt8(DisplayOpcodes.G_SPECIAL_1);
     return command;
 }
