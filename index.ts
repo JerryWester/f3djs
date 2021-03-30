@@ -1,18 +1,3 @@
-const commandBuffer = new Uint32Array(2);
-
-export enum BufferPosition {
-    BUF_HI = 0
-    , BUF_LO = 1
-}
-
-export function _shiftl(v: number, s: number, w: number) {
-    return ((((v) & ((0x01 << (w)) - 1)) << (s)));
-}
-
-export function _shiftr(v: number, s: number, w: number) {
-    return ((((v) >> (s)) & ((0x01 << (w)) - 1)));
-}
-
 // F3DZEX2
 export enum DisplayOpcodes {
     G_NOOP = 0x00
