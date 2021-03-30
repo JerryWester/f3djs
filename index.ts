@@ -93,9 +93,9 @@ export enum GeometryModes {
 }
 
 // 0x00
-export function gsSPNoOp() {
+export function gsSPNoOp(tag: number = 0) {
     let command = Buffer.alloc(8);
-    //console.log(command);
+    command.writeUInt32BE(tag, 4);
     return command;
 }
 
