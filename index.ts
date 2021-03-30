@@ -52,17 +52,29 @@ export enum GeometryModes {
     , G_CLIPPING = 0b00000000100000000000000000000000
 }
 
+// 0x00
 export function gsSPNoOp() {
     let command = newBuffer();
     //console.log(command);
     return command;
 }
 
+// 0x01
 export function gsSPVertex(v: number, n: number, v0: number) {
     commandBuffer[BufferPosition.BUF_HI] = _shiftl(DisplayOpcodes.G_VTX, 24, 8) | _shiftl(n, 12, 8) | _shiftl((v0 + n), 1, 7);
     commandBuffer[BufferPosition.BUF_LO] = v;
     let command = Buffer.from(commandBuffer.buffer).swap32();
     //console.log(command);
+    return command;
+}
+
+// 0x02
+export function gsSPModifyVertex(vbidx: number, where: number, val: number) {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(0x02);
+    command.writeUInt8(where, 1);
+    command.writeUInt16BE(vbidx * 2, 2);
+    command.writeUInt32BE(val, 4);
     return command;
 }
 
