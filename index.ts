@@ -84,6 +84,35 @@ export enum GeometryModes {
     , G_CLIPPING = 0b00000000100000000000000000000000
 }
 
+export enum ZValFlag {
+    G_BZ_PERSP
+    , G_BZ_ORTHO
+}
+
+export function FTOFIX32(x: number) {
+    return x * 0x00010000;
+}
+
+/**
+ * Where `zval` is the Z value the programmer is thinking of comparing against (whereas the "real" Z value handed to the opcode is calculated by this function), `near` and `far` denote the distances of the near and far clipping planes, respectively, from the viewpoint. `zmin` and `zmax` are the minimum and maximum posible Z values, respectively. `flag` decides on the projection, taking either of these enumerations:
+ * 
+ * - `G_BZ_PERSP` = perspective projection
+ * - `G_BZ_ORTHO` = orthographic projection
+ * @param zval The Z value the programmer is thinking of comparing against
+ * @param flag Projection type
+ * @param near Distance of near clipping plane
+ * @param far Distance of far clipping plane
+ * @param zmin Minimum possible Z value
+ * @param zmax Maximum possible Z value
+ * @returns Calculated zVal for gsSPBranchLessZraw
+ */
+export function calcZVal(zval: number, flag: ZValFlag, near: number, far: number, zmin: number = 0x0, zmax: number = 0x3FF) {
+    let part1 = flag == ZValFlag.G_BZ_PERSP
+        ? (1 - near / zval) / (1 - near / far)
+        : (zval - near) / (far - near);
+    return FTOFIX32(part1) * ((zmax - zmin) & ~1) + FTOFIX32(zmin);
+}
+
 /**
  * Does nothing except stall the RDP for a few cycles. Typically used in debugging. In the Z64 games (specifically the debug builds), `tag` is set to a pointer to a string commenting the display list, which would then likely be output when calling the SDK's guParseGbiDL function. 
  * @param tag Pointer to a string tag
@@ -149,5 +178,16 @@ export function gsSPCullDisplayList(vfirst: number, vlast: number) {
     command.writeUInt8(0x03);
     command.writeUInt16BE(vfirst, 2);
     command.writeUInt16BE(vlast, 6);
+    return command;
+}
+
+
+export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number) {
+    let command = Buffer.alloc(16);
+    command.writeUInt8(0xE1)
+    command.writeUInt32BE(newdl, 4);
+    command.writeUInt32BE(((vbidx * 5) << 12) + (vbidx * 2), 8)
+    command.writeUInt8(0x04, 8);
+    command.writeUInt32BE(zval, 12);
     return command;
 }
