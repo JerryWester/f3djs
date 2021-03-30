@@ -125,7 +125,7 @@ export function gsSPVertex(vaddr: number, numv: number, vbidx: number) {
  * @param where Enumerated set of values specifying what to change
  * @param vbidx Vertex buffer index of vertex to modify
  * @param val New value to inserts
- * @returns 
+ * @returns Display list command
  */
 export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: number) {
     let command = Buffer.alloc(8);
@@ -133,6 +133,20 @@ export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: num
     command.writeUInt8(where, 1);
     command.writeUInt16BE(vbidx * 2, 2);
     command.writeUInt32BE(val, 4);
+    return command;
+}
+
+/**
+ * This command takes the vertices in the vertex buffer from `vfirst` through `vlast` as describing the volume of the object being rendered (called the "bounding value"). If the bounding volume does not intersect with the current viewing volume (aka if the bounding volume is entirely offscreen), then the display list ends, equivalent to a DF opcode. Otherwise, the display list continues as though nothing happened (equivalent to 00, then).
+ * 
+ * For F3DEX2.NoN, Each of `vfirst` and `vlast` must be in the range `0 ≤ x ≤ 31`. Additionally, `vfirst < vlast` must be true (thus a minimum of two vertices must be specified, and range of vertices cannot be reversed). It's not specified what the behavior is when all the vertices are coplanar. 
+ * @param vfirst Vertex buffer index of first vertex for bounding volume
+ * @param vlast Vertex buffer index of last vertex for bounding volume
+ * @returns Display list command
+ */
+export function gsSPCullDisplayList(vfirst: number, vlast: number) {
+    let command = Buffer.alloc(8);
+
     return command;
 }
 
