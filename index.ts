@@ -119,7 +119,7 @@ export function FTOFIX32(x: number) {
  * @param {number} zmax Maximum possible Z value
  * @returns {number} Calculated zVal for gsSPBranchLessZraw
  */
-export function calcZVal(zval: number, flag: ZValFlag, near: number, far: number, zmin: number = 0x0, zmax: number = 0x3FF) {
+export function calcZVal(zval: number, flag: ZValFlag, near: number, far: number, zmin: number = 0x0, zmax: number = 0x3FF): number {
     let part1 = flag == ZValFlag.G_BZ_PERSP
         ? (1 - near / zval) / (1 - near / far)
         : (zval - near) / (far - near);
@@ -131,7 +131,7 @@ export function calcZVal(zval: number, flag: ZValFlag, near: number, far: number
  * @param {number} tag Pointer to a string tag
  * @returns {Buffer} Display list command
  */
-export function gsSPNoOp(tag: number = 0) {
+export function gsSPNoOp(tag: number = 0): Buffer {
     let command = Buffer.alloc(8);
     command.writeUInt32BE(tag, 4);
     return command;
@@ -144,7 +144,7 @@ export function gsSPNoOp(tag: number = 0) {
  * @param {number} vaddr Address of vertices
  * @returns {Buffer} Display list command
  */
-export function gsSPVertex(vaddr: number, numv: number, vbidx: number) {
+export function gsSPVertex(vaddr: number, numv: number, vbidx: number): Buffer {
     let command = Buffer.alloc(8);
     command.writeUInt8(0x01, 0);
     command.writeUInt16BE(numv << 4, 1);
@@ -169,7 +169,7 @@ export function gsSPVertex(vaddr: number, numv: number, vbidx: number) {
  * @param {number} val New value to inserts
  * @returns {Buffer} Display list command
  */
-export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: number) {
+export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: number): Buffer {
     let command = Buffer.alloc(8);
     command.writeUInt8(0x02);
     command.writeUInt8(where, 1);
@@ -186,7 +186,7 @@ export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: num
  * @param {number} vlast Vertex buffer index of last vertex for bounding volume
  * @returns {Buffer} Display list command
  */
-export function gsSPCullDisplayList(vfirst: number, vlast: number) {
+export function gsSPCullDisplayList(vfirst: number, vlast: number): Buffer {
     let command = Buffer.alloc(8);
     command.writeUInt8(0x03);
     command.writeUInt16BE(vfirst, 2);
@@ -207,7 +207,7 @@ export function gsSPCullDisplayList(vfirst: number, vlast: number) {
  * @param {number} zval Z value to test against
  * @returns {Buffer} Display list command
  */
-export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number) {
+export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number): Buffer {
     // E1000000 dddddddd
     // 04aaabbb zzzzzzzz
 
@@ -240,7 +240,7 @@ export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number) {
  * @param {PrimaryVertex} flag Primary vertex
  * @returns {Buffer} Display list command
  */
-export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: PrimaryVertex) {
+export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: PrimaryVertex): Buffer {
     let command = Buffer.alloc(8);
     command.writeUInt8(0x05);
     switch (flag) {
@@ -281,7 +281,7 @@ export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: PrimaryV
  * @param {PrimaryVertex} flag1 Tri 2, Primary Vertex
  * @returns {Buffer} Display list command
  */
-export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: PrimaryVertex, v10: number, v11: number, v12: number, flag1: PrimaryVertex) {
+export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: PrimaryVertex, v10: number, v11: number, v12: number, flag1: PrimaryVertex): Buffer {
     let command = Buffer.alloc(8);
     command.writeUInt8(0x06);
     switch (flag0) {
@@ -340,7 +340,7 @@ export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: Pri
  * @param {PrimaryVertex} flag Primary Vertex
  * @returns {Buffer} Display list command
  */
-export function gsSPQuadrangle(v0: number, v1: number, v2: number, v3: number, flag: PrimaryVertex) {
+export function gsSPQuadrangle(v0: number, v1: number, v2: number, v3: number, flag: PrimaryVertex): Buffer {
     let command = Buffer.alloc(8);
     command.writeUInt8(0x07);
     switch (flag) {
