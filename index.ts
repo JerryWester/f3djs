@@ -9,11 +9,11 @@ export function newBuffer() {
     return Buffer.from('\0\0\0\0\0\0\0\0');
 }
 
-export function _shiftl(v, s, w) {
+export function _shiftl(v: number, s: number, w: number) {
     return ((((v) & ((0x01 << (w)) - 1)) << (s)));
 }
 
-export function _shiftr(v, s, w) {
+export function _shiftr(v: number, s: number, w: number) {
     return ((((v) >> (s)) & ((0x01 << (w)) - 1)));
 }
 
