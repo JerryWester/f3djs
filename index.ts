@@ -320,6 +320,8 @@ export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: Pri
 }
 
 /**
+ * @deprecated **Note:** This opcode is functionally equivalent to opcode 06. The macro for this opcode (and thus presumably also the opcode itself) is labeled as no longer supported in Oct 1999 SDK documentation. If you're making new display lists to import into OoT, **use 06 instead of this.**
+ * 
  * Draws a quadrangle, as two triangles. All four vertex indices are in the range `0 ≤ v ≤ 31` for F3DEX2.NoN.
  * 
  * The macro given takes the four vertices and rearranges them according to `flag`, and as per the opcode writes it as two triangles. The draw order is `aa -> bb -> cc` for the first triangle, `aa -> cc -> dd`, with `aa` being the "primary" vertex for both (thus maintaining a single "primary" vertex for the quadrangle). Both occurrences of `aa` should be equal, as well as both of `cc`, since the purpose of this opcode is to draw a quadrilateral polygon. 
