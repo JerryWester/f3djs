@@ -318,3 +318,63 @@ export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: Pri
     }
     return command;
 }
+
+/**
+ * Draws a quadrangle, as two triangles. All four vertex indices are in the range `0 ≤ v ≤ 31` for F3DEX2.NoN.
+ * 
+ * The macro given takes the four vertices and rearranges them according to `flag`, and as per the opcode writes it as two triangles. The draw order is `aa -> bb -> cc` for the first triangle, `aa -> cc -> dd`, with `aa` being the "primary" vertex for both (thus maintaining a single "primary" vertex for the quadrangle). Both occurrences of `aa` should be equal, as well as both of `cc`, since the purpose of this opcode is to draw a quadrilateral polygon. 
+ * 
+ * The flag determines the vertices order.
+ * @param v0 Vertex 1
+ * @param v1 Vertex 2
+ * @param v2 Vertex 3
+ * @param v3 Vertex 4
+ * @param flag Primary Vertex
+ * @returns Display list command
+ */
+export function gsSPQuadrangle(v0, v1, v2, v3, flag) {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(0x07);
+    switch (flag) {
+        case PrimaryVertex.V0: {
+            command.writeUInt8(v0, 1);
+            command.writeUInt8(v1, 2);
+            command.writeUInt8(v2, 3);
+            
+            command.writeUInt8(v0, 5);
+            command.writeUInt8(v2, 6);
+            command.writeUInt8(v3, 7);
+        } break;
+        
+        case PrimaryVertex.V1: {
+            command.writeUInt8(v1, 1);
+            command.writeUInt8(v2, 2);
+            command.writeUInt8(v3, 3);
+            
+            command.writeUInt8(v1, 5);
+            command.writeUInt8(v3, 6);
+            command.writeUInt8(v0, 7);
+        } break;
+        
+        case PrimaryVertex.V2: {
+            command.writeUInt8(v2, 1);
+            command.writeUInt8(v3, 2);
+            command.writeUInt8(v0, 3);
+            
+            command.writeUInt8(v2, 5);
+            command.writeUInt8(v0, 6);
+            command.writeUInt8(v1, 7);
+        } break;
+        
+        case PrimaryVertex.V3: {
+            command.writeUInt8(v3, 1);
+            command.writeUInt8(v0, 2);
+            command.writeUInt8(v1, 3);
+            
+            command.writeUInt8(v3, 5);
+            command.writeUInt8(v1, 6);
+            command.writeUInt8(v2, 7);
+        } break;
+    }
+    return command;
+}
