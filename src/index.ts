@@ -705,3 +705,22 @@ export function gsMoveMem(size: number, index: MoveMemModes, offset: number, add
     command.writeUInt32BE(address, 4);
     return command;
 }
+
+/**
+ * Loads a new microcode executable into the RSP, with pointers `dstart` to the start of the data section and `tstart` to the start of the text section, with `dsize` specifying the size of the data section. After loading the new microcode, the RCP is reset as appropriate.
+ * 
+ * Note that `dstart` is stored in the high half of the "RDP word". 
+ * @param dstart Start of data section
+ * @param dsize Size of data section
+ * @param tstart Start of text section
+ * @returns Display list command
+ */
+export function gsSPLoadUcodeEx(tstart: number, dstart: number, dsize: number): Buffer {
+    const command = Buffer.alloc(16);
+    command.writeUInt8(0xE1);
+    command.writeUInt32BE(dstart, 4);
+    command.writeUInt8(DisplayOpcodes.G_LOAD_UCODE, 8);
+    command.writeUInt16BE(dsize, 10);
+    command.writeUInt32BE(tstart, 12);
+    return command;
+}
