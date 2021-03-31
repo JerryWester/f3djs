@@ -102,6 +102,12 @@ export enum ZValFlag {
     , G_BZ_ORTHO
 }
 
+/** @enum {number} */
+export enum DmaIOFlag {
+    READ
+    , WRITE
+}
+
 export function FTOFIX32(x: number) {
     return x * 0x00010000;
 }
@@ -389,7 +395,7 @@ export function gsSPQuadrangle(v0: number, v1: number, v2: number, v3: number, f
 
 /**
  * Appears to be an explicitly reserved command.
- * @returns {Buffer} Display list commands
+ * @returns {Buffer} Display list command
  */
 export function G_SPECIAL_3(...unk: any[]): Buffer {
     let command = Buffer.alloc(8);
@@ -399,7 +405,7 @@ export function G_SPECIAL_3(...unk: any[]): Buffer {
 
 /**
  * Appears to be an explicitly reserved command.
- * @returns {Buffer} Display list commands
+ * @returns {Buffer} Display list command
  */
 export function G_SPECIAL_2(...unk: any[]): Buffer {
     let command = Buffer.alloc(8);
@@ -409,10 +415,40 @@ export function G_SPECIAL_2(...unk: any[]): Buffer {
 
 /**
  * Appears to be an explicitly reserved command.
- * @returns {Buffer} Display list commands
+ * @returns {Buffer} Display list command
  */
 export function G_SPECIAL_1(...unk: any[]): Buffer {
     let command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SPECIAL_1);
+    return command;
+}
+
+/**
+ * Does a DMA between DMEM/IMEM address dmem and DRAM address dram. size bytes are presumably transfered in the process. flag determines the type of transfer. Apparently:
+ * 
+ * - READ: Read from DMEM/IMEM to DRAM
+ * - WRITE: Write DRAM to DMEM/IMEM
+ * 
+ * The exact nature of this command is unclear, since none of this opcode's macros are documented, and the only available comment suggests this is a debugging tool only. Therefore, you should not expect to see this in production code.
+ * @param {DmaIOFlag} flag Chooses between read or write
+ * @param {number} dmem Address in DMEM/IMEM(?)
+ * @param {number} size (Presumably) size of data to transfer
+ * @param {number} dram DRAM address
+ * @returns {Buffer} Display list command
+ */
+export function gsSPDma_io(flag: DmaIOFlag, dmem: number, dram: number, size: number): Buffer {
+    let command = Buffer.alloc(8);
+    // D6___sss rrrrrrrr
+    // ___ -> fmmm mmmm mmm0
+
+    command.writeUInt32BE(
+        ((
+            ((flag & 1) << 11) | // f
+            (((dmem / 8) & 0x3FF) << 1) // mmm mmmm mmm
+        ) << 12) |
+        (size & 0xFFF) // sss
+    );
+    command.writeUInt8(DisplayOpcodes.G_DMA_IO);
+    command.writeUInt32BE(dram, 4);
     return command;
 }
