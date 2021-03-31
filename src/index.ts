@@ -511,3 +511,7 @@ export function gsSPPopMatrixN(which: MatrixParams, num: number): Buffer {
     command.writeUInt32BE(num * 64);
     return command;
 }
+
+export function gsSPGeometryMode(clearbits: number, setbits: number): Buffer {
+    let command = Buffer.alloc(8);
+}
