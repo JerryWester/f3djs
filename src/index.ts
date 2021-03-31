@@ -78,7 +78,7 @@ export enum MatrixParams {
     , G_MTX_PROJECTION = 0x04
 };
 
-export enum MoveWordModes {
+export enum MoveWordIndexModes {
     G_MW_MATRIX = 0x00
     , G_MW_NUMLIGHT = 0x02
     , G_MW_CLIP = 0x04
@@ -87,6 +87,67 @@ export enum MoveWordModes {
     , G_MW_LIGHTCOL = 0x0A
     , G_MW_FORCEMTX = 0x0C
     , G_MW_PERSPNORM = 0x0E
+};
+
+export enum MoveWordObjectModes {
+    G_MWO_NUMLIGHT = 0x00
+    , G_MWO_CLIP_RNX = 0x04
+    , G_MWO_CLIP_RNY = 0x0c
+    , G_MWO_CLIP_RPX = 0x14
+    , G_MWO_CLIP_RPY = 0x1c
+    , G_MWO_SEGMENT_0 = 0x00
+    , G_MWO_SEGMENT_1 = 0x01
+    , G_MWO_SEGMENT_2 = 0x02
+    , G_MWO_SEGMENT_3 = 0x03
+    , G_MWO_SEGMENT_4 = 0x04
+    , G_MWO_SEGMENT_5 = 0x05
+    , G_MWO_SEGMENT_6 = 0x06
+    , G_MWO_SEGMENT_7 = 0x07
+    , G_MWO_SEGMENT_8 = 0x08
+    , G_MWO_SEGMENT_9 = 0x09
+    , G_MWO_SEGMENT_A = 0x0a
+    , G_MWO_SEGMENT_B = 0x0b
+    , G_MWO_SEGMENT_C = 0x0c
+    , G_MWO_SEGMENT_D = 0x0d
+    , G_MWO_SEGMENT_E = 0x0e
+    , G_MWO_SEGMENT_F = 0x0f
+    , G_MWO_FOG = 0x00
+    , G_MWO_aLIGHT_1 = 0x00
+    , G_MWO_bLIGHT_1 = 0x04
+    , G_MWO_aLIGHT_2 = 0x18
+    , G_MWO_bLIGHT_2 = 0x1c
+    , G_MWO_aLIGHT_3 = 0x30
+    , G_MWO_bLIGHT_3 = 0x34
+    , G_MWO_aLIGHT_4 = 0x48
+    , G_MWO_bLIGHT_4 = 0x4c
+    , G_MWO_aLIGHT_5 = 0x60
+    , G_MWO_bLIGHT_5 = 0x64
+    , G_MWO_aLIGHT_6 = 0x78
+    , G_MWO_bLIGHT_6 = 0x7c
+    , G_MWO_aLIGHT_7 = 0x90
+    , G_MWO_bLIGHT_7 = 0x94
+    , G_MWO_aLIGHT_8 = 0xa8
+    , G_MWO_bLIGHT_8 = 0xac
+    , G_MWO_MATRIX_XX_XY_I = 0x00
+    , G_MWO_MATRIX_XZ_XW_I = 0x04
+    , G_MWO_MATRIX_YX_YY_I = 0x08
+    , G_MWO_MATRIX_YZ_YW_I = 0x0c
+    , G_MWO_MATRIX_ZX_ZY_I = 0x10
+    , G_MWO_MATRIX_ZZ_ZW_I = 0x14
+    , G_MWO_MATRIX_WX_WY_I = 0x18
+    , G_MWO_MATRIX_WZ_WW_I = 0x1c
+    , G_MWO_MATRIX_XX_XY_F = 0x20
+    , G_MWO_MATRIX_XZ_XW_F = 0x24
+    , G_MWO_MATRIX_YX_YY_F = 0x28
+    , G_MWO_MATRIX_YZ_YW_F = 0x2c
+    , G_MWO_MATRIX_ZX_ZY_F = 0x30
+    , G_MWO_MATRIX_ZZ_ZW_F = 0x34
+    , G_MWO_MATRIX_WX_WY_F = 0x38
+    , G_MWO_MATRIX_WZ_WW_F = 0x3c
+    , G_MWO_POINT_RGBA = 0x10
+    , G_MWO_POINT_ST = 0x14
+    , G_MWO_POINT_XYSCREEN = 0x18
+    , G_MWO_POINT_ZSCREEN = 0x1c 
 }
 
 export enum MoveMemModes {
@@ -586,20 +647,29 @@ export function gsSPMatrix(mtxaddr: number, params: MatrixParams): Buffer {
  * - `G_MW_PERSPNORM`
  * 
  * The offset is, as the name suggests, an offset from the address that index resolves to.
- * @todo Enumeration for offset?
- * @todo gsSPSegment?
  * @param index Index into DMEM pointer table(?)
  * @param offset Offset from the indexed base address(?)
  * @param data New 32-bit value
  * @returns Display list command
  */
-export function gsMoveWd(index: MoveWordModes, offset: number, data: number): Buffer {
+export function gsMoveWd(index: MoveWordIndexModes, offset: MoveWordObjectModes, data: number): Buffer {
     let command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_MOVEWORD);
     command.writeUInt8(index, 1);
     command.writeUInt16BE(offset, 2);
     command.writeUInt32BE(data, 4);
     return command;
+}
+
+/**
+ * Wrapper for `gsMoveWd`.
+ * @todo Document this better.
+ * @param segment Segment
+ * @param base Address
+ * @returns Display list command
+ */
+export function gsSPSegment(segment: MoveWordObjectModes, base: number): Buffer {
+    return gsMoveWd(MoveWordIndexModes.G_MW_SEGMENT, segment * 4, base);
 }
 
 /**
