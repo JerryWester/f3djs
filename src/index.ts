@@ -160,6 +160,12 @@ export enum MoveMemModes {
     , G_MV_MATRIX = 14
 }
 
+export enum ShiftModes {
+    G_MDSFT_ALPHACOMPARE = 0
+    , G_MDSFT_ZSRCSEL = 2
+    , G_MDSFT_RENDERMODE = 3
+}
+
 export enum GeometryModes {
     G_ZBUFFER = 0b00000000000000000000000000000001
     , G_SHADE = 0b00000000000000000000000000000100
@@ -817,4 +823,29 @@ export function gsSPNoOp(): Buffer {
  */
 export function gsDPWord(wordhi: number, wordlo: number): Buffer {
     return Buffer.concat([G_RDPHALF_1(wordhi), G_RDPHALF_2(wordlo)]);
+}
+
+/**
+ * Modifies various bits of the lower half of the RDP Other Modes word.
+ * 
+ * The operation performed by the opcode can be expressed as such, assuming `LO` to stand for the lower word of the RDP other modes:
+ * 
+ * ```javascript
+ *    LO =  LO & ~(((1 << length) - 1) << shift) | data
+ * ```
+ * 
+ * Or, in English, it clears all the bits designated to be modified (determined by `shift` and `length`), and then sets those bits according to `data`. Important to note that `data` is preshifted. That is, it is up to the caller to shift `data` appropriately.
+ * @param mode Does nothing. Set to 0xE2 by default
+ * @param shift Amount data is shifted by, or number of LSb of mode bits to be changed
+ * @param length Size of data affected, in bits
+ * @param data New bit settings to be applied
+ * @returns Display list command
+ */
+export function gsSPSetOtherMode(mode = 0xE2, shift: ShiftModes, length: number, data: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETOTHERMODE_L);
+    command.writeUInt8(32 - shift - length, 2);
+    command.writeUInt8(length - 1, 3);
+    command.writeUInt32BE(data, 4);
+    return command;
 }

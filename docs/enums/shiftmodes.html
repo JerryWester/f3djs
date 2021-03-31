@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ZValFlag | f3djs</title>
+	<title>ShiftModes | f3djs</title>
 	<meta name="description" content="Documentation for f3djs">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">f3djs</a>
 				</li>
 				<li>
-					<a href="zvalflag.html">ZValFlag</a>
+					<a href="shiftmodes.html">ShiftModes</a>
 				</li>
 			</ul>
-			<h1>Enumeration ZValFlag</h1>
+			<h1>Enumeration ShiftModes</h1>
 		</div>
 	</div>
 </header>
@@ -72,8 +72,9 @@
 						<section class="tsd-index-section ">
 							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="zvalflag.html#g_bz_ortho" class="tsd-kind-icon">G_<wbr>BZ_<wbr>ORTHO</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="zvalflag.html#g_bz_persp" class="tsd-kind-icon">G_<wbr>BZ_<wbr>PERSP</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="shiftmodes.html#g_mdsft_alphacompare" class="tsd-kind-icon">G_<wbr>MDSFT_<wbr>ALPHACOMPARE</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="shiftmodes.html#g_mdsft_rendermode" class="tsd-kind-icon">G_<wbr>MDSFT_<wbr>RENDERMODE</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="shiftmodes.html#g_mdsft_zsrcsel" class="tsd-kind-icon">G_<wbr>MDSFT_<wbr>ZSRCSEL</a></li>
 							</ul>
 						</section>
 					</div>
@@ -82,22 +83,32 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Enumeration members</h2>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="g_bz_ortho" class="tsd-anchor"></a>
-					<h3>G_<wbr>BZ_<wbr>ORTHO</h3>
-					<div class="tsd-signature tsd-kind-icon">G_<wbr>BZ_<wbr>ORTHO<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 1</span></div>
+					<a name="g_mdsft_alphacompare" class="tsd-anchor"></a>
+					<h3>G_<wbr>MDSFT_<wbr>ALPHACOMPARE</h3>
+					<div class="tsd-signature tsd-kind-icon">G_<wbr>MDSFT_<wbr>ALPHACOMPARE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f83de3a/src/index.ts#L184">index.ts:184</a></li>
+							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f83de3a/src/index.ts#L164">index.ts:164</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="g_bz_persp" class="tsd-anchor"></a>
-					<h3>G_<wbr>BZ_<wbr>PERSP</h3>
-					<div class="tsd-signature tsd-kind-icon">G_<wbr>BZ_<wbr>PERSP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 0</span></div>
+					<a name="g_mdsft_rendermode" class="tsd-anchor"></a>
+					<h3>G_<wbr>MDSFT_<wbr>RENDERMODE</h3>
+					<div class="tsd-signature tsd-kind-icon">G_<wbr>MDSFT_<wbr>RENDERMODE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 3</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f83de3a/src/index.ts#L183">index.ts:183</a></li>
+							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f83de3a/src/index.ts#L166">index.ts:166</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="g_mdsft_zsrcsel" class="tsd-anchor"></a>
+					<h3>G_<wbr>MDSFT_<wbr>ZSRCSEL</h3>
+					<div class="tsd-signature tsd-kind-icon">G_<wbr>MDSFT_<wbr>ZSRCSEL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 2</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f83de3a/src/index.ts#L165">index.ts:165</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -140,24 +151,27 @@
 					<li class=" tsd-kind-enum">
 						<a href="primaryvertex.html" class="tsd-kind-icon">Primary<wbr>Vertex</a>
 					</li>
-					<li class=" tsd-kind-enum">
-						<a href="shiftmodes.html" class="tsd-kind-icon">Shift<wbr>Modes</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-enum">
-						<a href="zvalflag.html" class="tsd-kind-icon">ZVal<wbr>Flag</a>
+						<a href="shiftmodes.html" class="tsd-kind-icon">Shift<wbr>Modes</a>
 						<ul>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="zvalflag.html#g_bz_ortho" class="tsd-kind-icon">G_<wbr>BZ_<wbr>ORTHO</a>
+								<a href="shiftmodes.html#g_mdsft_alphacompare" class="tsd-kind-icon">G_<wbr>MDSFT_<wbr>ALPHACOMPARE</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="zvalflag.html#g_bz_persp" class="tsd-kind-icon">G_<wbr>BZ_<wbr>PERSP</a>
+								<a href="shiftmodes.html#g_mdsft_rendermode" class="tsd-kind-icon">G_<wbr>MDSFT_<wbr>RENDERMODE</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="shiftmodes.html#g_mdsft_zsrcsel" class="tsd-kind-icon">G_<wbr>MDSFT_<wbr>ZSRCSEL</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-enum">
+						<a href="zvalflag.html" class="tsd-kind-icon">ZVal<wbr>Flag</a>
+					</li>
 					<li class=" tsd-kind-function">
 						<a href="../modules.html#g_special_1" class="tsd-kind-icon">G_<wbr>SPECIAL_<wbr>1</a>
 					</li>
