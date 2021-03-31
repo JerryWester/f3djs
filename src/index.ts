@@ -808,3 +808,13 @@ export function gsSPNoOp(): Buffer {
     command.writeUInt8(DisplayOpcodes.G_SPNOOP);
     return command;
 }
+
+/**
+ * Sets the upper half of the generic RDP word to `wordhi` and the lower half to `wordlo`.
+ * @param wordhi Upper half of the generic RDP word
+ * @param wordlo Lower half of the generic RDP word
+ * @returns Display list command
+ */
+export function gsDPWord(wordhi: number, wordlo: number): Buffer {
+    return Buffer.concat([G_RDPHALF_1(wordhi), G_RDPHALF_2(wordlo)]);
+}
