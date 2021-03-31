@@ -512,6 +512,24 @@ export function gsSPPopMatrixN(which: MatrixParams, num: number): Buffer {
     return command;
 }
 
+/**
+ * Changes the various mode bits of the RSP's geometry mode. This opcode can clear and set bits at once.
+ * 
+ * Assuming `G` to stand for the geometry mode bits, this command performs the equivalent of:
+ * 
+ * ```javascript
+ *     G = (G & ~clearbits) | setbits
+ * ```
+ * 
+ * That is, keeps only the bits that aren't meant to be cleared, and then sets the bits that are meant to be set.
+ * @param {number} clearbits Geometry mode bits to clear
+ * @param {number} setbits Geometry mode bits to set
+ * @returns {Buffer} Display list command
+ */
 export function gsSPGeometryMode(clearbits: number, setbits: number): Buffer {
     let command = Buffer.alloc(8);
+    command.writeUInt32BE(~(clearbits & 0xFFFFFF));
+    command.writeUInt8(DisplayOpcodes.G_GEOMETRYMODE);
+    command.writeUInt32BE(setbits, 4);
+    return command;
 }
