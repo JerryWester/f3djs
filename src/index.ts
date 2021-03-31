@@ -183,7 +183,7 @@ export enum DmaIOFlag {
     , WRITE
 }
 
-export function FTOFIX32(x: number): number {
+function FTOFIX32(x: number): number {
     return x * 0x00010000;
 }
 
@@ -205,6 +205,20 @@ export function calcZVal(zval: number, flag: ZValFlag, near: number, far: number
         ? (1 - near / zval) / (1 - near / far)
         : (zval - near) / (far - near);
     return FTOFIX32(part1) * ((zmax - zmin) & ~1) + FTOFIX32(zmin);
+}
+
+function G_RDPHALF_1(wordhi: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_RDPHALF_1);
+    command.writeUInt32BE(wordhi, 4);
+    return command;
+}
+
+function G_RDPHALF_2(wordlo: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_RDPHALF_2);
+    command.writeUInt32BE(wordlo, 4);
+    return command;
 }
 
 /**
