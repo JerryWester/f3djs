@@ -522,3 +522,31 @@ export function gsSPGeometryMode(clearbits: number, setbits: number): Buffer {
     command.writeUInt32BE(setbits, 4);
     return command;
 }
+
+/**
+ * Adds a new matrix from `mtxaddr` to the appropriate matrix stack.
+ * 
+ * `params` are a bitfield with the following options:
+ * 
+ * - `G_MTX_NOPUSH` or `G_MTX_PUSH`
+ * - `G_MTX_MUL` or `G_MTX_LOAD`
+ * - `G_MTX_MODELVIEW` or `G_MTX_PROJECTION`
+ * 
+ * `NOPUSH` and `PUSH`, `MUL` and `LOAD`, and `MODELVIEW` and `PROJECTION` are exclusive pairs of options. `NOPUSH`, `MUL`, and `MODELVIEW` are "default options", and are named just as programmer convenience, to explicitly state choices.
+ * 
+ * If `PUSH` is specified, then the matrix will be added to the top of the stack as a new stack element. If there is no room on the stack, this option is ignored and `NOPUSH` behavior occurs instead. `NOPUSH` means the top matrix of the stack will be overwritten with the new matrix.
+ * 
+ * If `MUL` is specified, the new matrix is multiplied by the top of the stack before being placed according to `PUSH`/`NOPUSH`. Specifically the matrix product of `new matrix * top of the stack` (verify this is the right order, since matrix multiplication ain't commutative). `LOAD` means no multiplication is done against the new matrix.
+ * 
+ * `MODELVIEW` selects the modelview matrix stack (meaning the new matrix is a modelview matrix), while `PROJECTION` refers to the projection matrix "stack". Since the projection matrix "stack" is not actually a stack, rather a single matrix, the `PUSH` option is always ignored for new projection matrices. 
+ * @param params Parameters controlling nature of matrix addition
+ * @param mtxaddr RAM address of new matrix
+ * @returns 
+ */
+export function gsSPMatrix(mtxaddr: number, params: MatrixParams): Buffer {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_MTX);
+    command.writeUInt8(0x38, 1);
+    command.writeUInt8((params & 0xFF) ^ MatrixParams.G_MTX_PUSH);
+    return command;
+}
