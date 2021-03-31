@@ -108,7 +108,11 @@ export enum DmaIOFlag {
     , WRITE
 }
 
-export function FTOFIX32(x: number) {
+/**
+ * @param {number} x
+ * @returns {number}
+ */
+export function FTOFIX32(x: number): number {
     return x * 0x00010000;
 }
 
