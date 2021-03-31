@@ -735,3 +735,44 @@ export function gsSPLoadUcodeEx(tstart: number, dstart: number, dsize: number): 
     command.writeUInt32BE(tstart, 12);
     return command;
 }
+
+enum DisplayListMode {
+    DISPLAY = 0x00
+    , BRANCH = 0x01
+}
+
+function G_DL(flag: DisplayListMode, dl: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_DL);
+    command.writeUInt8(flag, 1);
+    command.writeUInt32BE(dl, 4);
+    return command;
+}
+
+/**
+ * Tells the RDP to switch over to the display list at address `dl`.
+ * 
+ * The current address the display list processor is at is pushed to a display list address stack before switching over. This means execution returns at this point after the new display list is done. 
+ * @param dl Display list address
+ * @returns Display list command
+ */
+export function gsSPDisplayList(dl: number): Buffer {
+    return G_DL(DisplayListMode.DISPLAY, dl);
+}
+
+/**
+ * Tells the RDP to switch over to the display list at address `dl`.
+ * 
+ * The current address isn't saved, meaning execution can't return to this point after the new display list is done. (It will instead return to the existing top of the address stack, if any addresses are there.)
+ * @param dl Display list address
+ * @returns Display list command
+ */
+export function gsSPBranchList(dl: number): Buffer {
+    return G_DL(DisplayListMode.BRANCH, dl);
+}
+
+export function gsSPEndDisplayList(): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_ENDDL);
+    return command;
+}
