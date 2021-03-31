@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MatrixParams | f3djs</title>
+	<title>MoveWordModes | f3djs</title>
 	<meta name="description" content="Documentation for f3djs">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">f3djs</a>
 				</li>
 				<li>
-					<a href="matrixparams.html">MatrixParams</a>
+					<a href="movewordmodes.html">MoveWordModes</a>
 				</li>
 			</ul>
-			<h1>Enumeration MatrixParams</h1>
+			<h1>Enumeration MoveWordModes</h1>
 		</div>
 	</div>
 </header>
@@ -72,12 +72,14 @@
 						<section class="tsd-index-section ">
 							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="matrixparams.html#g_mtx_load" class="tsd-kind-icon">G_<wbr>MTX_<wbr>LOAD</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="matrixparams.html#g_mtx_modelview" class="tsd-kind-icon">G_<wbr>MTX_<wbr>MODELVIEW</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="matrixparams.html#g_mtx_mul" class="tsd-kind-icon">G_<wbr>MTX_<wbr>MUL</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="matrixparams.html#g_mtx_nopush" class="tsd-kind-icon">G_<wbr>MTX_<wbr>NOPUSH</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="matrixparams.html#g_mtx_projection" class="tsd-kind-icon">G_<wbr>MTX_<wbr>PROJECTION</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="matrixparams.html#g_mtx_push" class="tsd-kind-icon">G_<wbr>MTX_<wbr>PUSH</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="movewordmodes.html#g_mw_clip" class="tsd-kind-icon">G_<wbr>MW_<wbr>CLIP</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="movewordmodes.html#g_mw_fog" class="tsd-kind-icon">G_<wbr>MW_<wbr>FOG</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="movewordmodes.html#g_mw_forcemtx" class="tsd-kind-icon">G_<wbr>MW_<wbr>FORCEMTX</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="movewordmodes.html#g_mw_lightcol" class="tsd-kind-icon">G_<wbr>MW_<wbr>LIGHTCOL</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="movewordmodes.html#g_mw_matrix" class="tsd-kind-icon">G_<wbr>MW_<wbr>MATRIX</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="movewordmodes.html#g_mw_numlight" class="tsd-kind-icon">G_<wbr>MW_<wbr>NUMLIGHT</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="movewordmodes.html#g_mw_perspnorm" class="tsd-kind-icon">G_<wbr>MW_<wbr>PERSPNORM</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="movewordmodes.html#g_mw_segment" class="tsd-kind-icon">G_<wbr>MW_<wbr>SEGMENT</a></li>
 							</ul>
 						</section>
 					</div>
@@ -86,62 +88,82 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Enumeration members</h2>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="g_mtx_load" class="tsd-anchor"></a>
-					<h3>G_<wbr>MTX_<wbr>LOAD</h3>
-					<div class="tsd-signature tsd-kind-icon">G_<wbr>MTX_<wbr>LOAD<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 2</span></div>
+					<a name="g_mw_clip" class="tsd-anchor"></a>
+					<h3>G_<wbr>MW_<wbr>CLIP</h3>
+					<div class="tsd-signature tsd-kind-icon">G_<wbr>MW_<wbr>CLIP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 4</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L76">index.ts:76</a></li>
+							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L84">index.ts:84</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="g_mtx_modelview" class="tsd-anchor"></a>
-					<h3>G_<wbr>MTX_<wbr>MODELVIEW</h3>
-					<div class="tsd-signature tsd-kind-icon">G_<wbr>MTX_<wbr>MODELVIEW<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 0</span></div>
+					<a name="g_mw_fog" class="tsd-anchor"></a>
+					<h3>G_<wbr>MW_<wbr>FOG</h3>
+					<div class="tsd-signature tsd-kind-icon">G_<wbr>MW_<wbr>FOG<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 8</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L77">index.ts:77</a></li>
+							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L86">index.ts:86</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="g_mtx_mul" class="tsd-anchor"></a>
-					<h3>G_<wbr>MTX_<wbr>MUL</h3>
-					<div class="tsd-signature tsd-kind-icon">G_<wbr>MTX_<wbr>MUL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 0</span></div>
+					<a name="g_mw_forcemtx" class="tsd-anchor"></a>
+					<h3>G_<wbr>MW_<wbr>FORCEMTX</h3>
+					<div class="tsd-signature tsd-kind-icon">G_<wbr>MW_<wbr>FORCEMTX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 12</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L75">index.ts:75</a></li>
+							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L88">index.ts:88</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="g_mtx_nopush" class="tsd-anchor"></a>
-					<h3>G_<wbr>MTX_<wbr>NOPUSH</h3>
-					<div class="tsd-signature tsd-kind-icon">G_<wbr>MTX_<wbr>NOPUSH<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 0</span></div>
+					<a name="g_mw_lightcol" class="tsd-anchor"></a>
+					<h3>G_<wbr>MW_<wbr>LIGHTCOL</h3>
+					<div class="tsd-signature tsd-kind-icon">G_<wbr>MW_<wbr>LIGHTCOL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 10</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L73">index.ts:73</a></li>
+							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L87">index.ts:87</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="g_mtx_projection" class="tsd-anchor"></a>
-					<h3>G_<wbr>MTX_<wbr>PROJECTION</h3>
-					<div class="tsd-signature tsd-kind-icon">G_<wbr>MTX_<wbr>PROJECTION<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 4</span></div>
+					<a name="g_mw_matrix" class="tsd-anchor"></a>
+					<h3>G_<wbr>MW_<wbr>MATRIX</h3>
+					<div class="tsd-signature tsd-kind-icon">G_<wbr>MW_<wbr>MATRIX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L78">index.ts:78</a></li>
+							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L82">index.ts:82</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="g_mtx_push" class="tsd-anchor"></a>
-					<h3>G_<wbr>MTX_<wbr>PUSH</h3>
-					<div class="tsd-signature tsd-kind-icon">G_<wbr>MTX_<wbr>PUSH<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 1</span></div>
+					<a name="g_mw_numlight" class="tsd-anchor"></a>
+					<h3>G_<wbr>MW_<wbr>NUMLIGHT</h3>
+					<div class="tsd-signature tsd-kind-icon">G_<wbr>MW_<wbr>NUMLIGHT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L74">index.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L83">index.ts:83</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="g_mw_perspnorm" class="tsd-anchor"></a>
+					<h3>G_<wbr>MW_<wbr>PERSPNORM</h3>
+					<div class="tsd-signature tsd-kind-icon">G_<wbr>MW_<wbr>PERSPNORM<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 14</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L89">index.ts:89</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="g_mw_segment" class="tsd-anchor"></a>
+					<h3>G_<wbr>MW_<wbr>SEGMENT</h3>
+					<div class="tsd-signature tsd-kind-icon">G_<wbr>MW_<wbr>SEGMENT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 6</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/27cf819/src/index.ts#L85">index.ts:85</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -166,42 +188,48 @@
 					<li class=" tsd-kind-enum">
 						<a href="geometrymodes.html" class="tsd-kind-icon">Geometry<wbr>Modes</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-enum">
+					<li class=" tsd-kind-enum">
 						<a href="matrixparams.html" class="tsd-kind-icon">Matrix<wbr>Params</a>
-						<ul>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="matrixparams.html#g_mtx_load" class="tsd-kind-icon">G_<wbr>MTX_<wbr>LOAD</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="matrixparams.html#g_mtx_modelview" class="tsd-kind-icon">G_<wbr>MTX_<wbr>MODELVIEW</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="matrixparams.html#g_mtx_mul" class="tsd-kind-icon">G_<wbr>MTX_<wbr>MUL</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="matrixparams.html#g_mtx_nopush" class="tsd-kind-icon">G_<wbr>MTX_<wbr>NOPUSH</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="matrixparams.html#g_mtx_projection" class="tsd-kind-icon">G_<wbr>MTX_<wbr>PROJECTION</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="matrixparams.html#g_mtx_push" class="tsd-kind-icon">G_<wbr>MTX_<wbr>PUSH</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-enum">
 						<a href="modifyvtxparams.html" class="tsd-kind-icon">Modify<wbr>Vtx<wbr>Params</a>
 					</li>
 					<li class=" tsd-kind-enum">
 						<a href="movememmodes.html" class="tsd-kind-icon">Move<wbr>Mem<wbr>Modes</a>
 					</li>
-					<li class=" tsd-kind-enum">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-enum">
 						<a href="movewordmodes.html" class="tsd-kind-icon">Move<wbr>Word<wbr>Modes</a>
+						<ul>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="movewordmodes.html#g_mw_clip" class="tsd-kind-icon">G_<wbr>MW_<wbr>CLIP</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="movewordmodes.html#g_mw_fog" class="tsd-kind-icon">G_<wbr>MW_<wbr>FOG</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="movewordmodes.html#g_mw_forcemtx" class="tsd-kind-icon">G_<wbr>MW_<wbr>FORCEMTX</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="movewordmodes.html#g_mw_lightcol" class="tsd-kind-icon">G_<wbr>MW_<wbr>LIGHTCOL</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="movewordmodes.html#g_mw_matrix" class="tsd-kind-icon">G_<wbr>MW_<wbr>MATRIX</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="movewordmodes.html#g_mw_numlight" class="tsd-kind-icon">G_<wbr>MW_<wbr>NUMLIGHT</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="movewordmodes.html#g_mw_perspnorm" class="tsd-kind-icon">G_<wbr>MW_<wbr>PERSPNORM</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="movewordmodes.html#g_mw_segment" class="tsd-kind-icon">G_<wbr>MW_<wbr>SEGMENT</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-enum">
 						<a href="primaryvertex.html" class="tsd-kind-icon">Primary<wbr>Vertex</a>
 					</li>

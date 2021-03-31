@@ -78,6 +78,17 @@ export enum MatrixParams {
     , G_MTX_PROJECTION = 0x04
 };
 
+export enum MoveWordModes {
+    G_MW_MATRIX = 0x00
+    , G_MW_NUMLIGHT = 0x02
+    , G_MW_CLIP = 0x04
+    , G_MW_SEGMENT = 0x06
+    , G_MW_FOG = 0x08
+    , G_MW_LIGHTCOL = 0x0A
+    , G_MW_FORCEMTX = 0x0C
+    , G_MW_PERSPNORM = 0x0E
+}
+
 export enum MoveMemModes {
     G_MV_MMTX = 2
     , G_MV_PMTX = 6
@@ -85,7 +96,7 @@ export enum MoveMemModes {
     , G_MV_LIGHT = 10
     , G_MV_POINT = 12
     , G_MV_MATRIX = 14
-}
+};
 
 export enum GeometryModes {
     G_ZBUFFER = 0b00000000000000000000000000000001
@@ -560,26 +571,48 @@ export function gsSPMatrix(mtxaddr: number, params: MatrixParams): Buffer {
     return command;
 }
 
-/*
-
-TODO:
-G_MOVEWORD
-gsMoveWd
-gsSPSegment
-
-*/
+/**
+ * Loads a new 32-bit value data to the location specified by index and offset.
+ * 
+ * index is an index into a table of DMEM addresses. The enumerations given for this for F3DEX2 are:
+ * 
+ * - `G_MW_MATRIX`
+ * - `G_MW_NUMLIGHT`
+ * - `G_MW_CLIP`
+ * - `G_MW_SEGMENT`
+ * - `G_MW_FOG`
+ * - `G_MW_LIGHTCOL`
+ * - `G_MW_FORCEMTX`
+ * - `G_MW_PERSPNORM`
+ * 
+ * The offset is, as the name suggests, an offset from the address that index resolves to.
+ * @todo Enumeration for offset?
+ * @todo gsSPSegment?
+ * @param index Index into DMEM pointer table(?)
+ * @param offset Offset from the indexed base address(?)
+ * @param data New 32-bit value
+ * @returns Display list command
+ */
+export function gsMoveWd(index: MoveWordModes, offset: number, data: number): Buffer {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_MOVEWORD);
+    command.writeUInt8(index, 1);
+    command.writeUInt16BE(offset, 2);
+    command.writeUInt32BE(data, 4);
+    return command;
+}
 
 /**
  * Transfers a block of data from RDRAM to DMEM, in 8 byte chunks. `Size` is the number of bytes to copy from RDRAM address, placing it at the DMEM location pointed to by `index`, plus `offset`.
  * 
  * `index` is an index into a table of addresses of DMEM. Given enumerations for index are:
  * 
- * - `G_MV_MMTX` = 2
- * - `G_MV_PMTX` = 6
- * - `G_MV_VIEWPORT` = 8
- * - `G_MV_LIGHT` = 10
- * - `G_MV_POINT` = 12
- * - `G_MV_MATRIX` = 14
+ * - `G_MV_MMTX`
+ * - `G_MV_PMTX`
+ * - `G_MV_VIEWPORT`
+ * - `G_MV_LIGHT`
+ * - `G_MV_POINT`
+ * - `G_MV_MATRIX`
  * 
  * Note however that only `VIEWPORT`, `LIGHT`, and `MATRIX` are used by any of the macros given to programmers.
  * 
@@ -592,7 +625,7 @@ gsSPSegment
  * @param address RAM address of memory
  * @returns Display list command
  */
-export function gsMoveMem(size: number, index: number, offset: number, address: number): Buffer {
+export function gsMoveMem(size: number, index: MoveMemModes, offset: number, address: number): Buffer {
     let command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_MOVEMEM);
     command.writeUInt8(((size - 1) / 8 & 0x1F) << 3, 1);
