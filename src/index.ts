@@ -771,6 +771,10 @@ export function gsSPBranchList(dl: number): Buffer {
     return G_DL(DisplayListMode.BRANCH, dl);
 }
 
+/**
+ * Ends the current display list. At this point execution will return to the address of the top of the display list address stack. If there are no addresses in this stack, that's the end of graphics processing, until the RCP is asked to do more.
+ * @returns Display list command
+ */
 export function gsSPEndDisplayList(): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_ENDDL);
