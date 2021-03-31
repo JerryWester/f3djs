@@ -456,3 +456,36 @@ export function gsSPDma_io(flag: DmaIOFlag, dmem: number, dram: number, size: nu
     command.writeUInt32BE(dram, 4);
     return command;
 }
+
+/**
+ * This opcode enables or disables various tile descriptors, and sets the maximum number of mipmap levels and scaling factor for the texture.
+ * 
+ * `tile` is the tile descriptor number being modified by the opcode. `level` is the maximum number of mipmap levels minus one, (so e.g. a level of zero means at most one mipmap). The `scaleS` and `scaleT` parameters set scaling factors for the tile descriptor.
+ * 
+ * If `on` is set to 0, then the tile descriptor is disabled, and none of the other parameters are actually applied. If `on` is set to 1, then the tile descriptor is enabled and the previously-mentioned parameters are applied.
+ * 
+ * Note that `scaleS` and `scaleT` are binary fractional values with an implied 0.; for example, a `scaleS` of 0x8000 means 0b0.1000_0000_0000_0000, or 0d0.5. 
+ * @param {number} level Maximum number of mipmap levels aside from the first
+ * @param {number} tile Tile descriptor number
+ * @param {number} on Decides whether to turn the given texture on or off
+ * @param {number} scaleS Scaling factor for the S-axis (horizontal)
+ * @param {number} scaleT Scaling factor for the T-axis (vertical)
+ * @returns {Buffer} Display list command
+ */
+export function gsSPTexture(scaleS: number, scaleT: number, level: number, tile: number, on: number): Buffer {
+    let command = Buffer.alloc(8);
+    // D700____ sssstttt
+    // ____ -> 00LL Lddd nnnn nnn0
+
+    command.writeUInt8(DisplayOpcodes.G_TEXTURE);
+    command.writeUInt16BE(
+        ((level & 0x7) << 11) |
+        ((tile & 0x7) << 8) |
+        ((on & 0x7F) << 1),
+        2
+    );
+    command.writeUInt16BE(scaleS, 4);
+    command.writeUInt16BE(scaleT, 6);
+
+    return command;
+}
