@@ -550,3 +550,12 @@ export function gsSPMatrix(mtxaddr: number, params: MatrixParams): Buffer {
     command.writeUInt8((params & 0xFF) ^ MatrixParams.G_MTX_PUSH);
     return command;
 }
+
+/*
+
+TODO:
+G_MOVEWORD
+gsMoveWd
+gsSPSegment
+
+*/
