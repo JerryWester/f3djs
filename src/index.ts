@@ -674,6 +674,17 @@ export function gsSPSegment(segment: MoveWordObjectModes, base: number): Buffer 
 }
 
 /**
+ * Wrapper for `gsMoveWd`.
+ * @todo Document this better.
+ * @param where Where
+ * @param num Address
+ * @returns Display list command
+ */
+export function gsSPInsertMatrix(where: MoveWordObjectModes, num: number): Buffer {
+    return gsMoveWd(MoveWordIndexModes.G_MW_MATRIX, where, num);
+}
+
+/**
  * Transfers a block of data from RDRAM to DMEM, in 8 byte chunks. `Size` is the number of bytes to copy from RDRAM address, placing it at the DMEM location pointed to by `index`, plus `offset`.
  * 
  * `index` is an index into a table of addresses of DMEM. Given enumerations for index are:
