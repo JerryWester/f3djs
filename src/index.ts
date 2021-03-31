@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // F3DZEX2
 export enum DisplayOpcodes {
     G_NOOP = 0x00
@@ -53,7 +54,7 @@ export enum DisplayOpcodes {
     , G_SETTIMG = 0xFD
     , G_SETZIMG = 0xFE
     , G_SETCIMG = 0xFF
-};
+}
 
 export enum ModifyVtxParams {
     G_MWO_POINT_RGBA = 0x10
@@ -76,7 +77,7 @@ export enum MatrixParams {
     , G_MTX_LOAD = 0x02
     , G_MTX_MODELVIEW = 0x00
     , G_MTX_PROJECTION = 0x04
-};
+}
 
 export enum MoveWordIndexModes {
     G_MW_MATRIX = 0x00
@@ -87,7 +88,7 @@ export enum MoveWordIndexModes {
     , G_MW_LIGHTCOL = 0x0A
     , G_MW_FORCEMTX = 0x0C
     , G_MW_PERSPNORM = 0x0E
-};
+}
 
 export enum MoveWordObjectModes {
     G_MWO_NUMLIGHT = 0x00
@@ -157,7 +158,7 @@ export enum MoveMemModes {
     , G_MV_LIGHT = 10
     , G_MV_POINT = 12
     , G_MV_MATRIX = 14
-};
+}
 
 export enum GeometryModes {
     G_ZBUFFER = 0b00000000000000000000000000000001
@@ -199,8 +200,8 @@ export function FTOFIX32(x: number): number {
  * @param zmax Maximum possible Z value
  * @returns Calculated zVal for gsSPBranchLessZraw
  */
-export function calcZVal(zval: number, flag: ZValFlag, near: number, far: number, zmin: number = 0x0, zmax: number = 0x3FF): number {
-    let part1 = flag == ZValFlag.G_BZ_PERSP
+export function calcZVal(zval: number, flag: ZValFlag, near: number, far: number, zmin = 0x0, zmax = 0x3FF): number {
+    const part1 = flag == ZValFlag.G_BZ_PERSP
         ? (1 - near / zval) / (1 - near / far)
         : (zval - near) / (far - near);
     return FTOFIX32(part1) * ((zmax - zmin) & ~1) + FTOFIX32(zmin);
@@ -211,8 +212,8 @@ export function calcZVal(zval: number, flag: ZValFlag, near: number, far: number
  * @param tag Pointer to a string tag
  * @returns Display list command
  */
-export function gsSPNoOp(tag: number = 0): Buffer {
-    let command = Buffer.alloc(8);
+export function gsSPNoOp(tag = 0): Buffer {
+    const command = Buffer.alloc(8);
     command.writeUInt32BE(tag, 4);
     return command;
 }
@@ -225,7 +226,7 @@ export function gsSPNoOp(tag: number = 0): Buffer {
  * @returns Display list command
  */
 export function gsSPVertex(vaddr: number, numv: number, vbidx: number): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_VTX);
     command.writeUInt16BE(numv << 4, 1);
     command.writeUInt8(((vbidx + numv) & 0x7F) << 1, 3);
@@ -250,7 +251,7 @@ export function gsSPVertex(vaddr: number, numv: number, vbidx: number): Buffer {
  * @returns Display list command
  */
 export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: number): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_MODIFYVTX);
     command.writeUInt8(where, 1);
     command.writeUInt16BE(vbidx * 2, 2);
@@ -267,7 +268,7 @@ export function gsSPModifyVertex(vbidx: number, where: ModifyVtxParams, val: num
  * @returns Display list command
  */
 export function gsSPCullDisplayList(vfirst: number, vlast: number): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_CULLDL);
     command.writeUInt16BE(vfirst, 2);
     command.writeUInt16BE(vlast, 6);
@@ -291,7 +292,7 @@ export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number): 
     // E1000000 dddddddd
     // 04aaabbb zzzzzzzz
 
-    let command = Buffer.alloc(16);
+    const command = Buffer.alloc(16);
 
     // E1000000
     command.writeUInt8(DisplayOpcodes.G_RDPHALF_1)
@@ -321,7 +322,7 @@ export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number): 
  * @returns Display list command
  */
 export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: PrimaryVertex): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_TRI1);
     switch (flag) {
         case PrimaryVertex.V0: {
@@ -362,7 +363,7 @@ export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: PrimaryV
  * @returns Display list command
  */
 export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: PrimaryVertex, v10: number, v11: number, v12: number, flag1: PrimaryVertex): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_TRI2);
     switch (flag0) {
         case PrimaryVertex.V0: {
@@ -421,7 +422,7 @@ export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: Pri
  * @returns Display list command
  */
 export function gsSPQuadrangle(v0: number, v1: number, v2: number, v3: number, flag: PrimaryVertex): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_QUAD);
     switch (flag) {
         case PrimaryVertex.V0: {
@@ -471,8 +472,8 @@ export function gsSPQuadrangle(v0: number, v1: number, v2: number, v3: number, f
  * Appears to be an explicitly reserved command.
  * @returns Display list command
  */
-export function G_SPECIAL_3(...unk: any[]): Buffer {
-    let command = Buffer.alloc(8);
+export function G_SPECIAL_3(...unk: unknown[]): Buffer {
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SPECIAL_3);
     return command;
 }
@@ -481,8 +482,8 @@ export function G_SPECIAL_3(...unk: any[]): Buffer {
  * Appears to be an explicitly reserved command.
  * @returns Display list command
  */
-export function G_SPECIAL_2(...unk: any[]): Buffer {
-    let command = Buffer.alloc(8);
+export function G_SPECIAL_2(...unk: unknown[]): Buffer {
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SPECIAL_2);
     return command;
 }
@@ -491,8 +492,8 @@ export function G_SPECIAL_2(...unk: any[]): Buffer {
  * Appears to be an explicitly reserved command.
  * @returns Display list command
  */
-export function G_SPECIAL_1(...unk: any[]): Buffer {
-    let command = Buffer.alloc(8);
+export function G_SPECIAL_1(...unk: unknown[]): Buffer {
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SPECIAL_1);
     return command;
 }
@@ -511,7 +512,7 @@ export function G_SPECIAL_1(...unk: any[]): Buffer {
  * @returns Display list command
  */
 export function gsSPDma_io(flag: DmaIOFlag, dmem: number, dram: number, size: number): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     // D6___sss rrrrrrrr
     // ___ -> fmmm mmmm mmm0
 
@@ -543,7 +544,7 @@ export function gsSPDma_io(flag: DmaIOFlag, dmem: number, dram: number, size: nu
  * @returns Display list command
  */
 export function gsSPTexture(scaleS: number, scaleT: number, level: number, tile: number, on: number): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     // D700____ sssstttt
     // ____ -> 00LL Lddd nnnn nnn0
 
@@ -574,7 +575,7 @@ export function gsSPTexture(scaleS: number, scaleT: number, level: number, tile:
  * @returns Display list command
  */
 export function gsSPPopMatrixN(which: MatrixParams, num: number): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_POPMTX);
     command.writeUInt8(0x38, 1);
     command.writeUInt8(0x02, 3);
@@ -597,7 +598,7 @@ export function gsSPPopMatrixN(which: MatrixParams, num: number): Buffer {
  * @returns Display list command
  */
 export function gsSPGeometryMode(clearbits: number, setbits: number): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     command.writeUInt32BE(~(clearbits & 0xFFFFFF));
     command.writeUInt8(DisplayOpcodes.G_GEOMETRYMODE);
     command.writeUInt32BE(setbits, 4);
@@ -625,7 +626,7 @@ export function gsSPGeometryMode(clearbits: number, setbits: number): Buffer {
  * @returns Display list command
  */
 export function gsSPMatrix(mtxaddr: number, params: MatrixParams): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_MTX);
     command.writeUInt8(0x38, 1);
     command.writeUInt8((params & 0xFF) ^ MatrixParams.G_MTX_PUSH);
@@ -653,7 +654,7 @@ export function gsSPMatrix(mtxaddr: number, params: MatrixParams): Buffer {
  * @returns Display list command
  */
 export function gsMoveWd(index: MoveWordIndexModes, offset: MoveWordObjectModes, data: number): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_MOVEWORD);
     command.writeUInt8(index, 1);
     command.writeUInt16BE(offset, 2);
@@ -696,7 +697,7 @@ export function gsSPSegment(segment: MoveWordObjectModes, base: number): Buffer 
  * @returns Display list command
  */
 export function gsMoveMem(size: number, index: MoveMemModes, offset: number, address: number): Buffer {
-    let command = Buffer.alloc(8);
+    const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_MOVEMEM);
     command.writeUInt8(((size - 1) / 8 & 0x1F) << 3, 1);
     command.writeUInt8(offset / 8, 2);
