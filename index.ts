@@ -489,3 +489,25 @@ export function gsSPTexture(scaleS: number, scaleT: number, level: number, tile:
 
     return command;
 }
+
+/**
+ * Pops num matrices from the stack specified by which
+ * 
+ * which can be either of:
+ * 
+ * - G_MTX_MODELVIEW
+ * - G_MTX_PROJECTION
+ * 
+ * However, since the projection matrix "stack" isn't actually a stack, the which parameter is silently ignored and always assumes the modelview matrix stack. 
+ * @param {number} num The number of matrices to pop
+ * @param {MatrixParams} which Specifies which matrix stack to pop from
+ * @returns {Buffer} Display list command
+ */
+export function gsSPPopMatrixN(which: MatrixParams, num: number): Buffer {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_POPMTX);
+    command.writeUInt8(0x38, 1);
+    command.writeUInt8(0x02, 3);
+    command.writeUInt32BE(num * 64);
+    return command;
+}
