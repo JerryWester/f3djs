@@ -78,6 +78,15 @@ export enum MatrixParams {
     , G_MTX_PROJECTION = 0x04
 };
 
+export enum MoveMemModes {
+    G_MV_MMTX = 2
+    , G_MV_PMTX = 6
+    , G_MV_VIEWPORT = 8
+    , G_MV_LIGHT = 10
+    , G_MV_POINT = 12
+    , G_MV_MATRIX = 14
+}
+
 export enum GeometryModes {
     G_ZBUFFER = 0b00000000000000000000000000000001
     , G_SHADE = 0b00000000000000000000000000000100
@@ -541,7 +550,7 @@ export function gsSPGeometryMode(clearbits: number, setbits: number): Buffer {
  * `MODELVIEW` selects the modelview matrix stack (meaning the new matrix is a modelview matrix), while `PROJECTION` refers to the projection matrix "stack". Since the projection matrix "stack" is not actually a stack, rather a single matrix, the `PUSH` option is always ignored for new projection matrices. 
  * @param params Parameters controlling nature of matrix addition
  * @param mtxaddr RAM address of new matrix
- * @returns 
+ * @returns Display list command
  */
 export function gsSPMatrix(mtxaddr: number, params: MatrixParams): Buffer {
     let command = Buffer.alloc(8);
@@ -559,3 +568,36 @@ gsMoveWd
 gsSPSegment
 
 */
+
+/**
+ * Transfers a block of data from RDRAM to DMEM, in 8 byte chunks. `Size` is the number of bytes to copy from RDRAM address, placing it at the DMEM location pointed to by `index`, plus `offset`.
+ * 
+ * `index` is an index into a table of addresses of DMEM. Given enumerations for index are:
+ * 
+ * - `G_MV_MMTX` = 2
+ * - `G_MV_PMTX` = 6
+ * - `G_MV_VIEWPORT` = 8
+ * - `G_MV_LIGHT` = 10
+ * - `G_MV_POINT` = 12
+ * - `G_MV_MATRIX` = 14
+ * 
+ * Note however that only `VIEWPORT`, `LIGHT`, and `MATRIX` are used by any of the macros given to programmers.
+ * 
+ * `offset` is, as the name would suggest, an offset from the address index resolves to. This could be anything, though a couple enumerations are provided.
+ * 
+ * Also note that the function `gsMoveMem` is imaginary: all of the macros that use this opcode do so directly, as opposed to going through another function. Since no general macro exists for this opcode, `gsMoveMem` was invented for illustrative purposes. 
+ * @param size Size in bytes of memory to be moved
+ * @param offset Offset from indexed base address
+ * @param index Index into table of DMEM addresses
+ * @param address RAM address of memory
+ * @returns Display list command
+ */
+export function gsMoveMem(size: number, index: number, offset: number, address: number): Buffer {
+    let command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_MOVEMEM);
+    command.writeUInt8(((size - 1) / 8 & 0x1F) << 3, 1);
+    command.writeUInt8(offset / 8, 2);
+    command.writeUInt8(index, 3);
+    command.writeUInt32BE(address, 4);
+    return command;
+}

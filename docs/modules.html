@@ -69,6 +69,7 @@
 								<li class="tsd-kind-enum"><a href="enums/geometrymodes.html" class="tsd-kind-icon">Geometry<wbr>Modes</a></li>
 								<li class="tsd-kind-enum"><a href="enums/matrixparams.html" class="tsd-kind-icon">Matrix<wbr>Params</a></li>
 								<li class="tsd-kind-enum"><a href="enums/modifyvtxparams.html" class="tsd-kind-icon">Modify<wbr>Vtx<wbr>Params</a></li>
+								<li class="tsd-kind-enum"><a href="enums/movememmodes.html" class="tsd-kind-icon">Move<wbr>Mem<wbr>Modes</a></li>
 								<li class="tsd-kind-enum"><a href="enums/primaryvertex.html" class="tsd-kind-icon">Primary<wbr>Vertex</a></li>
 								<li class="tsd-kind-enum"><a href="enums/zvalflag.html" class="tsd-kind-icon">ZVal<wbr>Flag</a></li>
 							</ul>
@@ -81,6 +82,7 @@
 								<li class="tsd-kind-function"><a href="modules.html#g_special_2" class="tsd-kind-icon">G_<wbr>SPECIAL_<wbr>2</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#g_special_3" class="tsd-kind-icon">G_<wbr>SPECIAL_<wbr>3</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#calczval" class="tsd-kind-icon">calcZVal</a></li>
+								<li class="tsd-kind-function"><a href="modules.html#gsmovemem" class="tsd-kind-icon">gs<wbr>Move<wbr>Mem</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#gssp1triangle" class="tsd-kind-icon">gsSP1<wbr>Triangle</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#gssp2triangles" class="tsd-kind-icon">gsSP2<wbr>Triangles</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#gsspbranchlesszraw" class="tsd-kind-icon">gsSPBranch<wbr>Less<wbr>Zraw</a></li>
@@ -111,7 +113,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L104">index.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L113">index.ts:113</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -134,7 +136,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L413">index.ts:413</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L422">index.ts:422</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -163,7 +165,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L403">index.ts:403</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L412">index.ts:412</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -192,7 +194,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L393">index.ts:393</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L402">index.ts:402</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -221,7 +223,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L121">index.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L130">index.ts:130</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -278,6 +280,68 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="gsmovemem" class="tsd-anchor"></a>
+					<h3>gs<wbr>Move<wbr>Mem</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">gs<wbr>Move<wbr>Mem<span class="tsd-signature-symbol">(</span>size<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, offset<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L595">index.ts:595</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Transfers a block of data from RDRAM to DMEM, in 8 byte chunks. <code>Size</code> is the number of bytes to copy from RDRAM address, placing it at the DMEM location pointed to by <code>index</code>, plus <code>offset</code>.</p>
+								</div>
+								<p><code>index</code> is an index into a table of addresses of DMEM. Given enumerations for index are:</p>
+								<ul>
+									<li><code>G_MV_MMTX</code> = 2</li>
+									<li><code>G_MV_PMTX</code> = 6</li>
+									<li><code>G_MV_VIEWPORT</code> = 8</li>
+									<li><code>G_MV_LIGHT</code> = 10</li>
+									<li><code>G_MV_POINT</code> = 12</li>
+									<li><code>G_MV_MATRIX</code> = 14</li>
+								</ul>
+								<p>Note however that only <code>VIEWPORT</code>, <code>LIGHT</code>, and <code>MATRIX</code> are used by any of the macros given to programmers.</p>
+								<p><code>offset</code> is, as the name would suggest, an offset from the address index resolves to. This could be anything, though a couple enumerations are provided.</p>
+								<p>Also note that the function <code>gsMoveMem</code> is imaginary: all of the macros that use this opcode do so directly, as opposed to going through another function. Since no general macro exists for this opcode, <code>gsMoveMem</code> was invented for illustrative purposes.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>size: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Size in bytes of memory to be moved</p>
+									</div>
+								</li>
+								<li>
+									<h5>index: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Index into table of DMEM addresses</p>
+									</div>
+								</li>
+								<li>
+									<h5>offset: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Offset from indexed base address</p>
+									</div>
+								</li>
+								<li>
+									<h5>address: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>RAM address of memory</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
+							<p>Display list command</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="gssp1triangle" class="tsd-anchor"></a>
 					<h3>gsSP1<wbr>Triangle</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -287,7 +351,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L242">index.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L251">index.ts:251</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -339,7 +403,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L283">index.ts:283</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L292">index.ts:292</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -415,7 +479,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L209">index.ts:209</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L218">index.ts:218</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -462,7 +526,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L188">index.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L197">index.ts:197</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -501,7 +565,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L432">index.ts:432</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L441">index.ts:441</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -556,7 +620,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L518">index.ts:518</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L527">index.ts:527</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -598,7 +662,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L546">index.ts:546</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L555">index.ts:555</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -632,6 +696,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
+							<p>Display list command</p>
 						</li>
 					</ul>
 				</section>
@@ -645,7 +710,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L171">index.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L180">index.ts:180</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -697,7 +762,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L133">index.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L142">index.ts:142</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -729,7 +794,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L495">index.ts:495</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L504">index.ts:504</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -773,7 +838,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L342">index.ts:342</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L351">index.ts:351</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -834,7 +899,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L464">index.ts:464</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L473">index.ts:473</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -893,7 +958,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/44823a4/src/index.ts#L146">index.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/2910307/src/index.ts#L155">index.ts:155</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -955,6 +1020,9 @@
 						<a href="enums/modifyvtxparams.html" class="tsd-kind-icon">Modify<wbr>Vtx<wbr>Params</a>
 					</li>
 					<li class=" tsd-kind-enum">
+						<a href="enums/movememmodes.html" class="tsd-kind-icon">Move<wbr>Mem<wbr>Modes</a>
+					</li>
+					<li class=" tsd-kind-enum">
 						<a href="enums/primaryvertex.html" class="tsd-kind-icon">Primary<wbr>Vertex</a>
 					</li>
 					<li class=" tsd-kind-enum">
@@ -974,6 +1042,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#calczval" class="tsd-kind-icon">calcZVal</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#gsmovemem" class="tsd-kind-icon">gs<wbr>Move<wbr>Mem</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#gssp1triangle" class="tsd-kind-icon">gsSP1<wbr>Triangle</a>
