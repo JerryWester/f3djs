@@ -430,8 +430,8 @@ export function G_SPECIAL_1(...unk: any[]): Buffer {
 /**
  * Does a DMA between DMEM/IMEM address dmem and DRAM address dram. size bytes are presumably transfered in the process. flag determines the type of transfer. Apparently:
  * 
- * - READ: Read from DMEM/IMEM to DRAM
- * - WRITE: Write DRAM to DMEM/IMEM
+ * - `READ`: Read from DMEM/IMEM to DRAM
+ * - `WRITE`: Write DRAM to DMEM/IMEM
  * 
  * The exact nature of this command is unclear, since none of this opcode's macros are documented, and the only available comment suggests this is a debugging tool only. Therefore, you should not expect to see this in production code.
  * @param {DmaIOFlag} flag Chooses between read or write
@@ -495,12 +495,12 @@ export function gsSPTexture(scaleS: number, scaleT: number, level: number, tile:
  * 
  * which can be either of:
  * 
- * - G_MTX_MODELVIEW
- * - G_MTX_PROJECTION
+ * - `G_MTX_MODELVIEW`
+ * - `G_MTX_PROJECTION`
  * 
  * However, since the projection matrix "stack" isn't actually a stack, the which parameter is silently ignored and always assumes the modelview matrix stack. 
  * @param {number} num The number of matrices to pop
- * @param {MatrixParams} which Specifies which matrix stack to pop from
+ * @param {MatrixParams} which Specifies which matrix stack to pop from (ignored, `G_MTX_MODELVIEW` default)
  * @returns {Buffer} Display list command
  */
 export function gsSPPopMatrixN(which: MatrixParams, num: number): Buffer {
