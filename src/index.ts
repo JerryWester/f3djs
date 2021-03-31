@@ -316,11 +316,8 @@ export function gsSPBranchLessZraw(newdl: number, vbidx: number, zval: number): 
 
     const command = Buffer.alloc(16);
 
-    // E1000000
-    command.writeUInt8(DisplayOpcodes.G_RDPHALF_1);
-
-    // dddddddd
-    command.writeUInt32BE(newdl, 4);
+    // E1000000 dddddddd
+    G_RDPHALF_1(newdl).copy(command);
 
     // 04aaabbb
     command.writeUInt32BE(((vbidx * 5) << 12) + (vbidx * 2), 8);
@@ -750,8 +747,7 @@ export function gsMoveMem(size: number, index: MoveMemModes, offset: number, add
  */
 export function gsSPLoadUcodeEx(tstart: number, dstart: number, dsize: number): Buffer {
     const command = Buffer.alloc(16);
-    command.writeUInt8(0xE1);
-    command.writeUInt32BE(dstart, 4);
+    G_RDPHALF_1(dstart).copy(command);
     command.writeUInt8(DisplayOpcodes.G_LOAD_UCODE, 8);
     command.writeUInt16BE(dsize, 10);
     command.writeUInt32BE(tstart, 12);
