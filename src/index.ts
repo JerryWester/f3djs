@@ -208,11 +208,19 @@ export function calcZVal(zval: number, flag: ZValFlag, near: number, far: number
 }
 
 /**
- * Does nothing except stall the RDP for a few cycles. Typically used in debugging. In the Z64 games (specifically the debug builds), `tag` is set to a pointer to a string commenting the display list, which would then likely be output when calling the SDK's guParseGbiDL function. 
+ * Does nothing except stall the RDP for a few cycles. Typically used in debugging.
+ * @returns Display list command
+ */
+export function gsDPNoOp(): Buffer {
+    return Buffer.alloc(8);
+}
+
+/**
+ * Does nothing except stall the RDP for a few cycles. Typically used in debugging. In the Z64 games (specifically the debug builds), `tag` is set to a pointer to a string commenting the display list, which would then likely be output when calling the SDK's guParseGbiDL function.
  * @param tag Pointer to a string tag
  * @returns Display list command
  */
-export function gsSPNoOp(tag = 0): Buffer {
+export function gsDPNoOpTag(tag: number): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt32BE(tag, 4);
     return command;
@@ -778,5 +786,15 @@ export function gsSPBranchList(dl: number): Buffer {
 export function gsSPEndDisplayList(): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_ENDDL);
+    return command;
+}
+
+/**
+ * Does nothing. Seemingly different from 00; judging by the names of this opcode and 00, this opcode stalls the RSP, whereas the other stalls the RDP.
+ * @returns Display list command
+ */
+export function gsSPNoOp(): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SPNOOP);
     return command;
 }
