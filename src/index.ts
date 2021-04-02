@@ -1160,3 +1160,93 @@ export function gsDPSetOtherMode(omodeH: number, omodeL: number): Buffer {
     command.writeUInt8(DisplayOpcodes.G_RDPSETOTHERMODE);
     return command;
 }
+
+export function gsDPLoadTLUTCmd(tile: number, count: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_LOADTLUT);
+    return command;
+}
+
+export function gsDPSetTileSize(tile: number, uls: number, ult: number, lrs: number, lrt: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETTILESIZE);
+    return command;
+}
+
+export function gsDPLoadBlock(tile: number, uls: number, ult: number, texels: number, dxt: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_LOADBLOCK);
+    return command;
+}
+
+export function gsDPLoadTile(tile: number, uls: number, ult: number, lrs: number, lrt: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_LOADTILE);
+    return command;
+}
+
+export function gsDPSetTile(fmt: number, siz: number, line: number, tmem: number, tile: number, palette: number, cmT: number, maskT: number, shiftT: number, cmS: number, maskS: number, shiftS: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETTILE);
+    return command;
+}
+
+export function gsDPFillRectangle(ulx: number, uly: number, lrx: number, lry: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_FILLRECT);
+    return command;
+}
+
+export function gsDPSetFillColor(color: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETFILLCOLOR);
+    return command;
+}
+
+export function gsDPSetFogColor(R: number, G: number, B: number, A: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETFOGCOLOR);
+    return command;
+}
+
+export function gsDPBlendColor(R: number, G: number, B: number, A: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETBLENDCOLOR);
+    return command;
+}
+
+export function gsDPSetPrimColor(minlevel: number, lodfrac: number, R: number, G: number, B: number, A: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETPRIMCOLOR);
+    return command;
+}
+
+export function gsDPSetEnvColor(R: number, G: number, B: number, A: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETENVCOLOR);
+    return command;
+}
+
+export function gsDPSetCombineLERP(a0: number, b0: number, c0: number, d0: number, Aa0: number, Ab0: number, Ac0: number, Ad0: number, a1: number, b1: number, c1: number, d1: number, Aa1: number, Ab1: number, Ac1: number, Ad1: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETCOMBINE);
+    return command;
+}
+
+export function gsDPSetTextureImage(fmt: number, siz: number, width: number, imgaddr: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETTIMG);
+    return command;
+}
+
+export function gsDPSetDepthImage(imgaddr: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETZIMG);
+    return command;
+}
+
+export function gsDPSetColorImage(fmt: number, siz: number, width: number, imgaddr: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETCIMG);
+    return command;
+}
