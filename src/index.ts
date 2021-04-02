@@ -184,17 +184,10 @@ export enum ShiftModes {
     , G_MDSFT_PIPELINE = 23
 }
 
-export enum GeometryModes {
-    G_ZBUFFER = 0b00000000000000000000000000000001
-    , G_SHADE = 0b00000000000000000000000000000100
-    , G_CULL_FRONT = 0b00000000000000000000001000000000
-    , G_CULL_BACK = 0b00000000000000000000010000000000
-    , G_FOG = 0b00000000000000010000000000000000
-    , G_LIGHTING = 0b00000000000000100000000000000000
-    , G_TEXTURE_GEN = 0b00000000000001000000000000000000
-    , G_TEXTURE_GEN_LINEAR = 0b00000000000010000000000000000000
-    , G_SHADING_SMOOTH = 0b00000000001000000000000000000000
-    , G_CLIPPING = 0b00000000100000000000000000000000
+export enum ScissorMode {
+    G_SC_NON_INTERLACE = 0
+    , G_SC_EVEN_INTERLACE = 2
+    , G_SC_ODD_INTERLACE = 3
 }
 
 export enum ZValFlag {
@@ -1107,5 +1100,31 @@ export function gsDPSetConvert(k0: number, k1: number, k2: number, k3: number, k
     );
     command.writeUInt8(DisplayOpcodes.G_SETCONVERT);
 
+    return command;
+}
+
+/**
+ * Sets the scissoring rectangle, with upper-left corner at `(ulx, uly)`, and lower-right corner at `(lrx, lry)`.
+ * 
+ * `NON_INTERLACE` draws all scanlines, while `EVEN` and `ODD` draw only even or odd scanlines, respectively.
+ * @param ulx Upper-left X coordinate of rectangle
+ * @param uly Upper-left Y coordinate of rectangle
+ * @param mode Interpolation mode setting
+ * @param lrx Lower-right X coordinate of rectangle
+ * @param lry Lower-right Y coordinate of rectangle
+ * @returns Display list command
+ */
+export function gsDPSetScissor(mode: ScissorMode, ulx: number, uly: number, lrx: number, lry: number): Buffer {
+    const command = Buffer.alloc(8);
+
+    command.writeUInt32BE(
+        (ulx << 12) | uly
+    );
+    command.writeUInt32BE(
+        (lrx << 12) | lry,
+        4
+    );
+    command.writeUInt8(DisplayOpcodes.G_SETSCISSOR);
+    command.writeUInt8(mode << 4, 4);
     return command;
 }
