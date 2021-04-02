@@ -85,8 +85,12 @@
 								<li class="tsd-kind-function"><a href="modules.html#g_special_2" class="tsd-kind-icon">G_<wbr>SPECIAL_<wbr>2</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#g_special_3" class="tsd-kind-icon">G_<wbr>SPECIAL_<wbr>3</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#calczval" class="tsd-kind-icon">calcZVal</a></li>
+								<li class="tsd-kind-function"><a href="modules.html#gsdpfullsync" class="tsd-kind-icon">gsDPFull<wbr>Sync</a></li>
+								<li class="tsd-kind-function"><a href="modules.html#gsdploadsync" class="tsd-kind-icon">gsDPLoad<wbr>Sync</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#gsdpnoop" class="tsd-kind-icon">gsDPNo<wbr>Op</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#gsdpnooptag" class="tsd-kind-icon">gsDPNo<wbr>OpTag</a></li>
+								<li class="tsd-kind-function"><a href="modules.html#gsdppipesync" class="tsd-kind-icon">gsDPPipe<wbr>Sync</a></li>
+								<li class="tsd-kind-function"><a href="modules.html#gsdptilesync" class="tsd-kind-icon">gsDPTile<wbr>Sync</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#gsdpword" class="tsd-kind-icon">gsDPWord</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#gsmovemem" class="tsd-kind-icon">gs<wbr>Move<wbr>Mem</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#gsmovewd" class="tsd-kind-icon">gs<wbr>Move<wbr>Wd</a></li>
@@ -129,7 +133,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L576">index.ts:576</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L576">index.ts:576</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -158,7 +162,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L566">index.ts:566</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L566">index.ts:566</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -187,7 +191,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L556">index.ts:556</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L556">index.ts:556</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -216,7 +220,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L227">index.ts:227</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L227">index.ts:227</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -273,6 +277,52 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="gsdpfullsync" class="tsd-anchor"></a>
+					<h3>gsDPFull<wbr>Sync</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">gsDPFull<wbr>Sync<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L1025">index.ts:1025</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Generates an interrupt for the main CPU when the RDP has finished doing everything. This is typically the last opcode before the &quot;end display list&quot; opcode (<code>DF</code>).</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
+							<p>Display list command</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="gsdploadsync" class="tsd-anchor"></a>
+					<h3>gsDPLoad<wbr>Sync</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">gsDPLoad<wbr>Sync<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L991">index.ts:991</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This forces a wait for a texture to load, in order to synchronize with pixel rendering. This ensures that loading a new texture won&#39;t disrupt the rendering of primitives mid-render.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
+							<p>Display list command</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="gsdpnoop" class="tsd-anchor"></a>
 					<h3>gsDPNo<wbr>Op</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -282,7 +332,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L290">index.ts:290</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L290">index.ts:290</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -305,7 +355,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L299">index.ts:299</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L299">index.ts:299</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -328,6 +378,54 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="gsdppipesync" class="tsd-anchor"></a>
+					<h3>gsDPPipe<wbr>Sync</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">gsDPPipe<wbr>Sync<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L1005">index.ts:1005</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p><strong>This is not the &quot;start of display list&quot; command.</strong> There is no such thing.</p>
+								</div>
+								<p>Waits for the RDP to finish rendering its currently-rendering primitive, before updating RDP attributes. This avoids altering the rendering of a primitive in the middle of its render.</p>
+								<p>Historically, several model viewers have interpreted this command as somehow starting a display list. <strong>This is not true.</strong> Display lists have no command that starts a display list. To find display lists, the most accurate way would be to find the end display list command (DF) and work backwards, until an invalid display list command is encountered.</p>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
+							<p>Display list command</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="gsdptilesync" class="tsd-anchor"></a>
+					<h3>gsDPTile<wbr>Sync</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">gsDPTile<wbr>Sync<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L1015">index.ts:1015</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Forces a wait for rendering to finish before updating tile descriptor attributes, so as to not disrupt rendering of primitives mid-render.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
+							<p>Display list command</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="gsdpword" class="tsd-anchor"></a>
 					<h3>gsDPWord</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -337,7 +435,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L880">index.ts:880</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L880">index.ts:880</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -375,7 +473,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L791">index.ts:791</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L791">index.ts:791</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -437,7 +535,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L737">index.ts:737</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L737">index.ts:737</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -493,7 +591,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L405">index.ts:405</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L405">index.ts:405</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -545,7 +643,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L446">index.ts:446</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L446">index.ts:446</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -621,7 +719,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L375">index.ts:375</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L375">index.ts:375</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -668,7 +766,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L850">index.ts:850</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L850">index.ts:850</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -701,7 +799,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L354">index.ts:354</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L354">index.ts:354</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -740,7 +838,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L839">index.ts:839</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L839">index.ts:839</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -773,7 +871,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L595">index.ts:595</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L595">index.ts:595</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -828,7 +926,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L858">index.ts:858</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L858">index.ts:858</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -851,7 +949,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L681">index.ts:681</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L681">index.ts:681</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -893,7 +991,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L764">index.ts:764</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L764">index.ts:764</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -936,7 +1034,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L810">index.ts:810</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L810">index.ts:810</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -981,7 +1079,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L709">index.ts:709</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L709">index.ts:709</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1029,7 +1127,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L337">index.ts:337</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L337">index.ts:337</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1081,7 +1179,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L868">index.ts:868</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L868">index.ts:868</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1104,7 +1202,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L658">index.ts:658</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L658">index.ts:658</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1148,7 +1246,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L505">index.ts:505</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L505">index.ts:505</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1209,7 +1307,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L753">index.ts:753</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L753">index.ts:753</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1252,7 +1350,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L914">index.ts:914</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L914">index.ts:914</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1313,7 +1411,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L627">index.ts:627</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L627">index.ts:627</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1372,7 +1470,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L964">index.ts:964</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L964">index.ts:964</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1455,9 +1553,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L980">index.ts:980</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L983">index.ts:983</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This is similar to <code>gsSPTextureRectangle</code>, with the only difference being that the S and T coordinates of a texture are flipped in rendering, so that S coordinates are along the Y axis and T along the X axis. This essentially flips the texture about the diagonal line <code>(ulx,uly)</code>,<code>(lrx,lry)</code>.</p>
+								</div>
+								<p><code>dtdx</code> describes the change in T over the change in X, and <code>dsdy</code> describes change in S over change in Y.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -1530,7 +1634,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f7739b7/src/index.ts#L312">index.ts:312</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ccdc290/src/index.ts#L312">index.ts:312</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1625,10 +1729,22 @@
 						<a href="modules.html#calczval" class="tsd-kind-icon">calcZVal</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="modules.html#gsdpfullsync" class="tsd-kind-icon">gsDPFull<wbr>Sync</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#gsdploadsync" class="tsd-kind-icon">gsDPLoad<wbr>Sync</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="modules.html#gsdpnoop" class="tsd-kind-icon">gsDPNo<wbr>Op</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#gsdpnooptag" class="tsd-kind-icon">gsDPNo<wbr>OpTag</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#gsdppipesync" class="tsd-kind-icon">gsDPPipe<wbr>Sync</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#gsdptilesync" class="tsd-kind-icon">gsDPTile<wbr>Sync</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#gsdpword" class="tsd-kind-icon">gsDPWord</a>

@@ -993,3 +993,37 @@ export function gsDPLoadSync(): Buffer {
     command.writeUInt8(DisplayOpcodes.G_RDPLOADSYNC);
     return command;
 }
+
+/**
+ * **This is not the "start of display list" command.** There is no such thing.
+ * 
+ * Waits for the RDP to finish rendering its currently-rendering primitive, before updating RDP attributes. This avoids altering the rendering of a primitive in the middle of its render.
+ * 
+ * Historically, several model viewers have interpreted this command as somehow starting a display list. **This is not true.** Display lists have no command that starts a display list. To find display lists, the most accurate way would be to find the end display list command (DF) and work backwards, until an invalid display list command is encountered. 
+ * @returns Display list command
+ */
+export function gsDPPipeSync(): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_RDPPIPESYNC);
+    return command;
+}
+
+/**
+ * Forces a wait for rendering to finish before updating tile descriptor attributes, so as to not disrupt rendering of primitives mid-render.
+ * @returns Display list command
+ */
+export function gsDPTileSync(): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_RDPTILESYNC);
+    return command;
+}
+
+/**
+ * Generates an interrupt for the main CPU when the RDP has finished doing everything. This is typically the last opcode before the "end display list" opcode (`DF`).
+ * @returns Display list command
+ */
+export function gsDPFullSync(): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_RDPFULLSYNC);
+    return command;
+}
