@@ -247,18 +247,18 @@ function G_RDPHALF_2(wordlo: number): Buffer {
 
 /**
  * @param val Decimal point value
- * @param s Significand, or the integer before the period (i.e. the `10` in `10.5`)
- * @param e Exponent, or the integer after the period (i.e. the `5` in `10.5`)
+ * @param s Significand, or the integer before the decimal point (i.e. the `10` in `10.5`)
+ * @param e Exponent, or the integer after the decimal point (i.e. the `5` in `10.5`)
  * @returns Signed fixed-point number
  */
 function sFIXED_POINT(val: number, s: number, e: number): number {
-    const eee = Math.pow(2, e);
-    const max = (Math.pow(2, s) - 1) + ((eee - 1) / eee);
+    const exp = Math.pow(2, e);
+    const max = (Math.pow(2, s) - 1) + ((exp - 1) / exp);
     if (val >= -Math.pow(2, s) && val < max) {
         const bits = 1 + s + e;
         const max_val = Math.pow(2, bits);
         const part1 = (Math.floor(val) + max_val) % max_val;
-        const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * eee);
+        const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * exp);
         return (part1 << e) | part2;
     } else {
         throw `Error: value must be between ${-Math.pow(2, s)} and ${max}. Received ${val}`;
@@ -267,16 +267,16 @@ function sFIXED_POINT(val: number, s: number, e: number): number {
 
 /**
  * @param val Decimal point value
- * @param s Significand, or the integer before the period (i.e. the `10` in `10.2`)
- * @param e Exponent, or the integer after the period (i.e. the `2` in `10.2`)
+ * @param s Significand, or the integer before the decimal point (i.e. the `10` in `10.2`)
+ * @param e Exponent, or the integer after the decimal point (i.e. the `2` in `10.2`)
  * @returns Unsigned fixed-point number
  */
 function uFIXED_POINT(val: number, s: number, e: number): number {
-    const eee = Math.pow(2, e);
-    const max = (Math.pow(2, s) - 1) + ((eee - 1) / eee);
+    const exp = Math.pow(2, e);
+    const max = (Math.pow(2, s) - 1) + ((exp - 1) / exp);
     if (val >= 0 && val < max) {
         const part1 = Math.floor(val);
-        const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * eee);
+        const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * exp);
         return (part1 << e) | part2;
     } else {
         throw `Error: value must be between 0 and ${max}. Received ${val}`;
