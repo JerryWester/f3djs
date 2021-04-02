@@ -920,6 +920,28 @@ export function gsSPSetOtherMode(mode: OtherModes, shift: ShiftModes, length: nu
     return command;
 }
 
+function G_TEXRECT(mode: DisplayOpcodes, ulx: number, uly: number, lrx: number, lry: number, tile: number, uls: number, ult: number, dsdx: number, dtdy: number): Buffer {
+    const command = Buffer.alloc(24);
+    command.writeUInt32BE(
+        (uFIXED_POINT(lrx, 10, 2) << 12) |
+        uFIXED_POINT(lry, 10, 2)
+    );
+    command.writeUInt8(mode);
+    command.writeUInt32BE(
+        (uFIXED_POINT(ulx, 10, 2) << 12) |
+        uFIXED_POINT(uly, 10, 2),
+        4
+    );
+    command.writeUInt8(tile, 4);
+    command.writeUInt8(DisplayOpcodes.G_RDPHALF_1, 8);
+    command.writeUInt16BE(sFIXED_POINT(uls, 10, 5), 12);
+    command.writeUInt16BE(sFIXED_POINT(ult, 10, 5), 14);
+    command.writeUInt8(DisplayOpcodes.G_RDPHALF_2, 16);
+    command.writeUInt16BE(sFIXED_POINT(dsdx, 5, 10), 20);
+    command.writeUInt16BE(sFIXED_POINT(dtdy, 5, 10), 22);
+    return command;
+}
+
 /**
  * Draws a textured rectangle from screen coordinates `(ulx,uly)` to `(lrx, lry)`, using the texture specified by `tile` to color the rectangle. The texture is positioned using `(uls, ult)` as the texture coordinate of `(ulx, uly)`, and changing the texture coordinates with the use of `dsdx` and `dtdy`.
  * 
@@ -940,23 +962,24 @@ export function gsSPSetOtherMode(mode: OtherModes, shift: ShiftModes, length: nu
  * @returns Display list command
  */
 export function gsSPTextureRectangle(ulx: number, uly: number, lrx: number, lry: number, tile: number, uls: number, ult: number, dsdx: number, dtdy: number): Buffer {
-    const command = Buffer.alloc(24);
-    command.writeUInt32BE(
-        (uFIXED_POINT(lrx, 10, 2) << 12) |
-        uFIXED_POINT(lry, 10, 2)
-    );
-    command.writeUInt8(DisplayOpcodes.G_TEXRECT);
-    command.writeUInt32BE(
-        (uFIXED_POINT(ulx, 10, 2) << 12) |
-        uFIXED_POINT(uly, 10, 2),
-        4
-    );
-    command.writeUInt8(tile, 4);
-    command.writeUInt8(DisplayOpcodes.G_RDPHALF_1, 8);
-    command.writeUInt16BE(sFIXED_POINT(uls, 10, 5), 12);
-    command.writeUInt16BE(sFIXED_POINT(ult, 10, 5), 14);
-    command.writeUInt8(DisplayOpcodes.G_RDPHALF_2, 16);
-    command.writeUInt16BE(sFIXED_POINT(dsdx, 5, 10), 20);
-    command.writeUInt16BE(sFIXED_POINT(dtdy, 5, 10), 22);
-    return command;
+    return G_TEXRECT(DisplayOpcodes.G_TEXRECT, ulx, uly, lrx, lry, tile, uls, ult, dsdx, dtdy);
+}
+
+/**
+ * This is similar to `gsSPTextureRectangle`, with the only difference being that the S and T coordinates of a texture are flipped in rendering, so that S coordinates are along the Y axis and T along the X axis. This essentially flips the texture about the diagonal line `(ulx,uly)`,`(lrx,lry)`.
+ * 
+ * `dtdx` describes the change in T over the change in X, and `dsdy` describes change in S over change in Y. 
+ * @param lrx Lower-right corner X coordinate
+ * @param lry Lower-right corner Y coordinate
+ * @param tile Tile descriptor to use for rectangle
+ * @param ulx Upper-left corner X coordinate
+ * @param uly Upper-left corner Y coordinate
+ * @param uls Texture S coordinate at upper-left corner
+ * @param ult Texture T coordinate at upper-left corner
+ * @param dsdx Change in S coordinate over change in X coordinate
+ * @param dtdy Change in T coordinate over change in Y coordinate
+ * @returns Display list command
+ */
+export function gsSPTextureRectangleFlip(ulx: number, uly: number, lrx: number, lry: number, tile: number, uls: number, ult: number, dsdx: number, dtdy: number): Buffer {
+    return G_TEXRECT(DisplayOpcodes.G_TEXRECTFLIP, ulx, uly, lrx, lry, tile, uls, ult, dsdx, dtdy);
 }
