@@ -1178,17 +1178,31 @@ export function gsDPLoadTLUTCmd(tile: number, count: number): Buffer {
 }
 
 /**
+ * Sets the size of the texture for tile descriptor `tile`, setting its upper-left corner at `(uls, ult)`, and its lower-right corner at `(lrs, lrt)`.
  * 
- * @param tile 
- * @param uls 
- * @param ult 
- * @param lrs 
- * @param lrt 
+ * When loading textures into TMEM, these values indicate the location of the first and last texel to load into TMEM. When rendering, the upper-left corner tells where in texture image space to start taking the texture from, while the lower-right corner applies in rendering only for clamping the texture.
+ * 
+ * `uls`, `ult`, `lrs`, and `lrt` are all in unsigned fixed-point 10.2 format, with range 0 ≤ x ≤ 1023.75 
+ * @param uls Upper-left texture coordinate, S-axis (must be between or equal to 0 and 1023.75)
+ * @param ult Upper-left texture coordinate, T-axis (must be between or equal to 0 and 1023.75)
+ * @param tile Tile descriptor to modify
+ * @param lrs Lower-right texture coordinate, S-axis (must be between or equal to 0 and 1023.75)
+ * @param lrt Lower-right texture coordinate, T-axis (must be between or equal to 0 and 1023.75)
  * @returns Display list command
  */
 export function gsDPSetTileSize(tile: number, uls: number, ult: number, lrs: number, lrt: number): Buffer {
     const command = Buffer.alloc(8);
+    command.writeUInt32BE(
+        (uls << 12) |
+        ult
+    );
     command.writeUInt8(DisplayOpcodes.G_SETTILESIZE);
+    command.writeUInt32BE(
+        (lrs << 12) |
+        lrt,
+        4
+    );
+    command.writeUInt8(tile, 4);
     return command;
 }
 
