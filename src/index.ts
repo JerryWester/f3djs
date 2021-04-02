@@ -1242,17 +1242,29 @@ export function gsDPLoadBlock(tile: number, uls: number, ult: number, texels: nu
 }
 
 /**
+ * Loads a rectangular portion of the texture being pointed to in DRAM for tile descriptor tile into TMEM. `(uls, ult)` specifies the upper-left corner of the texture in RAM, offset from its earlier-specified origin, and `(lrs, lrt)` specifies the lower-right corner of the texture to load.
  * 
- * @param tile 
- * @param uls 
- * @param ult 
- * @param lrs 
- * @param lrt 
+ * All coordinate values are in unsigned fixed-point 10.2 format (range `0 ≤ n ≤ 1023.75`).
+ * @param uls Upper-left corner of tile, S-axis (must be between or equal to 0 and 1023.75)
+ * @param ult Upper-left corner of tile, T-axis (must be between or equal to 0 and 1023.75)
+ * @param tile Tile descriptor being loaded to
+ * @param lrs Lower-right corner of tile, S-axis (must be between or equal to 0 and 1023.75)
+ * @param lrt Lower-right corner of tile, T-axis (must be between or equal to 0 and 1023.75)
  * @returns Display list command
  */
 export function gsDPLoadTile(tile: number, uls: number, ult: number, lrs: number, lrt: number): Buffer {
     const command = Buffer.alloc(8);
+    command.writeUInt32BE(
+        (uFIXED_POINT(uls, 10, 2) << 12) |
+        uFIXED_POINT(ult, 10, 2)
+    );
     command.writeUInt8(DisplayOpcodes.G_LOADTILE);
+    command.writeUInt32BE(
+        (uFIXED_POINT(lrs, 10, 2) << 12) |
+        uFIXED_POINT(lrt, 10, 2),
+        4
+    );
+    command.writeUInt8(tile, 4);
     return command;
 }
 
