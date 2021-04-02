@@ -160,10 +160,28 @@ export enum MoveMemModes {
     , G_MV_MATRIX = 14
 }
 
+export enum OtherModes {
+    G_SETOTHERMODE_L = 0xE2
+    , G_SETOTHERMODE_H = 0xE3
+}
+
 export enum ShiftModes {
     G_MDSFT_ALPHACOMPARE = 0
     , G_MDSFT_ZSRCSEL = 2
     , G_MDSFT_RENDERMODE = 3
+    , G_MDSFT_BLENDMASK = 0
+    , G_MDSFT_ALPHADITHER = 4
+    , G_MDSFT_RGBDITHER = 6
+    , G_MDSFT_COMBKEY = 8
+    , G_MDSFT_TEXTCONV = 9
+    , G_MDSFT_TEXTFILT = 12
+    , G_MDSFT_TEXTLUT = 14
+    , G_MDSFT_TEXTLOD = 16
+    , G_MDSFT_TEXTDETAIL = 17
+    , G_MDSFT_TEXTPERSP = 19
+    , G_MDSFT_CYCLETYPE = 20
+    , G_MDSFT_COLORDITHER = 22
+    , G_MDSFT_PIPELINE = 23
 }
 
 export enum GeometryModes {
@@ -826,7 +844,11 @@ export function gsDPWord(wordhi: number, wordlo: number): Buffer {
 }
 
 /**
- * Modifies various bits of the lower half of the RDP Other Modes word.
+ * Modifies various bits of the RDP Other Modes word.
+ * 
+ * If `mode` is `G_SETOTHERMODE_L`:
+ * 
+ * Modifies the various bits of the lower half of the RDP Other Modes word.
  * 
  * The operation performed by the opcode can be expressed as such, assuming `LO` to stand for the lower word of the RDP other modes:
  * 
@@ -835,15 +857,25 @@ export function gsDPWord(wordhi: number, wordlo: number): Buffer {
  * ```
  * 
  * Or, in English, it clears all the bits designated to be modified (determined by `shift` and `length`), and then sets those bits according to `data`. Important to note that `data` is preshifted. That is, it is up to the caller to shift `data` appropriately.
- * @param mode Does nothing. Set to 0xE2 by default
+ * 
+ * If `mode` is `G_SETOTHERMODE_H`:
+ * 
+ * Modifies the various bits of the high half of the RDP Other Modes word.
+ * 
+ * Like with `G_SETOTHERMODE_L`, `data` is preshifted, and the opcode's procedure can be formulized in the same way (where `HO` stands for the high word of the other modes):
+ * 
+ * ```javascript
+ *    HO =  HO & ~(((1 << length) - 1) << shift) | data
+ * ```
+ * @param mode Changes low or high word
  * @param shift Amount data is shifted by, or number of LSb of mode bits to be changed
  * @param length Size of data affected, in bits
  * @param data New bit settings to be applied
  * @returns Display list command
  */
-export function gsSPSetOtherMode(mode = 0xE2, shift: ShiftModes, length: number, data: number): Buffer {
+export function gsSPSetOtherMode(mode: OtherModes, shift: ShiftModes, length: number, data: number): Buffer {
     const command = Buffer.alloc(8);
-    command.writeUInt8(DisplayOpcodes.G_SETOTHERMODE_L);
+    command.writeUInt8(mode);
     command.writeUInt8(32 - shift - length, 2);
     command.writeUInt8(length - 1, 3);
     command.writeUInt32BE(data, 4);
