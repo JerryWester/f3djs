@@ -1144,3 +1144,19 @@ export function gsDPSetPrimDepth(z: number, dz: number): Buffer {
     command.writeInt16BE(dz, 6);
     return command;
 }
+
+/**
+ * Sets the other mode bits of the RDP. `omodeH` is similar to using `gsSPSetOtherMode` with `G_SETOTHERMODE_H`, and `omodeL` is similar to using `gsSPSetOtherMode` with `G_SETOTHERMODE_L`.
+ * 
+ * The difference from `gsSPSetOtherMode` is that this command sets all the bits in both halves of the RDP word (that is, command has no way of limiting what bits are actually affected). 
+ * @param omodeH Settings for other mode higher word bits
+ * @param omodeL Settings for other mode lower word bits
+ * @returns Display list command
+ */
+export function gsDPSetOtherMode(omodeH: number, omodeL: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt32BE(omodeH);
+    command.writeUInt32BE(omodeL, 4);
+    command.writeUInt8(DisplayOpcodes.G_RDPSETOTHERMODE);
+    return command;
+}
