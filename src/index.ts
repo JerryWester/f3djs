@@ -252,14 +252,16 @@ function G_RDPHALF_2(wordlo: number): Buffer {
  * @returns Signed fixed-point number
  */
 function sFIXED_POINT(val: number, s: number, e: number): number {
-    if (val >= -Math.pow(2, s) && val < Math.pow(2, s)) {
+    const eee = Math.pow(2, e);
+    const max = (Math.pow(2, s) - 1) + ((eee - 1) / eee);
+    if (val >= -Math.pow(2, s) && val < max) {
         const bits = 1 + s + e;
         const max_val = Math.pow(2, bits);
         const part1 = (Math.floor(val) + max_val) % max_val;
-        const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * Math.pow(2, e));
+        const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * eee);
         return (part1 << e) | part2;
     } else {
-        throw `Error: value must be between ${-Math.pow(2, s)} and ${Math.pow(2, s)}. Received ${val}`;
+        throw `Error: value must be between ${-Math.pow(2, s)} and ${max}. Received ${val}`;
     }
 }
 
@@ -270,12 +272,14 @@ function sFIXED_POINT(val: number, s: number, e: number): number {
  * @returns Unsigned fixed-point number
  */
 function uFIXED_POINT(val: number, s: number, e: number): number {
-    if (val >= 0 && val < Math.pow(2, s)) {
+    const eee = Math.pow(2, e);
+    const max = (Math.pow(2, s) - 1) + ((eee - 1) / eee);
+    if (val >= 0 && val < max) {
         const part1 = Math.floor(val);
-        const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * Math.pow(2, e));
+        const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * eee);
         return (part1 << e) | part2;
     } else {
-        throw `Error: value must be between 0 and ${Math.pow(2, s)}. Received ${val}`;
+        throw `Error: value must be between 0 and ${max}. Received ${val}`;
     }
 }
 
