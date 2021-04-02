@@ -1193,13 +1193,13 @@ export function gsDPLoadTLUTCmd(tile: number, count: number): Buffer {
 export function gsDPSetTileSize(tile: number, uls: number, ult: number, lrs: number, lrt: number): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt32BE(
-        (uls << 12) |
-        ult
+        (uFIXED_POINT(uls, 10, 2) << 12) |
+        uFIXED_POINT(ult, 10, 2)
     );
     command.writeUInt8(DisplayOpcodes.G_SETTILESIZE);
     command.writeUInt32BE(
-        (lrs << 12) |
-        lrt,
+        (uFIXED_POINT(lrs, 10, 2) << 12) |
+        uFIXED_POINT(lrt, 10, 2),
         4
     );
     command.writeUInt8(tile, 4);
@@ -1207,17 +1207,37 @@ export function gsDPSetTileSize(tile: number, uls: number, ult: number, lrs: num
 }
 
 /**
+ * Loads a texture into TMEM as one long line of data, starting at `(uls, ult)` in the currently chosen area of RAM, and loads `texels + 1` texels to TMEM for tile descriptor `tile`. `dxt` is used for determining when the next row starts.
  * 
- * @param tile 
- * @param uls 
- * @param ult 
- * @param texels 
- * @param dxt 
+ * `uls` and `ult` are unsigned fixed-point 10.2 numbers, with range `0 ≤ n ≤ 1023.75`.
+ * 
+ * `dxt` is an unsigned fixed-point 1.11 number, meaning a range of `0 ≤ n ≤ 1.999512`. This number has units, namely lines `words^-1`, where a "word" is 64 bits in length, and a line is one row of the texture. (It may be more easily understood when inverted to get its reciprocal: words/lines. `dxt` is the reciprocal of the number of 64-bit chunks it takes to get a row of texture.)
+ * 
+ * When loading an image through this function, an internal counter is incremented by `dxt` for every 64 bits of texture read. When this counter is high enough to turn over to the next integer value (e.g. 0.9 + 0.15 -> 1.05), the current line number is incremented. This is important as odd-numbered rows have their values swapped for interleaved access (the first line read in is line 0, and thus isn't swapped).
+ * 
+ * Note that if `dxt` is not a power of two (i.e. only one bit in the value is 'on'), then an error in the counter will accumulate over time, and eventually cause errors in determining where next lines are (when exactly this happens depends on the value and the type of texture being read in).
+ * 
+ * If the data has bee pre-interleaved by the game, then `dxt` will be 0, meaning the current line number never advances (and thus loading will never interleave data for you). 
+ * @param uls Upper-left corner of texture to load, S-axis (must be between or equal to 0 and 1023.75)
+ * @param ult Upper-left corner of texture to load, T-axis (must be between or equal to 0 and 1023.75)
+ * @param tile Tile descriptor to load into
+ * @param texels Number of texels to load to TMEM, minus one
+ * @param dxt Change in T-axis per scanline (must be between or equal to 0 and 1.999512)
  * @returns Display list command
  */
 export function gsDPLoadBlock(tile: number, uls: number, ult: number, texels: number, dxt: number): Buffer {
     const command = Buffer.alloc(8);
+    command.writeUInt32BE(
+        (uFIXED_POINT(uls, 10, 2) << 12) |
+        uFIXED_POINT(ult, 10, 2)
+    );
     command.writeUInt8(DisplayOpcodes.G_LOADBLOCK);
+    command.writeUInt32BE(
+        (texels << 12) |
+        uFIXED_POINT(dxt, 10, 2),
+        4
+    );
+    command.writeUInt8(tile, 4);
     return command;
 }
 

@@ -154,7 +154,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L569">index.ts:569</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L569">index.ts:569</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -183,7 +183,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L559">index.ts:559</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L559">index.ts:559</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -212,7 +212,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L549">index.ts:549</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L549">index.ts:549</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -241,7 +241,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L220">index.ts:220</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L220">index.ts:220</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -307,7 +307,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1308">index.ts:1308</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1328">index.ts:1328</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -340,7 +340,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1269">index.ts:1269</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1289">index.ts:1289</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -373,7 +373,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1018">index.ts:1018</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1018">index.ts:1018</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -396,25 +396,50 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1218">index.ts:1218</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1228">index.ts:1228</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Loads a texture into TMEM as one long line of data, starting at <code>(uls, ult)</code> in the currently chosen area of RAM, and loads <code>texels + 1</code> texels to TMEM for tile descriptor <code>tile</code>. <code>dxt</code> is used for determining when the next row starts.</p>
+								</div>
+								<p><code>uls</code> and <code>ult</code> are unsigned fixed-point 10.2 numbers, with range <code>0 ≤ n ≤ 1023.75</code>.</p>
+								<p><code>dxt</code> is an unsigned fixed-point 1.11 number, meaning a range of <code>0 ≤ n ≤ 1.999512</code>. This number has units, namely lines <code>words^-1</code>, where a &quot;word&quot; is 64 bits in length, and a line is one row of the texture. (It may be more easily understood when inverted to get its reciprocal: words/lines. <code>dxt</code> is the reciprocal of the number of 64-bit chunks it takes to get a row of texture.)</p>
+								<p>When loading an image through this function, an internal counter is incremented by <code>dxt</code> for every 64 bits of texture read. When this counter is high enough to turn over to the next integer value (e.g. 0.9 + 0.15 -&gt; 1.05), the current line number is incremented. This is important as odd-numbered rows have their values swapped for interleaved access (the first line read in is line 0, and thus isn&#39;t swapped).</p>
+								<p>Note that if <code>dxt</code> is not a power of two (i.e. only one bit in the value is &#39;on&#39;), then an error in the counter will accumulate over time, and eventually cause errors in determining where next lines are (when exactly this happens depends on the value and the type of texture being read in).</p>
+								<p>If the data has bee pre-interleaved by the game, then <code>dxt</code> will be 0, meaning the current line number never advances (and thus loading will never interleave data for you).</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>tile: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Tile descriptor to load into</p>
+									</div>
 								</li>
 								<li>
 									<h5>uls: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Upper-left corner of texture to load, S-axis (must be between or equal to 0 and 1023.75)</p>
+									</div>
 								</li>
 								<li>
 									<h5>ult: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Upper-left corner of texture to load, T-axis (must be between or equal to 0 and 1023.75)</p>
+									</div>
 								</li>
 								<li>
 									<h5>texels: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Number of texels to load to TMEM, minus one</p>
+									</div>
 								</li>
 								<li>
 									<h5>dxt: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Change in T-axis per scanline (must be between or equal to 0 and 1.999512)</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
@@ -432,7 +457,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L984">index.ts:984</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L984">index.ts:984</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -455,7 +480,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1172">index.ts:1172</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1172">index.ts:1172</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -494,7 +519,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1233">index.ts:1233</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1253">index.ts:1253</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -530,7 +555,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L283">index.ts:283</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L283">index.ts:283</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -553,7 +578,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L292">index.ts:292</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L292">index.ts:292</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -585,7 +610,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L998">index.ts:998</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L998">index.ts:998</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -610,7 +635,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1403">index.ts:1403</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1423">index.ts:1423</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -643,7 +668,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1364">index.ts:1364</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1384">index.ts:1384</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -712,7 +737,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1084">index.ts:1084</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1084">index.ts:1084</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -775,7 +800,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1389">index.ts:1389</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1409">index.ts:1409</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -799,7 +824,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1338">index.ts:1338</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1358">index.ts:1358</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -832,7 +857,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1280">index.ts:1280</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1300">index.ts:1300</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -856,7 +881,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1294">index.ts:1294</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1314">index.ts:1314</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -889,7 +914,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1038">index.ts:1038</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1038">index.ts:1038</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -953,7 +978,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1063">index.ts:1063</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1063">index.ts:1063</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -999,7 +1024,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1156">index.ts:1156</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1156">index.ts:1156</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1038,7 +1063,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1324">index.ts:1324</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1344">index.ts:1344</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1077,7 +1102,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1140">index.ts:1140</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1140">index.ts:1140</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1116,7 +1141,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1117">index.ts:1117</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1117">index.ts:1117</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1173,7 +1198,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1378">index.ts:1378</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1398">index.ts:1398</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1206,7 +1231,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1255">index.ts:1255</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1275">index.ts:1275</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1263,7 +1288,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1193">index.ts:1193</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1193">index.ts:1193</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1321,7 +1346,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L1008">index.ts:1008</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L1008">index.ts:1008</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1344,7 +1369,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L873">index.ts:873</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L873">index.ts:873</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1382,7 +1407,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L784">index.ts:784</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L784">index.ts:784</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1444,7 +1469,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L730">index.ts:730</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L730">index.ts:730</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1500,7 +1525,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L398">index.ts:398</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L398">index.ts:398</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1552,7 +1577,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L439">index.ts:439</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L439">index.ts:439</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1628,7 +1653,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L368">index.ts:368</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L368">index.ts:368</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1675,7 +1700,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L843">index.ts:843</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L843">index.ts:843</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1708,7 +1733,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L347">index.ts:347</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L347">index.ts:347</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1747,7 +1772,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L832">index.ts:832</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L832">index.ts:832</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1780,7 +1805,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L588">index.ts:588</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L588">index.ts:588</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1835,7 +1860,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L851">index.ts:851</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L851">index.ts:851</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1858,7 +1883,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L674">index.ts:674</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L674">index.ts:674</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1900,7 +1925,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L757">index.ts:757</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L757">index.ts:757</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1943,7 +1968,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L803">index.ts:803</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L803">index.ts:803</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1988,7 +2013,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L702">index.ts:702</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L702">index.ts:702</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2036,7 +2061,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L330">index.ts:330</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L330">index.ts:330</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2088,7 +2113,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L861">index.ts:861</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L861">index.ts:861</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2111,7 +2136,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L651">index.ts:651</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L651">index.ts:651</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2155,7 +2180,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L498">index.ts:498</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L498">index.ts:498</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2216,7 +2241,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L746">index.ts:746</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L746">index.ts:746</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2259,7 +2284,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L907">index.ts:907</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L907">index.ts:907</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2320,7 +2345,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L620">index.ts:620</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L620">index.ts:620</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2379,7 +2404,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L957">index.ts:957</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L957">index.ts:957</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2462,7 +2487,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L976">index.ts:976</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L976">index.ts:976</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2543,7 +2568,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/6f26fd6/src/index.ts#L305">index.ts:305</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/ceabba2/src/index.ts#L305">index.ts:305</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
