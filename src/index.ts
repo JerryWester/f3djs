@@ -1105,6 +1105,7 @@ export function gsDPSetConvert(k0: number, k1: number, k2: number, k3: number, k
         (k4 << 9) |
         k5
     );
+    command.writeUInt8(DisplayOpcodes.G_SETCONVERT);
 
     return command;
 }
