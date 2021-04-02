@@ -184,7 +184,7 @@ export enum ShiftModes {
     , G_MDSFT_PIPELINE = 23
 }
 
-export enum ScissorMode {
+export enum ScissorModes {
     G_SC_NON_INTERLACE = 0
     , G_SC_EVEN_INTERLACE = 2
     , G_SC_ODD_INTERLACE = 3
@@ -1114,7 +1114,7 @@ export function gsDPSetConvert(k0: number, k1: number, k2: number, k3: number, k
  * @param lry Lower-right Y coordinate of rectangle
  * @returns Display list command
  */
-export function gsDPSetScissor(mode: ScissorMode, ulx: number, uly: number, lrx: number, lry: number): Buffer {
+export function gsDPSetScissor(mode: ScissorModes, ulx: number, uly: number, lrx: number, lry: number): Buffer {
     const command = Buffer.alloc(8);
 
     command.writeUInt32BE(
@@ -1126,5 +1126,21 @@ export function gsDPSetScissor(mode: ScissorMode, ulx: number, uly: number, lrx:
     );
     command.writeUInt8(DisplayOpcodes.G_SETSCISSOR);
     command.writeUInt8(mode << 4, 4);
+    return command;
+}
+
+/**
+ * This sets the Z value for the entire primitive to be rendered, when the source for its depth component is set to be taken from this value. (This could be thought of as the depth version of "flat shading".)
+ * 
+ * `z` and `dz` are signed 16-bit values. `z` sets the actual depth for the primitive, while `dz` helps rendering of anti-aliased and decal objects (this is usually 0). 
+ * @param z Z value for primitive
+ * @param dz delta Z value for primitive
+ * @returns Display list command
+ */
+export function gsDPSetPrimDepth(z: number, dz: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETPRIMDEPTH);
+    command.writeInt16BE(z, 4);
+    command.writeInt16BE(dz, 6);
     return command;
 }
