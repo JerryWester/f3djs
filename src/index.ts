@@ -1075,3 +1075,36 @@ export function gsDPSetKeyR(centerR: number, widthR: number, scaleR: number): Bu
     command.writeUInt8(scaleR, 7);
     return command;
 }
+
+/**
+ * Sets the terms need to perform conversion from YUV to RGB. All of the parameters are signed 9-bit numbers, with range `-256 ≤ k ≤ 255`.
+ * 
+ * Note that YUV support was no longer guaranteed by Oct 1999 documentation, however the K4 and K5 terms could still potentially be used by the Color Combiner. 
+ * @param k0 K0 term of conversion matrix
+ * @param k1 K1 term of conversion matrix
+ * @param k2 K2 term of conversion matrix
+ * @param k3 K3 term of conversion matrix
+ * @param k4 K4 term of conversion matrix
+ * @param k5 K5 term of conversion matrix
+ * @returns Display list command
+ */
+export function gsDPSetConvert(k0: number, k1: number, k2: number, k3: number, k4: number, k5: number): Buffer {
+    const command = Buffer.alloc(8);
+
+    //    E    C  00aa aaaa  aaab bbbb  bbbb cccc
+    // cccc cddd  dddd ddee  eeee eeef  ffff ffff
+
+    command.writeUInt32BE(
+        (k0 << 13) |
+        (k1 << 4) |
+        (k2 >> 5)
+    );
+    command.writeUInt32BE(
+        ((k2 & 0b11111) << 27) |
+        (k3 << 18) |
+        (k4 << 9) |
+        k5
+    );
+
+    return command;
+}
