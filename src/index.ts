@@ -1027,3 +1027,51 @@ export function gsDPFullSync(): Buffer {
     command.writeUInt8(DisplayOpcodes.G_RDPFULLSYNC);
     return command;
 }
+
+/**
+ * Sets the center, scale, and width parameters for the green and blue components for chroma key (see `gsDPSetKeyR` for red).
+ * 
+ * `widthB` and `widthG` are in an unsigned fixed-point 4.8 format. The other parameters are normal 8-bit unsigned integers.
+ * 
+ * Note that chroma key was considered unsupported by Oct 1999 documentation, however this opcode may potentially still be used to set registers in the Color Combiner for other purposes. 
+ * @param widthG Scaled width of half the key window for green (must be between or equal to 0 and 15.99609375)
+ * @param widthB Scaled width of half the key window for blue (must be between or equal to 0 and 15.99609375)
+ * @param centerG Intensity of active key for green
+ * @param scaleG Reciprocal of size of soft edge, normalized to 0..0xFF, for green
+ * @param centerB Intensity of active key for blue
+ * @param scaleB Reciprocal of size of soft edge, normalized to 0..0xFF, for blue
+ * @returns Display list command
+ */
+export function gsDPSetKeyGB(centerG: number, scaleG: number, widthG: number, centerB: number, scaleB: number, widthB: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt32BE(
+        (uFIXED_POINT(widthG, 4, 8) << 12) |
+        uFIXED_POINT(widthB, 4, 8)
+    );
+    command.writeUInt8(DisplayOpcodes.G_SETKEYGB);
+    command.writeUInt8(centerG, 4);
+    command.writeUInt8(scaleG, 5);
+    command.writeUInt8(centerB, 6);
+    command.writeUInt8(scaleB, 7);
+    return command;
+}
+
+/**
+ * Sets the scale, center, and width parameters for the red component for chroma key (see `gsDPSetKeyGB` for blue and green).
+ * 
+ * `widthR` is an unsigned fixed-point 4.8 number. centerR and sizeR are 8-bit unsigned integers.
+ * 
+ * Note that chroma key was considered unsupported by Oct 1999 documentation, however this opcode may potentially still be used to set registers in the Color Combiner for other purposes. 
+ * @param widthR Scaled with of half the key window for red
+ * @param centerR Intensity of active key for red
+ * @param scaleR Reciprocal of size of soft edge, normalized to 0..0xFF, for blue
+ * @returns Display list command
+ */
+export function gsDPSetKeyR(centerR: number, widthR: number, scaleR: number): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_SETKEYR);
+    command.writeUInt16BE(uFIXED_POINT(widthR, 4, 8), 4);
+    command.writeUInt8(centerR, 6);
+    command.writeUInt8(scaleR, 7);
+    return command;
+}
