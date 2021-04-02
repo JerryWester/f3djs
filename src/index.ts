@@ -261,7 +261,7 @@ function sFIXED_POINT(val: number, s: number, e: number): number {
         const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * exp);
         return (part1 << e) | part2;
     } else {
-        throw `Error: value must be between ${-Math.pow(2, s)} and ${max}. Received ${val}`;
+        throw `Error: value must be between or equal to ${-Math.pow(2, s)} and ${max}. Received ${val}`;
     }
 }
 
@@ -279,7 +279,7 @@ function uFIXED_POINT(val: number, s: number, e: number): number {
         const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * exp);
         return (part1 << e) | part2;
     } else {
-        throw `Error: value must be between 0 and ${max}. Received ${val}`;
+        throw `Error: value must be between or equal to 0 and ${max}. Received ${val}`;
     }
 }
 
@@ -950,15 +950,15 @@ function G_TEXRECT(mode: DisplayOpcodes, ulx: number, uly: number, lrx: number, 
  * `tile` refers to any of the eight tile descriptors whose texture will be used on the rectangle. `uls` and `ult` specify the S and T coordinate, respectively, of the upper-left corner of the rectangle. `uls` and `ult` are in signed fixed point 10.5 format, giving a range `-1024 ≤ n ≤ 1023.96875` for each value (with 1/32 precision).
  * 
  * The texture coordinates for other parts of the rectangle are calculated via `dsdx` and `dtdy`, which are in signed fixed point 5.10 format, giving a range of `-32 ≤ n ≤ 31.999023` (with 1/1024 precision). These parameters change the S coordinate per a change of 1.0 in the X coordinate of the rectangle, and the T coordinate per change of 1.0 in the Y coordinate.
- * @param lrx Lower-right corner X coordinate
- * @param lry Lower-right corner Y coordinate
+ * @param lrx Lower-right corner X coordinate (must be between or equal to 0 and 1023.75)
+ * @param lry Lower-right corner Y coordinate (must be between or equal to 0 and 1023.75)
  * @param tile Tile descriptor to use for rectangle
- * @param ulx Upper-left corner X coordinate
- * @param uly Upper-left corner Y coordinate
- * @param uls Texture S coordinate at upper-left corner
- * @param ult Texture T coordinate at upper-left corner
- * @param dsdx Change in S coordinate over change in X coordinate
- * @param dtdy Change in T coordinate over change in Y coordinate
+ * @param ulx Upper-left corner X coordinate (must be between or equal to 0 and 1023.75)
+ * @param uly Upper-left corner Y coordinate (must be between or equal to 0 and 1023.75)
+ * @param uls Texture S coordinate at upper-left corner (must be between or equal to -1024 and 1023.96875)
+ * @param ult Texture T coordinate at upper-left corner (must be between or equal to -1024 and 1023.96875)
+ * @param dsdx Change in S coordinate over change in X coordinate (must be between or equal to -32 and 31.999023)
+ * @param dtdy Change in T coordinate over change in Y coordinate (must be between or equal to -32 and 31.999023)
  * @returns Display list command
  */
 export function gsSPTextureRectangle(ulx: number, uly: number, lrx: number, lry: number, tile: number, uls: number, ult: number, dsdx: number, dtdy: number): Buffer {
@@ -968,16 +968,16 @@ export function gsSPTextureRectangle(ulx: number, uly: number, lrx: number, lry:
 /**
  * This is similar to `gsSPTextureRectangle`, with the only difference being that the S and T coordinates of a texture are flipped in rendering, so that S coordinates are along the Y axis and T along the X axis. This essentially flips the texture about the diagonal line `(ulx,uly)`,`(lrx,lry)`.
  * 
- * `dtdx` describes the change in T over the change in X, and `dsdy` describes change in S over change in Y. 
- * @param lrx Lower-right corner X coordinate
- * @param lry Lower-right corner Y coordinate
+ * `dtdx` describes the change in T over the change in X, and `dsdy` describes change in S over change in Y.
+ * @param lrx Lower-right corner X coordinate (must be between or equal to 0 and 1023.75)
+ * @param lry Lower-right corner Y coordinate (must be between or equal to 0 and 1023.75)
  * @param tile Tile descriptor to use for rectangle
- * @param ulx Upper-left corner X coordinate
- * @param uly Upper-left corner Y coordinate
- * @param uls Texture S coordinate at upper-left corner
- * @param ult Texture T coordinate at upper-left corner
- * @param dsdx Change in S coordinate over change in X coordinate
- * @param dtdy Change in T coordinate over change in Y coordinate
+ * @param ulx Upper-left corner X coordinate (must be between or equal to 0 and 1023.75)
+ * @param uly Upper-left corner Y coordinate (must be between or equal to 0 and 1023.75)
+ * @param uls Texture S coordinate at upper-left corner (must be between or equal to -1024 and 1023.96875)
+ * @param ult Texture T coordinate at upper-left corner (must be between or equal to -1024 and 1023.96875)
+ * @param dsdx Change in S coordinate over change in X coordinate (must be between or equal to -32 and 31.999023)
+ * @param dtdy Change in T coordinate over change in Y coordinate (must be between or equal to -32 and 31.999023)
  * @returns Display list command
  */
 export function gsSPTextureRectangleFlip(ulx: number, uly: number, lrx: number, lry: number, tile: number, uls: number, ult: number, dsdx: number, dtdy: number): Buffer {
