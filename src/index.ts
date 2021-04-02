@@ -917,7 +917,13 @@ export function gsSPSetOtherMode(mode: OtherModes, shift: ShiftModes, length: nu
 }
 
 /**
+ * Draws a textured rectangle from screen coordinates `(ulx,uly)` to `(lrx, lry)`, using the texture specified by `tile` to color the rectangle. The texture is positioned using `(uls, ult)` as the texture coordinate of `(ulx, uly)`, and changing the texture coordinates with the use of `dsdx` and `dtdy`.
  * 
+ * `ulx`, `uly`, `lrx`, and `lry` are 12-bit numbers in a fixed point 10.2 format, giving a range of `0 ≤ n ≤ 1023.75` for each value (with 1/4 precision). This means that the coordinates cannot reference the framebuffer past a 1024-pixel square, if the framebuffer exceeds those limits in either dimension.
+ * 
+ * `tile` refers to any of the eight tile descriptors whose texture will be used on the rectangle. `uls` and `ult` specify the S and T coordinate, respectively, of the upper-left corner of the rectangle. `uls` and `ult` are in signed fixed point 10.5 format, giving a range `-1024 ≤ n ≤ 1023.96875` for each value (with 1/32 precision).
+ * 
+ * The texture coordinates for other parts of the rectangle are calculated via `dsdx` and `dtdy`, which are in signed fixed point 5.10 format, giving a range of `-32 ≤ n ≤ 31.999023` (with 1/1024 precision). These parameters change the S coordinate per a change of 1.0 in the X coordinate of the rectangle, and the T coordinate per change of 1.0 in the Y coordinate.
  * @param lrx Lower-right corner X coordinate
  * @param lry Lower-right corner Y coordinate
  * @param tile Tile descriptor to use for rectangle
@@ -927,10 +933,26 @@ export function gsSPSetOtherMode(mode: OtherModes, shift: ShiftModes, length: nu
  * @param ult Texture T coordinate at upper-left corner
  * @param dsdx Change in S coordinate over change in X coordinate
  * @param dtdy Change in T coordinate over change in Y coordinate
- * @returns 
+ * @returns Display list command
  */
 export function gsSPTextureRectangle(ulx: number, uly: number, lrx: number, lry: number, tile: number, uls: number, ult: number, dsdx: number, dtdy: number): Buffer {
     const command = Buffer.alloc(24);
-
+    command.writeUInt32BE(
+        (uFIXED_POINT(lrx, 10, 2) << 12) |
+        uFIXED_POINT(lry, 10, 2)
+    );
+    command.writeUInt8(DisplayOpcodes.G_TEXRECT);
+    command.writeUInt32BE(
+        (uFIXED_POINT(ulx, 10, 2) << 12) |
+        uFIXED_POINT(uly, 10, 2),
+        4
+    );
+    command.writeUInt8(tile, 4);
+    command.writeUInt8(DisplayOpcodes.G_RDPHALF_1, 8);
+    command.writeUInt16BE(sFIXED_POINT(uls, 10, 5), 12);
+    command.writeUInt16BE(sFIXED_POINT(ult, 10, 5), 14);
+    command.writeUInt8(DisplayOpcodes.G_RDPHALF_2, 16);
+    command.writeUInt16BE(sFIXED_POINT(dsdx, 5, 10), 20);
+    command.writeUInt16BE(sFIXED_POINT(dtdy, 5, 10), 22);
     return command;
 }
