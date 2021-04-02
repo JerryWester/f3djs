@@ -983,3 +983,13 @@ export function gsSPTextureRectangle(ulx: number, uly: number, lrx: number, lry:
 export function gsSPTextureRectangleFlip(ulx: number, uly: number, lrx: number, lry: number, tile: number, uls: number, ult: number, dsdx: number, dtdy: number): Buffer {
     return G_TEXRECT(DisplayOpcodes.G_TEXRECTFLIP, ulx, uly, lrx, lry, tile, uls, ult, dsdx, dtdy);
 }
+
+/**
+ * This forces a wait for a texture to load, in order to synchronize with pixel rendering. This ensures that loading a new texture won't disrupt the rendering of primitives mid-render.
+ * @returns Display list command
+ */
+export function gsDPLoadSync(): Buffer {
+    const command = Buffer.alloc(8);
+    command.writeUInt8(DisplayOpcodes.G_RDPLOADSYNC);
+    return command;
+}
