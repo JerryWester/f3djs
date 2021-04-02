@@ -190,6 +190,28 @@ export enum ScissorModes {
     , G_SC_ODD_INTERLACE = 3
 }
 
+export enum TileFormats {
+    G_IM_FMT_RGBA = 0
+    , G_IM_FMT_YUV = 1
+    , G_IM_FMT_CI = 2
+    , G_IM_FMT_IA = 3
+    , G_IM_FMT_I = 4
+}
+
+export enum TileSize {
+    G_IM_SIZ_4b = 0
+    , G_IM_SIZ_8b = 1
+    , G_IM_SIZ_16b = 2
+    , G_IM_SIZ_32b = 3
+}
+
+export enum TileSettings {
+    G_TX_NOMIRROR = 0
+    , G_TX_MIRROR = 1
+    , G_TX_WRAP = 0
+    , G_TX_CLAMP = 2
+}
+
 export enum ZValFlag {
     G_BZ_PERSP
     , G_BZ_ORTHO
@@ -1269,23 +1291,55 @@ export function gsDPLoadTile(tile: number, uls: number, ult: number, lrs: number
 }
 
 /**
+ * Sets many different parameters for tile descriptor `tile`.
  * 
- * @param fmt 
- * @param siz 
- * @param line 
- * @param tmem 
- * @param tile 
- * @param palette 
- * @param cmT 
- * @param maskT 
- * @param shiftT 
- * @param cmS 
- * @param maskS 
- * @param shiftS 
+ * `fmt` sets the color format in use by the particular texture. `siz` sets the bit size of each texel. (Note: Not every combination of `fmt` and `siz` is valid.)
+ * 
+ * `line` sets the number of 64-bit pieces per row of the texture (textures will be padded in TMEM if the row doesn't end in a multiple of 64 bits). `tmem` is the location in TMEM where the texture is. Note that TMEM is addressed in units of 64 bits here (zero-indexed), so e.g. 1 means byte 8 of TMEM.
+ * 
+ * `palette` specifies which of the sixteen palettes this texture will be using. Note that this only applies to ci4 textures (`G_IM_FMT_CI` and `G_IM_SIZ_4b`), since ci8 has access to the entirety of the palette area, and no other texture type needs palettes.
+ * 
+ * `cmT` and `cmS` set the clamp and mirror settings for their respective axes. `MIRROR` enables mirroring of the texture along that given access (e.g. setting `MIRROR` for the S axis will mirror a texture horizontally), whereas `NOMIRROR` disables it. `WRAP` repeats texels on a particular cycle, whereas `CLAMP` enforces clamping instead (sampling the colors at the edges of the texture for texels beyond the set size of the texture).
+ * 
+ * `maskT` and `maskS` sets when the respective axis "loops" its texels. The value is interpreted as the first bit that's ignored. In other words, only the first two mask texels of the row/column are actually used. If wrapping, then the previous texels are simply repeated; mirroring will mirror the set to be reperated, meaning the maskth bit of the current coordinate decides if its texel is mirrored. A mask value of 0 will implicitly enable clamping.
+ * 
+ * `shiftT` and `shiftS` specify how many bits to shift texture coordinates after perspective division, for their respective axes. If the value is 0, then no shifting is done. If the value is in range `1 ≤ n ≤ 10`, then coordinates are right-shifted by that amount. For values in range `11 ≤ n ≤ 15`, values are left-shifted by `16 - n`. 
+ * @param fmt Sets color format
+ * @param siz Sets bit size of pixel
+ * @param line Number of 64-bit values per row
+ * @param tmem Offset of texture in TMEM
+ * @param tile Tile descriptor being modified
+ * @param palette Which palette to use for colors (if relevant)
+ * @param cmT Clamp and Mirror flags for the T axis
+ * @param maskT Sets how much of T axis is shown before wrapping
+ * @param shiftT Sets the amount to shift T axis values after perspective division
+ * @param cmS Clamp and Mirror flags for the S axis
+ * @param maskS Sets how much of S axis is shown before wrapping
+ * @param shiftS Sets the amount to shift S axis values after perspective division
  * @returns Display list command
  */
-export function gsDPSetTile(fmt: number, siz: number, line: number, tmem: number, tile: number, palette: number, cmT: number, maskT: number, shiftT: number, cmS: number, maskS: number, shiftS: number): Buffer {
+export function gsDPSetTile(fmt: TileFormats, siz: TileSize, line: number, tmem: number, tile: number, palette: number, cmT: TileSettings, maskT: number, shiftT: number, cmS: TileSettings, maskS: number, shiftS: number): Buffer {
     const command = Buffer.alloc(8);
+    //    F    5  fffi i0nn  nnnn nnnm  mmmm mmmm
+    // 0000 0ttt  pppp ccaa  aass ssdd  bbbb uuuu
+
+    command.writeUInt32BE(
+        ((fmt & 0x7) << 21) |
+        ((siz & 0x3) << 19) |
+        ((line & 0x1FF) << 9) |
+        (tmem & 0x1FF)
+    );
+    command.writeUInt32BE(
+        ((tile & 0x7) << 24) |
+        ((palette & 0xF) << 20) |
+        ((cmT & 0x3) << 18) |
+        ((maskT & 0xF) << 14) |
+        ((shiftT & 0xF) << 10) |
+        ((cmS & 0x3) << 8) |
+        ((maskS & 0xF) << 4) |
+        (shiftS & 0xF),
+        4
+    );
     command.writeUInt8(DisplayOpcodes.G_SETTILE);
     return command;
 }
