@@ -1162,14 +1162,18 @@ export function gsDPSetOtherMode(omodeH: number, omodeL: number): Buffer {
 }
 
 /**
+ * Tells the RDP to load `count + 1` colors from the texture loaded to tile descriptor `tile`. The tile descriptor's attributes and other state related to textures inform the RDP how to load the palette, and where to load it to.
  * 
- * @param tile 
- * @param count 
- * @returns 
+ * Note: the count is quadrupled likely due to how palettes are stored in TMEM.
+ * @param tile Tile descriptor to load from
+ * @param count Number of colors to load minus one
+ * @returns Display list command
  */
 export function gsDPLoadTLUTCmd(tile: number, count: number): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_LOADTLUT);
+    command.writeUInt8(tile, 4);
+    command.writeUInt16BE((count & 0x3FF) << 6, 5);
     return command;
 }
 
@@ -1180,7 +1184,7 @@ export function gsDPLoadTLUTCmd(tile: number, count: number): Buffer {
  * @param ult 
  * @param lrs 
  * @param lrt 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPSetTileSize(tile: number, uls: number, ult: number, lrs: number, lrt: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1195,7 +1199,7 @@ export function gsDPSetTileSize(tile: number, uls: number, ult: number, lrs: num
  * @param ult 
  * @param texels 
  * @param dxt 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPLoadBlock(tile: number, uls: number, ult: number, texels: number, dxt: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1210,7 +1214,7 @@ export function gsDPLoadBlock(tile: number, uls: number, ult: number, texels: nu
  * @param ult 
  * @param lrs 
  * @param lrt 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPLoadTile(tile: number, uls: number, ult: number, lrs: number, lrt: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1232,7 +1236,7 @@ export function gsDPLoadTile(tile: number, uls: number, ult: number, lrs: number
  * @param cmS 
  * @param maskS 
  * @param shiftS 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPSetTile(fmt: number, siz: number, line: number, tmem: number, tile: number, palette: number, cmT: number, maskT: number, shiftT: number, cmS: number, maskS: number, shiftS: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1246,7 +1250,7 @@ export function gsDPSetTile(fmt: number, siz: number, line: number, tmem: number
  * @param uly 
  * @param lrx 
  * @param lry 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPFillRectangle(ulx: number, uly: number, lrx: number, lry: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1257,7 +1261,7 @@ export function gsDPFillRectangle(ulx: number, uly: number, lrx: number, lry: nu
 /**
  * 
  * @param color 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPSetFillColor(color: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1271,7 +1275,7 @@ export function gsDPSetFillColor(color: number): Buffer {
  * @param G 
  * @param B 
  * @param A 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPSetFogColor(R: number, G: number, B: number, A: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1285,7 +1289,7 @@ export function gsDPSetFogColor(R: number, G: number, B: number, A: number): Buf
  * @param G 
  * @param B 
  * @param A 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPBlendColor(R: number, G: number, B: number, A: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1301,7 +1305,7 @@ export function gsDPBlendColor(R: number, G: number, B: number, A: number): Buff
  * @param G 
  * @param B 
  * @param A 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPSetPrimColor(minlevel: number, lodfrac: number, R: number, G: number, B: number, A: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1315,7 +1319,7 @@ export function gsDPSetPrimColor(minlevel: number, lodfrac: number, R: number, G
  * @param G 
  * @param B 
  * @param A 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPSetEnvColor(R: number, G: number, B: number, A: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1341,7 +1345,7 @@ export function gsDPSetEnvColor(R: number, G: number, B: number, A: number): Buf
  * @param Ab1 
  * @param Ac1 
  * @param Ad1 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPSetCombineLERP(a0: number, b0: number, c0: number, d0: number, Aa0: number, Ab0: number, Ac0: number, Ad0: number, a1: number, b1: number, c1: number, d1: number, Aa1: number, Ab1: number, Ac1: number, Ad1: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1355,7 +1359,7 @@ export function gsDPSetCombineLERP(a0: number, b0: number, c0: number, d0: numbe
  * @param siz 
  * @param width 
  * @param imgaddr 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPSetTextureImage(fmt: number, siz: number, width: number, imgaddr: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1366,7 +1370,7 @@ export function gsDPSetTextureImage(fmt: number, siz: number, width: number, img
 /**
  * 
  * @param imgaddr 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPSetDepthImage(imgaddr: number): Buffer {
     const command = Buffer.alloc(8);
@@ -1380,7 +1384,7 @@ export function gsDPSetDepthImage(imgaddr: number): Buffer {
  * @param siz 
  * @param width 
  * @param imgaddr 
- * @returns 
+ * @returns Display list command
  */
 export function gsDPSetColorImage(fmt: number, siz: number, width: number, imgaddr: number): Buffer {
     const command = Buffer.alloc(8);
