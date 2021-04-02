@@ -246,6 +246,40 @@ function G_RDPHALF_2(wordlo: number): Buffer {
 }
 
 /**
+ * @param val Decimal point value
+ * @param s Significand, or the integer before the period (i.e. the `10` in `10.5`)
+ * @param e Exponent, or the integer after the period (i.e. the `5` in `10.5`)
+ * @returns Signed fixed-point number
+ */
+function sFIXED_POINT(val: number, s: number, e: number): number {
+    if (val >= -Math.pow(2, s) && val < Math.pow(2, s)) {
+        const bits = 1 + s + e;
+        const max_val = Math.pow(2, bits);
+        const part1 = (Math.floor(val) + max_val) % max_val;
+        const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * Math.pow(2, e));
+        return (part1 << e) | part2;
+    } else {
+        throw `Error: value must be between ${-Math.pow(2, s)} and ${Math.pow(2, s)}. Received ${val}`;
+    }
+}
+
+/**
+ * @param val Decimal point value
+ * @param s Significand, or the integer before the period (i.e. the `10` in `10.2`)
+ * @param e Exponent, or the integer after the period (i.e. the `2` in `10.2`)
+ * @returns Unsigned fixed-point number
+ */
+function uFIXED_POINT(val: number, s: number, e: number): number {
+    if (val >= 0 && val < Math.pow(2, s)) {
+        const part1 = Math.floor(val);
+        const part2 = Math.floor(Number.parseFloat((val % 1).toPrecision(12)) * Math.pow(2, e));
+        return (part1 << e) | part2;
+    } else {
+        throw `Error: value must be between 0 and ${Math.pow(2, s)}. Received ${val}`;
+    }
+}
+
+/**
  * Does nothing except stall the RDP for a few cycles. Typically used in debugging.
  * @returns Display list command
  */
@@ -879,5 +913,24 @@ export function gsSPSetOtherMode(mode: OtherModes, shift: ShiftModes, length: nu
     command.writeUInt8(32 - shift - length, 2);
     command.writeUInt8(length - 1, 3);
     command.writeUInt32BE(data, 4);
+    return command;
+}
+
+/**
+ * 
+ * @param lrx Lower-right corner X coordinate
+ * @param lry Lower-right corner Y coordinate
+ * @param tile Tile descriptor to use for rectangle
+ * @param ulx Upper-left corner X coordinate
+ * @param uly Upper-left corner Y coordinate
+ * @param uls Texture S coordinate at upper-left corner
+ * @param ult Texture T coordinate at upper-left corner
+ * @param dsdx Change in S coordinate over change in X coordinate
+ * @param dtdy Change in T coordinate over change in Y coordinate
+ * @returns 
+ */
+export function gsSPTextureRectangle(ulx: number, uly: number, lrx: number, lry: number, tile: number, uls: number, ult: number, dsdx: number, dtdy: number): Buffer {
+    const command = Buffer.alloc(24);
+
     return command;
 }
