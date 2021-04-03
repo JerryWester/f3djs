@@ -1434,32 +1434,48 @@ export function gsDPBlendColor(R: number, G: number, B: number, A: number): Buff
 }
 
 /**
+ * Sets the primitive color register of the RDP's color combiner. Also sets two additional values available to the color combiner, the minimum LOD level and an LOD fraction.
  * 
- * @param minlevel 
- * @param lodfrac 
- * @param R 
- * @param G 
- * @param B 
- * @param A 
+ * `minlevel` and `lodfrac` are both fixed-point unsigned 0.8 numbers, meaning a range of `0 ≤ n ≤ 0.99609375`. `minlevel` defines the minimum possible value for LOD to have, when the LOD calculated for a particular part of the primitive is less than 1.0. In other words, the LOD of any part of the primitive is clamped at the lower end to `max(minlevel, LOD)`.
+ * 
+ * `lodfrac` specifies a fraction that the programmer can specify for use in the color combiner of the RDP. It's meant to offer a further refinement on the linear filtering of two mipmaps.
+ * 
+ * The RGBA32 color specified via `R`, `G`, `B`, and `A` is also made available to the color combiner for use by the programmer. 
+ * @param minlevel Minimum possible LOD value (clamped to this at minimum) (must be between or equal to 0 and 0.99609375)
+ * @param lodfrac Primitive LOD fraction for mipmap filtering (must be between or equal to 0 and 0.99609375)
+ * @param R Red component of primitive color
+ * @param G Green component of primitive color
+ * @param B Blue component of primitive color
+ * @param A Alpha component of primitive color
  * @returns Display list command
  */
 export function gsDPSetPrimColor(minlevel: number, lodfrac: number, R: number, G: number, B: number, A: number): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SETPRIMCOLOR);
+    command.writeUInt8(uFIXED_POINT(minlevel, 0, 8), 2);
+    command.writeUInt8(uFIXED_POINT(lodfrac, 0, 8), 3);
+    command.writeUInt8(R, 4);
+    command.writeUInt8(G, 5);
+    command.writeUInt8(B, 6);
+    command.writeUInt8(A, 7);
     return command;
 }
 
 /**
- * 
- * @param R 
- * @param G 
- * @param B 
- * @param A 
+ * Sets the environment color register in the RDP's color combiner. It's available as a general-purpose color register for the programmer to use in the color combiner.
+ * @param R Red component of blend color
+ * @param G Green component of blend color
+ * @param B Blue component of blend color
+ * @param A Alpha component of blend color
  * @returns Display list command
  */
 export function gsDPSetEnvColor(R: number, G: number, B: number, A: number): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SETENVCOLOR);
+    command.writeUInt8(R, 4);
+    command.writeUInt8(G, 5);
+    command.writeUInt8(B, 6);
+    command.writeUInt8(A, 7);
     return command;
 }
 
