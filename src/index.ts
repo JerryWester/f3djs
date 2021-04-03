@@ -205,7 +205,7 @@ export enum TileSize {
     , G_IM_SIZ_32b = 3
 }
 
-export enum TileSettings {
+export enum TileFlags {
     G_TX_NOMIRROR = 0
     , G_TX_MIRROR = 1
     , G_TX_WRAP = 0
@@ -1318,7 +1318,7 @@ export function gsDPLoadTile(tile: number, uls: number, ult: number, lrs: number
  * @param shiftS Sets the amount to shift S axis values after perspective division
  * @returns Display list command
  */
-export function gsDPSetTile(fmt: TileFormats, siz: TileSize, line: number, tmem: number, tile: number, palette: number, cmT: TileSettings, maskT: number, shiftT: number, cmS: TileSettings, maskS: number, shiftS: number): Buffer {
+export function gsDPSetTile(fmt: TileFormats, siz: TileSize, line: number, tmem: number, tile: number, palette: number, cmT: TileFlags, maskT: number, shiftT: number, cmS: TileFlags, maskS: number, shiftS: number): Buffer {
     const command = Buffer.alloc(8);
     //    F    5  fffi i0nn  nnnn nnnm  mmmm mmmm
     // 0000 0ttt  pppp ccaa  aass ssdd  bbbb uuuu
@@ -1345,55 +1345,91 @@ export function gsDPSetTile(fmt: TileFormats, siz: TileSize, line: number, tmem:
 }
 
 /**
+ * Draws a rectangle to the framebuffer with top-left corner `(ulx, uly)` and bottom-right corner `(lrx, lry)`, coloring it with the current fill color. Similar to `gsSPTextureRectangle`, but uses a solid color instead of a texture.
  * 
- * @param ulx 
- * @param uly 
- * @param lrx 
- * @param lry 
+ * All the coordinate values are (probably) fixed-width unsigned 10.2 format. 
+ * @param lrx Lower-right corner of rectangle, X-axis (must be between or equal to 0 and 1023.75)
+ * @param lry Lower-right corner of rectangle, Y-axis (must be between or equal to 0 and 1023.75)
+ * @param ulx Upper-left corner of rectangle, X-axis (must be between or equal to 0 and 1023.75)
+ * @param uly Upper-left corner of rectangle, Y-axis (must be between or equal to 0 and 1023.75)
  * @returns Display list command
  */
 export function gsDPFillRectangle(ulx: number, uly: number, lrx: number, lry: number): Buffer {
     const command = Buffer.alloc(8);
+    command.writeUInt32BE(
+        (uFIXED_POINT(lrx, 10, 2) << 12) |
+        uFIXED_POINT(lry, 10, 2)
+    );
+    command.writeUInt32BE(
+        (uFIXED_POINT(ulx, 10, 2) << 12) |
+        uFIXED_POINT(uly, 10, 2),
+        4
+    );
     command.writeUInt8(DisplayOpcodes.G_FILLRECT);
     return command;
 }
 
 /**
+ * Sets the fill color for use in fill mode, which allows clearing the current color buffer.
  * 
- * @param color 
+ * When clearing the Z buffer, color is a 14-bit `Z` value and 2-bit `dZ` value specified twice to fill all 32 bits. In other words, color at the bit level looks like the following:
+ * 
+ * ```
+ *    ZZZZ ZZZZ  ZZZZ ZZdd  ZZZZ ZZZZ  ZZZZ ZZdd
+ * ```
+ * 
+ * If dealing with a color buffer, the meaning of `color` depends on the current color image's format. For an RGBA5551 color image, the chosen fill color is specified twice, like with the Z buffer:
+ * 
+ * ```
+ *    rrrr rggg  ggbb bbba  rrrr rggg  ggbb bbba
+ * ```
+ * 
+ * For an RGBA32 color image, `color` is a single RGBA32 color value.
+ * 
+ * For the 16-bit versions, the two occurrences of the color/depth value should be the same, however they can be different for an unspecified "special effect".
+ * @param color Fill value for use in fill mode
  * @returns Display list command
  */
 export function gsDPSetFillColor(color: number): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SETFILLCOLOR);
+    command.writeUInt32BE(color, 4);
     return command;
 }
 
 /**
- * 
- * @param R 
- * @param G 
- * @param B 
- * @param A 
+ * Sets the fog color in the RDP blender. It's considered a general-purpose register, which as the name suggests is typically intended for fog effects. Note that the fog color is always specified in RGBA32 form, regardless of actual framebuffer formats.
+ * @param R Red component of fog color
+ * @param G Green component of fog color
+ * @param B Blue component of fog color
+ * @param A Alpha component of fog color
  * @returns Display list command
  */
 export function gsDPSetFogColor(R: number, G: number, B: number, A: number): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SETFOGCOLOR);
+    command.writeUInt8(R, 4);
+    command.writeUInt8(G, 5);
+    command.writeUInt8(B, 6);
+    command.writeUInt8(A, 7);
     return command;
 }
 
 /**
- * 
- * @param R 
- * @param G 
- * @param B 
- * @param A 
+ * Sets the RDP blender's blend color, a general purpose color register available for various purposes in the blender.
+ * @param R Red component of blend color
+ * @param G Green component of blend color
+ * @param B Blue component of blend color
+ * @param A Alpha component of blend color
  * @returns Display list command
  */
 export function gsDPBlendColor(R: number, G: number, B: number, A: number): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SETBLENDCOLOR);
+    command.writeUInt8(R, 4);
+    command.writeUInt8(G, 5);
+    command.writeUInt8(B, 6);
+    command.writeUInt8(A, 7);
     return command;
 }
 

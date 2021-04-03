@@ -75,8 +75,8 @@
 								<li class="tsd-kind-enum"><a href="enums/primaryvertex.html" class="tsd-kind-icon">Primary<wbr>Vertex</a></li>
 								<li class="tsd-kind-enum"><a href="enums/scissormodes.html" class="tsd-kind-icon">Scissor<wbr>Modes</a></li>
 								<li class="tsd-kind-enum"><a href="enums/shiftmodes.html" class="tsd-kind-icon">Shift<wbr>Modes</a></li>
+								<li class="tsd-kind-enum"><a href="enums/tileflags.html" class="tsd-kind-icon">Tile<wbr>Flags</a></li>
 								<li class="tsd-kind-enum"><a href="enums/tileformats.html" class="tsd-kind-icon">Tile<wbr>Formats</a></li>
-								<li class="tsd-kind-enum"><a href="enums/tilesettings.html" class="tsd-kind-icon">Tile<wbr>Settings</a></li>
 								<li class="tsd-kind-enum"><a href="enums/tilesize.html" class="tsd-kind-icon">Tile<wbr>Size</a></li>
 								<li class="tsd-kind-enum"><a href="enums/zvalflag.html" class="tsd-kind-icon">ZVal<wbr>Flag</a></li>
 							</ul>
@@ -157,7 +157,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L591">index.ts:591</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L591">index.ts:591</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -186,7 +186,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L581">index.ts:581</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L581">index.ts:581</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -215,7 +215,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L571">index.ts:571</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L571">index.ts:571</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -244,7 +244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L242">index.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L242">index.ts:242</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -310,22 +310,39 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1394">index.ts:1394</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1426">index.ts:1426</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the RDP blender&#39;s blend color, a general purpose color register available for various purposes in the blender.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>R: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Red component of blend color</p>
+									</div>
 								</li>
 								<li>
 									<h5>G: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Green component of blend color</p>
+									</div>
 								</li>
 								<li>
 									<h5>B: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Blue component of blend color</p>
+									</div>
 								</li>
 								<li>
 									<h5>A: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Alpha component of blend color</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
@@ -343,22 +360,40 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1355">index.ts:1355</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1357">index.ts:1357</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Draws a rectangle to the framebuffer with top-left corner <code>(ulx, uly)</code> and bottom-right corner <code>(lrx, lry)</code>, coloring it with the current fill color. Similar to <code>gsSPTextureRectangle</code>, but uses a solid color instead of a texture.</p>
+								</div>
+								<p>All the coordinate values are (probably) fixed-width unsigned 10.2 format.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>ulx: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Upper-left corner of rectangle, X-axis (must be between or equal to 0 and 1023.75)</p>
+									</div>
 								</li>
 								<li>
 									<h5>uly: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Upper-left corner of rectangle, Y-axis (must be between or equal to 0 and 1023.75)</p>
+									</div>
 								</li>
 								<li>
 									<h5>lrx: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Lower-right corner of rectangle, X-axis (must be between or equal to 0 and 1023.75)</p>
+									</div>
 								</li>
 								<li>
 									<h5>lry: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Lower-right corner of rectangle, Y-axis (must be between or equal to 0 and 1023.75)</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
@@ -376,7 +411,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1040">index.ts:1040</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1040">index.ts:1040</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -399,7 +434,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1250">index.ts:1250</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1250">index.ts:1250</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -460,7 +495,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1006">index.ts:1006</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1006">index.ts:1006</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -483,7 +518,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1194">index.ts:1194</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1194">index.ts:1194</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -522,7 +557,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1277">index.ts:1277</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1277">index.ts:1277</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -579,7 +614,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L305">index.ts:305</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L305">index.ts:305</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -602,7 +637,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L314">index.ts:314</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L314">index.ts:314</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -634,7 +669,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1020">index.ts:1020</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1020">index.ts:1020</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -659,7 +694,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1489">index.ts:1489</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1525">index.ts:1525</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -692,7 +727,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1450">index.ts:1450</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1486">index.ts:1486</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -761,7 +796,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1106">index.ts:1106</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1106">index.ts:1106</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -824,7 +859,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1475">index.ts:1475</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1511">index.ts:1511</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -848,7 +883,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1424">index.ts:1424</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1460">index.ts:1460</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -881,13 +916,29 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1366">index.ts:1366</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1393">index.ts:1393</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the fill color for use in fill mode, which allows clearing the current color buffer.</p>
+								</div>
+								<p>When clearing the Z buffer, color is a 14-bit <code>Z</code> value and 2-bit <code>dZ</code> value specified twice to fill all 32 bits. In other words, color at the bit level looks like the following:</p>
+								<pre><code><span style="color: #000000">   </span><span style="color: #0070C1">ZZZZ</span><span style="color: #000000"> </span><span style="color: #0070C1">ZZZZ</span><span style="color: #000000">  </span><span style="color: #0070C1">ZZZZ</span><span style="color: #000000"> </span><span style="color: #001080">ZZdd</span><span style="color: #000000">  </span><span style="color: #0070C1">ZZZZ</span><span style="color: #000000"> </span><span style="color: #0070C1">ZZZZ</span><span style="color: #000000">  </span><span style="color: #0070C1">ZZZZ</span><span style="color: #000000"> </span><span style="color: #001080">ZZdd</span>
+</code></pre>
+								<p>If dealing with a color buffer, the meaning of <code>color</code> depends on the current color image&#39;s format. For an RGBA5551 color image, the chosen fill color is specified twice, like with the Z buffer:</p>
+								<pre><code><span style="color: #000000">   </span><span style="color: #001080">rrrr</span><span style="color: #000000"> </span><span style="color: #001080">rggg</span><span style="color: #000000">  </span><span style="color: #001080">ggbb</span><span style="color: #000000"> </span><span style="color: #001080">bbba</span><span style="color: #000000">  </span><span style="color: #001080">rrrr</span><span style="color: #000000"> </span><span style="color: #001080">rggg</span><span style="color: #000000">  </span><span style="color: #001080">ggbb</span><span style="color: #000000"> </span><span style="color: #001080">bbba</span>
+</code></pre>
+								<p>For an RGBA32 color image, <code>color</code> is a single RGBA32 color value.</p>
+								<p>For the 16-bit versions, the two occurrences of the color/depth value should be the same, however they can be different for an unspecified &quot;special effect&quot;.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>color: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Fill value for use in fill mode</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
@@ -905,22 +956,39 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1380">index.ts:1380</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1408">index.ts:1408</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the fog color in the RDP blender. It&#39;s considered a general-purpose register, which as the name suggests is typically intended for fog effects. Note that the fog color is always specified in RGBA32 form, regardless of actual framebuffer formats.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>R: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Red component of fog color</p>
+									</div>
 								</li>
 								<li>
 									<h5>G: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Green component of fog color</p>
+									</div>
 								</li>
 								<li>
 									<h5>B: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Blue component of fog color</p>
+									</div>
 								</li>
 								<li>
 									<h5>A: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Alpha component of fog color</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
@@ -938,7 +1006,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1060">index.ts:1060</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1060">index.ts:1060</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1002,7 +1070,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1085">index.ts:1085</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1085">index.ts:1085</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1048,7 +1116,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1178">index.ts:1178</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1178">index.ts:1178</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1087,7 +1155,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1410">index.ts:1410</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1446">index.ts:1446</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1126,7 +1194,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1162">index.ts:1162</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1162">index.ts:1162</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1165,7 +1233,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1139">index.ts:1139</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1139">index.ts:1139</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1222,7 +1290,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1464">index.ts:1464</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1500">index.ts:1500</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1249,13 +1317,13 @@
 					<a name="gsdpsettile" class="tsd-anchor"></a>
 					<h3>gsDPSet<wbr>Tile</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">gsDPSet<wbr>Tile<span class="tsd-signature-symbol">(</span>fmt<span class="tsd-signature-symbol">: </span><a href="enums/tileformats.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileFormats</a>, siz<span class="tsd-signature-symbol">: </span><a href="enums/tilesize.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileSize</a>, line<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, tmem<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, tile<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, palette<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, cmT<span class="tsd-signature-symbol">: </span><a href="enums/tilesettings.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileSettings</a>, maskT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, shiftT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, cmS<span class="tsd-signature-symbol">: </span><a href="enums/tilesettings.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileSettings</a>, maskS<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, shiftS<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span></li>
+						<li class="tsd-signature tsd-kind-icon">gsDPSet<wbr>Tile<span class="tsd-signature-symbol">(</span>fmt<span class="tsd-signature-symbol">: </span><a href="enums/tileformats.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileFormats</a>, siz<span class="tsd-signature-symbol">: </span><a href="enums/tilesize.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileSize</a>, line<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, tmem<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, tile<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, palette<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, cmT<span class="tsd-signature-symbol">: </span><a href="enums/tileflags.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileFlags</a>, maskT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, shiftT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, cmS<span class="tsd-signature-symbol">: </span><a href="enums/tileflags.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileFlags</a>, maskS<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, shiftS<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1321">index.ts:1321</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1321">index.ts:1321</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1308,7 +1376,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>cmT: <a href="enums/tilesettings.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileSettings</a></h5>
+									<h5>cmT: <a href="enums/tileflags.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileFlags</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Clamp and Mirror flags for the T axis</p>
 									</div>
@@ -1326,7 +1394,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>cmS: <a href="enums/tilesettings.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileSettings</a></h5>
+									<h5>cmS: <a href="enums/tileflags.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TileFlags</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Clamp and Mirror flags for the S axis</p>
 									</div>
@@ -1359,7 +1427,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1215">index.ts:1215</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1215">index.ts:1215</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1417,7 +1485,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L1030">index.ts:1030</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L1030">index.ts:1030</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1440,7 +1508,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L895">index.ts:895</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L895">index.ts:895</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1478,7 +1546,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L806">index.ts:806</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L806">index.ts:806</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1540,7 +1608,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L752">index.ts:752</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L752">index.ts:752</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1596,7 +1664,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L420">index.ts:420</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L420">index.ts:420</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1648,7 +1716,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L461">index.ts:461</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L461">index.ts:461</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1724,7 +1792,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L390">index.ts:390</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L390">index.ts:390</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1771,7 +1839,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L865">index.ts:865</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L865">index.ts:865</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1804,7 +1872,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L369">index.ts:369</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L369">index.ts:369</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1843,7 +1911,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L854">index.ts:854</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L854">index.ts:854</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1876,7 +1944,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L610">index.ts:610</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L610">index.ts:610</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1931,7 +1999,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L873">index.ts:873</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L873">index.ts:873</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1954,7 +2022,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L696">index.ts:696</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L696">index.ts:696</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1996,7 +2064,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L779">index.ts:779</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L779">index.ts:779</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2039,7 +2107,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L825">index.ts:825</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L825">index.ts:825</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2084,7 +2152,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L724">index.ts:724</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L724">index.ts:724</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2132,7 +2200,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L352">index.ts:352</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L352">index.ts:352</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2184,7 +2252,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L883">index.ts:883</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L883">index.ts:883</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2207,7 +2275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L673">index.ts:673</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L673">index.ts:673</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2251,7 +2319,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L520">index.ts:520</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L520">index.ts:520</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2312,7 +2380,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L768">index.ts:768</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L768">index.ts:768</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2355,7 +2423,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L929">index.ts:929</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L929">index.ts:929</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2416,7 +2484,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L642">index.ts:642</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L642">index.ts:642</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2475,7 +2543,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L979">index.ts:979</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L979">index.ts:979</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2558,7 +2626,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L998">index.ts:998</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L998">index.ts:998</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2639,7 +2707,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/f1b5088/src/index.ts#L327">index.ts:327</a></li>
+									<li>Defined in <a href="https://github.com/JerryWester/f3djs/blob/943767e/src/index.ts#L327">index.ts:327</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2719,10 +2787,10 @@
 						<a href="enums/shiftmodes.html" class="tsd-kind-icon">Shift<wbr>Modes</a>
 					</li>
 					<li class=" tsd-kind-enum">
-						<a href="enums/tileformats.html" class="tsd-kind-icon">Tile<wbr>Formats</a>
+						<a href="enums/tileflags.html" class="tsd-kind-icon">Tile<wbr>Flags</a>
 					</li>
 					<li class=" tsd-kind-enum">
-						<a href="enums/tilesettings.html" class="tsd-kind-icon">Tile<wbr>Settings</a>
+						<a href="enums/tileformats.html" class="tsd-kind-icon">Tile<wbr>Formats</a>
 					</li>
 					<li class=" tsd-kind-enum">
 						<a href="enums/tilesize.html" class="tsd-kind-icon">Tile<wbr>Size</a>
