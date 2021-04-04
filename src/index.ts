@@ -212,6 +212,43 @@ export enum TileFlags {
     , G_TX_CLAMP = 2
 }
 
+export enum ColorCombinerSettings {
+    G_CCMUX_COMBINED = 0
+    , G_CCMUX_TEXEL0 = 1
+    , G_CCMUX_TEXEL1 = 2
+    , G_CCMUX_PRIMITIVE = 3
+    , G_CCMUX_SHADE = 4
+    , G_CCMUX_ENVIRONMENT = 5
+    , G_CCMUX_CENTER = 6
+    , G_CCMUX_SCALE = 6
+    , G_CCMUX_COMBINED_ALPHA = 7
+    , G_CCMUX_TEXEL0_ALPHA = 8
+    , G_CCMUX_TEXEL1_ALPHA = 9
+    , G_CCMUX_PRIMITIVE_ALPHA = 10
+    , G_CCMUX_SHADE_ALPHA = 11
+    , G_CCMUX_ENV_ALPHA = 12
+    , G_CCMUX_LOD_FRACTION = 13
+    , G_CCMUX_PRIM_LOD_FRAC = 14
+    , G_CCMUX_NOISE = 7
+    , G_CCMUX_K4 = 7
+    , G_CCMUX_K5 = 15
+    , G_CCMUX_1 = 6
+    , G_CCMUX_0 = 31
+}
+
+export enum AlphaCombinerSettings {
+    G_ACMUX_COMBINED = 0
+    , G_ACMUX_TEXEL0 = 1
+    , G_ACMUX_TEXEL1 = 2
+    , G_ACMUX_PRIMITIVE = 3
+    , G_ACMUX_SHADE = 4
+    , G_ACMUX_ENVIRONMENT = 5
+    , G_ACMUX_LOD_FRACTION = 0
+    , G_ACMUX_PRIM_LOD_FRAC = 6
+    , G_ACMUX_1 = 6
+    , G_ACMUX_0 = 7
+}
+
 export enum ZValFlag {
     G_BZ_PERSP
     , G_BZ_ORTHO
@@ -1480,27 +1517,63 @@ export function gsDPSetEnvColor(R: number, G: number, B: number, A: number): Buf
 }
 
 /**
+ * Sets up the RDP's Color Combiner's parameters for primitive rendering. This sets up parameters for color (R, G, B) and alpha for both cycles. (In one-cycle mode, both cycles must have equal parameters.)
  * 
- * @param a0 
- * @param b0 
- * @param c0 
- * @param d0 
- * @param Aa0 
- * @param Ab0 
- * @param Ac0 
- * @param Ad0 
- * @param a1 
- * @param b1 
- * @param c1 
- * @param d1 
- * @param Aa1 
- * @param Ab1 
- * @param Ac1 
- * @param Ad1 
+ * The general formula used to mix colors in the Color combiner is of the form:
+ * 
+ * ```javascript
+ *    (A - B) * C + D
+ * ```
+ * 
+ * This is performed on all sets of parameters. `a0`, `b0`, `c0`, and `d0`; `a1`, `b1`, `c1`, and `d1`; `Aa0`, `Ab0`, `Ac0`, and `Ad0`; and `Aa1`, `Ab1`, `Ac1`, and `Ad1` are those sets of parameters.
+ * 
+ * The values taken in each parameter are part of an enumeration of potential sources for that value, but which differs for various pieces: all of the color A, B, C, D components have different enumerations, and alpha C is different from the other alpha components.
+ * @param a0 Color 'a' value, first cycle
+ * @param c0 Color 'c' value, first cycle
+ * @param Aa0 Alpha 'a' value, first cycle
+ * @param Ac0 Alpha 'c' value, first cycle
+ * @param a1 Color 'a' value, second cycle
+ * @param c1 Color 'c' value, second cycle
+ * @param b0 Color 'b' value, first cycle
+ * @param b1 Color 'b' value, second cycle
+ * @param Aa1 Alpha 'a' value, second cycle
+ * @param Ac1 Alpha 'c' value, second cycle
+ * @param d0 Color 'd' value, first cycle
+ * @param Ab0 Alpha 'b' value, first cycle
+ * @param Ad0 Alpha 'd' value, first cycle
+ * @param d1 Color 'd' value, second cycle
+ * @param Ab1 Alpha 'b' value, second cycle
+ * @param Ad1 Alpha 'd' value, second cycle
  * @returns Display list command
  */
-export function gsDPSetCombineLERP(a0: number, b0: number, c0: number, d0: number, Aa0: number, Ab0: number, Ac0: number, Ad0: number, a1: number, b1: number, c1: number, d1: number, Aa1: number, Ab1: number, Ac1: number, Ad1: number): Buffer {
+export function gsDPSetCombineLERP(a0: ColorCombinerSettings, b0: ColorCombinerSettings, c0: ColorCombinerSettings, d0: ColorCombinerSettings, Aa0: AlphaCombinerSettings, Ab0: AlphaCombinerSettings, Ac0: AlphaCombinerSettings, Ad0: AlphaCombinerSettings, a1: ColorCombinerSettings, b1: ColorCombinerSettings, c1: ColorCombinerSettings, d1: ColorCombinerSettings, Aa1: AlphaCombinerSettings, Ab1: AlphaCombinerSettings, Ac1: AlphaCombinerSettings, Ad1: AlphaCombinerSettings): Buffer {
     const command = Buffer.alloc(8);
+    //       F    C  aaaa cccc  czzz xxxe  eeeg gggg
+    //    bbbb ffff  vvvt ttdd  dyyy wwwh  hhuu usss
+
+    command.writeUInt32BE(
+        ((a0 & 0xF) << 20) |   // aaaa
+        ((c0 & 0x1F) << 15) |   // cccc c
+        ((Aa0 & 0x7) << 12) |    // zzz
+        ((Ac0 & 0x7) << 9) |    // xxx
+        ((a1 & 0xF) << 5) |      // e eee
+        (c1 & 0x1F)                 // g gggg
+    );
+
+    command.writeUInt32BE(
+        ((b0 & 0xF) << 28) |   // bbbb
+        ((b1 & 0xF) << 24) |   // ffff
+        ((Aa1 & 0x7) << 21) |  // vvv
+        ((Ac1 & 0x7) << 18) |  // t tt
+        ((d0 & 0x7) << 15) |   // dd d
+        ((Ab0 & 0x7) << 12) |  // yyy
+        ((Ad0 & 0x7) << 9) |  // www
+        ((d1 & 0x7) << 6) |   // h hh
+        ((Ab1 & 0x7) << 3) |  // uu u
+        (Ad1 & 0x7),   // sss
+        4
+    );
+
     command.writeUInt8(DisplayOpcodes.G_SETCOMBINE);
     return command;
 }
