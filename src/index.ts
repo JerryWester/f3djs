@@ -190,7 +190,7 @@ export enum ScissorModes {
     , G_SC_ODD_INTERLACE = 3
 }
 
-export enum TileFormats {
+export enum TextureFormat {
     G_IM_FMT_RGBA = 0
     , G_IM_FMT_YUV = 1
     , G_IM_FMT_CI = 2
@@ -198,14 +198,14 @@ export enum TileFormats {
     , G_IM_FMT_I = 4
 }
 
-export enum TileSize {
+export enum TextureSize {
     G_IM_SIZ_4b = 0
     , G_IM_SIZ_8b = 1
     , G_IM_SIZ_16b = 2
     , G_IM_SIZ_32b = 3
 }
 
-export enum TileFlags {
+export enum TextureFlags {
     G_TX_NOMIRROR = 0
     , G_TX_MIRROR = 1
     , G_TX_WRAP = 0
@@ -1355,7 +1355,7 @@ export function gsDPLoadTile(tile: number, uls: number, ult: number, lrs: number
  * @param shiftS Sets the amount to shift S axis values after perspective division
  * @returns Display list command
  */
-export function gsDPSetTile(fmt: TileFormats, siz: TileSize, line: number, tmem: number, tile: number, palette: number, cmT: TileFlags, maskT: number, shiftT: number, cmS: TileFlags, maskS: number, shiftS: number): Buffer {
+export function gsDPSetTile(fmt: TextureFormat, siz: TextureSize, line: number, tmem: number, tile: number, palette: number, cmT: TextureFlags, maskT: number, shiftT: number, cmS: TextureFlags, maskS: number, shiftS: number): Buffer {
     const command = Buffer.alloc(8);
     //    F    5  fffi i0nn  nnnn nnnm  mmmm mmmm
     // 0000 0ttt  pppp ccaa  aass ssdd  bbbb uuuu
@@ -1579,40 +1579,63 @@ export function gsDPSetCombineLERP(a0: ColorCombinerSettings, b0: ColorCombinerS
 }
 
 /**
- * 
- * @param fmt 
- * @param siz 
- * @param width 
- * @param imgaddr 
+ * This function sets the location in RAM of the image that will be used when using any of the texture loading functions. `imgaddr` is the RAM location of the image to be pulling textures from. `width` is the width of the image, necessary in finding out when next rows start. The maximum allowed with is 4096, or 0x1000.
+ * @param fmt Format of texture to be pointed to
+ * @param siz Bit size of pixels in texture to be pointed to
+ * @param width Width of the texture
+ * @param imgaddr RAM address of start of texture 
  * @returns Display list command
  */
-export function gsDPSetTextureImage(fmt: number, siz: number, width: number, imgaddr: number): Buffer {
+export function gsDPSetTextureImage(fmt: TextureFormat, siz: TextureSize, width: number, imgaddr: number): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SETTIMG);
+    command.writeUInt8(
+        ((fmt & 0x7) << 5) |
+        ((siz & 0x3) << 3),
+        1
+    );
+    command.writeUInt16BE(
+        (width - 1) & 0xFFF,
+        2
+    );
+    command.writeUInt32BE(imgaddr, 4);
     return command;
 }
 
 /**
- * 
- * @param imgaddr 
+ * Sets the location of the depth buffer to `imgaddr`. Since the format of the depth buffer is fixed (14-bit Z value and 2-bit dZ value), those parameters are not here, unlike for `gsDPSetTextureImage` and `gsDPSetColorImage`. The width of the depth buffer is shared with the color buffer (see `gsDPSetColorImage`), and thus isn't set here.
+ * @param imgaddr Address of the depth buffer
  * @returns Display list command
  */
 export function gsDPSetDepthImage(imgaddr: number): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SETZIMG);
+    command.writeUInt32BE(imgaddr, 4);
     return command;
 }
 
 /**
+ * Sets the location of the color framebuffer, usually a framebuffer that's displayed to the screen. The color buffer is set to RAM location `imgaddr`, with a width of `width`.
  * 
- * @param fmt 
- * @param siz 
- * @param width 
- * @param imgaddr 
+ * The location is usually some place set as the framebuffer to show (which is not handled by display lists), but oftentimes will be set to a depth buffer. This is usually done to fill (aka clear) the depth buffer in fill mode.
+ * @param fmt Format of texture to be pointed to
+ * @param siz Bit size of pixels in texture to be pointed to
+ * @param width Width of the texture
+ * @param imgaddr RAM address of start of texture 
  * @returns Display list command
  */
-export function gsDPSetColorImage(fmt: number, siz: number, width: number, imgaddr: number): Buffer {
+export function gsDPSetColorImage(fmt: TextureFormat, siz: TextureSize, width: number, imgaddr: number): Buffer {
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_SETCIMG);
+    command.writeUInt8(
+        ((fmt & 0x7) << 5) |
+        ((siz & 0x3) << 3),
+        1
+    );
+    command.writeUInt16BE(
+        (width - 1) & 0xFFF,
+        2
+    );
+    command.writeUInt32BE(imgaddr, 4);
     return command;
 }
