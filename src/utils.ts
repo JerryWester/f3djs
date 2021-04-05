@@ -6,11 +6,12 @@ export function findDLists(file: Buffer): number[] {
     }
     const startDL: number[] = [];
     for (let i = 0; i < endDL.length; i++) {
-        let offset = endDL[i];
-        while (file.readUInt8(offset - 8) <= 0x07 && file.readUInt8(offset - 8) >= 0xD3) {
-            offset -= 8;
-        }
-        startDL.push(offset);
+        /** @TODO Make this shit good */
+        // let offset = endDL[i];
+        // while (file.readUInt8(offset - 8) <= 0x07 && file.readUInt8(offset - 8) >= 0xD3) {
+        //     offset -= 8;
+        // }
+        // startDL.push(offset);
     }
     return startDL;
 }
