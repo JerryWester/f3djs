@@ -34,7 +34,11 @@ export function opcodeToString(opcode: Buffer): string {
             const where = opcode.readUInt8(1);
             const vbidx = opcode.readUInt16BE(2) / 2;
             const val = opcode.readUInt32BE(4);
+<<<<<<< HEAD
             return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where] ? ModifyVtxParams[where] : where}, ${val});`;
+=======
+            return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where]}, ${val});`;
+>>>>>>> 93215945cd2c0bf00eed05ac2187e2d5a10d236c
         }
 
         case DisplayOpcodes.G_CULLDL:{
