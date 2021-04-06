@@ -1,7 +1,8 @@
+/* eslint-disable no-constant-condition */
 import { DisplayOpcodes } from './f3dzex2';
 
 export function opcodeToString(opcode: Buffer): string {
-    switch (opcode.readUInt8()) {
+    switch (opcode.readUInt8() as DisplayOpcodes) {
 
         case DisplayOpcodes.G_NOOP:{
             if (opcode.readUInt32BE() === 0x00000000) {
@@ -11,217 +12,319 @@ export function opcodeToString(opcode: Buffer): string {
                     const tag = opcode.readUInt32BE(4);
                     return `gsDPNoOpTag(${tag});`;
                 }
-            } else {
-                return ``;
-            }
+            } else return ``;
         }
 
         case DisplayOpcodes.G_VTX:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_MODIFYVTX:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_CULLDL:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_BRANCH_Z:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_TRI1:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_TRI2:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_QUAD:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SPECIAL_3:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SPECIAL_2:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SPECIAL_1:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_DMA_IO:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_TEXTURE:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_POPMTX:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_GEOMETRYMODE:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_MTX:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_MOVEWORD:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_MOVEMEM:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_LOAD_UCODE:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_DL:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_ENDDL:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SPNOOP:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_RDPHALF_1:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETOTHERMODE_L:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETOTHERMODE_H:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_TEXRECT:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_TEXRECTFLIP:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_RDPLOADSYNC:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_RDPPIPESYNC:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_RDPTILESYNC:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_RDPFULLSYNC:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETKEYGB:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETKEYR:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETCONVERT:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETSCISSOR:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETPRIMDEPTH:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_RDPSETOTHERMODE:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_LOADTLUT:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_RDPHALF_2:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETTILESIZE:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_LOADBLOCK:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_LOADTILE:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETTILE:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_FILLRECT:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETFILLCOLOR:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETFOGCOLOR:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETBLENDCOLOR:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETPRIMCOLOR:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETENVCOLOR:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETCOMBINE:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETTIMG:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETZIMG:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         case DisplayOpcodes.G_SETCIMG:{
-            return ``;
+            if (true) {
+                return ``;
+            } else return ``;
         }
 
         default:{
