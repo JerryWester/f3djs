@@ -38,8 +38,10 @@ export function opcodeToString(opcode: Buffer): string {
         }
 
         case DisplayOpcodes.G_CULLDL:{
-            if (true) {
-                return ``;
+            if ((opcode.readUInt16BE() === 0x0300) && (opcode.readUInt16BE(4) === 0x0000)) {
+                const vfirst = opcode.readUInt16BE(2) / 2;
+                const vlast = opcode.readUInt16BE(6) / 2;
+                return `gsSPCullDisplayList(${vfirst}, ${vlast})`;
             } else return ``;
         }
 
