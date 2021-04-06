@@ -458,23 +458,23 @@ export function gsSP1Triangle(v0: number, v1: number, v2: number, flag: PrimaryV
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_TRI1);
     switch (flag) {
-    case PrimaryVertex.V0: {
-        command.writeUInt8(v0, 1);
-        command.writeUInt8(v1, 2);
-        command.writeUInt8(v2, 3);
-    } break;
+        case PrimaryVertex.V0: {
+            command.writeUInt8(v0, 1);
+            command.writeUInt8(v1, 2);
+            command.writeUInt8(v2, 3);
+        } break;
 
-    case PrimaryVertex.V1: {
-        command.writeUInt8(v1, 1);
-        command.writeUInt8(v2, 2);
-        command.writeUInt8(v0, 3);
-    } break;
+        case PrimaryVertex.V1: {
+            command.writeUInt8(v1, 1);
+            command.writeUInt8(v2, 2);
+            command.writeUInt8(v0, 3);
+        } break;
 
-    case PrimaryVertex.V2: {
-        command.writeUInt8(v2, 1);
-        command.writeUInt8(v0, 2);
-        command.writeUInt8(v1, 3);
-    } break;
+        case PrimaryVertex.V2: {
+            command.writeUInt8(v2, 1);
+            command.writeUInt8(v0, 2);
+            command.writeUInt8(v1, 3);
+        } break;
     }
     return command;
 }
@@ -499,42 +499,42 @@ export function gsSP2Triangles(v00: number, v01: number, v02: number, flag0: Pri
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_TRI2);
     switch (flag0) {
-    case PrimaryVertex.V0: {
-        command.writeUInt8(v00, 1);
-        command.writeUInt8(v01, 2);
-        command.writeUInt8(v02, 3);
-    } break;
+        case PrimaryVertex.V0: {
+            command.writeUInt8(v00, 1);
+            command.writeUInt8(v01, 2);
+            command.writeUInt8(v02, 3);
+        } break;
 
-    case PrimaryVertex.V1: {
-        command.writeUInt8(v01, 1);
-        command.writeUInt8(v02, 2);
-        command.writeUInt8(v00, 3);
-    } break;
+        case PrimaryVertex.V1: {
+            command.writeUInt8(v01, 1);
+            command.writeUInt8(v02, 2);
+            command.writeUInt8(v00, 3);
+        } break;
 
-    case PrimaryVertex.V2: {
-        command.writeUInt8(v02, 1);
-        command.writeUInt8(v00, 2);
-        command.writeUInt8(v01, 3);
-    } break;
+        case PrimaryVertex.V2: {
+            command.writeUInt8(v02, 1);
+            command.writeUInt8(v00, 2);
+            command.writeUInt8(v01, 3);
+        } break;
     }
     switch (flag1) {
-    case PrimaryVertex.V0: {
-        command.writeUInt8(v10, 5);
-        command.writeUInt8(v11, 6);
-        command.writeUInt8(v12, 7);
-    } break;
+        case PrimaryVertex.V0: {
+            command.writeUInt8(v10, 5);
+            command.writeUInt8(v11, 6);
+            command.writeUInt8(v12, 7);
+        } break;
 
-    case PrimaryVertex.V1: {
-        command.writeUInt8(v11, 5);
-        command.writeUInt8(v12, 6);
-        command.writeUInt8(v10, 7);
-    } break;
+        case PrimaryVertex.V1: {
+            command.writeUInt8(v11, 5);
+            command.writeUInt8(v12, 6);
+            command.writeUInt8(v10, 7);
+        } break;
 
-    case PrimaryVertex.V2: {
-        command.writeUInt8(v12, 5);
-        command.writeUInt8(v10, 6);
-        command.writeUInt8(v11, 7);
-    } break;
+        case PrimaryVertex.V2: {
+            command.writeUInt8(v12, 5);
+            command.writeUInt8(v10, 6);
+            command.writeUInt8(v11, 7);
+        } break;
     }
     return command;
 }
@@ -558,45 +558,45 @@ export function gsSPQuadrangle(v0: number, v1: number, v2: number, v3: number, f
     const command = Buffer.alloc(8);
     command.writeUInt8(DisplayOpcodes.G_QUAD);
     switch (flag) {
-    case PrimaryVertex.V0: {
-        command.writeUInt8(v0, 1);
-        command.writeUInt8(v1, 2);
-        command.writeUInt8(v2, 3);
+        case PrimaryVertex.V0: {
+            command.writeUInt8(v0, 1);
+            command.writeUInt8(v1, 2);
+            command.writeUInt8(v2, 3);
             
-        command.writeUInt8(v0, 5);
-        command.writeUInt8(v2, 6);
-        command.writeUInt8(v3, 7);
-    } break;
+            command.writeUInt8(v0, 5);
+            command.writeUInt8(v2, 6);
+            command.writeUInt8(v3, 7);
+        } break;
         
-    case PrimaryVertex.V1: {
-        command.writeUInt8(v1, 1);
-        command.writeUInt8(v2, 2);
-        command.writeUInt8(v3, 3);
+        case PrimaryVertex.V1: {
+            command.writeUInt8(v1, 1);
+            command.writeUInt8(v2, 2);
+            command.writeUInt8(v3, 3);
             
-        command.writeUInt8(v1, 5);
-        command.writeUInt8(v3, 6);
-        command.writeUInt8(v0, 7);
-    } break;
+            command.writeUInt8(v1, 5);
+            command.writeUInt8(v3, 6);
+            command.writeUInt8(v0, 7);
+        } break;
         
-    case PrimaryVertex.V2: {
-        command.writeUInt8(v2, 1);
-        command.writeUInt8(v3, 2);
-        command.writeUInt8(v0, 3);
+        case PrimaryVertex.V2: {
+            command.writeUInt8(v2, 1);
+            command.writeUInt8(v3, 2);
+            command.writeUInt8(v0, 3);
             
-        command.writeUInt8(v2, 5);
-        command.writeUInt8(v0, 6);
-        command.writeUInt8(v1, 7);
-    } break;
+            command.writeUInt8(v2, 5);
+            command.writeUInt8(v0, 6);
+            command.writeUInt8(v1, 7);
+        } break;
         
-    case PrimaryVertex.V3: {
-        command.writeUInt8(v3, 1);
-        command.writeUInt8(v0, 2);
-        command.writeUInt8(v1, 3);
+        case PrimaryVertex.V3: {
+            command.writeUInt8(v3, 1);
+            command.writeUInt8(v0, 2);
+            command.writeUInt8(v1, 3);
             
-        command.writeUInt8(v3, 5);
-        command.writeUInt8(v1, 6);
-        command.writeUInt8(v2, 7);
-    } break;
+            command.writeUInt8(v3, 5);
+            command.writeUInt8(v1, 6);
+            command.writeUInt8(v2, 7);
+        } break;
     }
     return command;
 }
