@@ -8,6 +8,7 @@ ModifyVtxParams[0x18] = `G_MWO_POINT_XYSCREEN`;
 ModifyVtxParams[0x1C] = `G_MWO_POINT_ZSCREEN`;
 
 export function opcodeToString(opcode: Buffer): string {
+    /** @TODO What the fuck am I gonna do for RDP stuff */
     switch (opcode.readUInt8() as DisplayOpcodes) {
 
         case DisplayOpcodes.G_NOOP:{
