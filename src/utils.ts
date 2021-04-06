@@ -1,6 +1,12 @@
 /* eslint-disable no-constant-condition */
 import { DisplayOpcodes } from './f3dzex2';
 
+const ModifyVtxParams: string[] = [];
+ModifyVtxParams[0x10] = `G_MWO_POINT_RGBA`;
+ModifyVtxParams[0x14] = `G_MWO_POINT_ST`;
+ModifyVtxParams[0x18] = `G_MWO_POINT_XYSCREEN`;
+ModifyVtxParams[0x1C] = `G_MWO_POINT_ZSCREEN`;
+
 export function opcodeToString(opcode: Buffer): string {
     switch (opcode.readUInt8() as DisplayOpcodes) {
 
@@ -25,9 +31,10 @@ export function opcodeToString(opcode: Buffer): string {
         }
 
         case DisplayOpcodes.G_MODIFYVTX:{
-            if (true) {
-                return ``;
-            } else return ``;
+            const where = opcode.readUInt8(1);
+            const vbidx = opcode.readUInt16BE(2) / 2;
+            const val = opcode.readUInt32BE(4);
+            return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where] ? ModifyVtxParams[where] : where}, ${val});`;
         }
 
         case DisplayOpcodes.G_CULLDL:{
