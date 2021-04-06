@@ -38,7 +38,11 @@ export function opcodeToString(opcode: Buffer): string {
             return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where] ? ModifyVtxParams[where] : where}, ${val});`;
 =======
             return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where]}, ${val});`;
+<<<<<<< HEAD
 >>>>>>> 9321594... G_MODIFYVTX
+=======
+>>>>>>> 93215945cd2c0bf00eed05ac2187e2d5a10d236c
+>>>>>>> 452ba15f290bee03865d27cef285e82b7254fda8
         }
 
         case DisplayOpcodes.G_CULLDL:{
