@@ -22,8 +22,11 @@ export function opcodeToString(opcode: Buffer): string {
         }
 
         case DisplayOpcodes.G_VTX:{
-            if (true) {
-                return ``;
+            if ((opcode.readUInt32BE() & 0xFFF00F00) == 0x01000000) {
+                const numv = (opcode.readUInt16BE(1) & 0xFF0) >> 4;
+                const vbidx = (opcode.readUInt8(3) >> 1) - numv;
+                const vaddr = opcode.readUInt32BE(4);
+                return `gsSPVertex(${vaddr}, ${numv}, ${vbidx});`;
             } else return ``;
         }
 
@@ -31,6 +34,7 @@ export function opcodeToString(opcode: Buffer): string {
             const where = opcode.readUInt8(1);
             const vbidx = opcode.readUInt16BE(2) / 2;
             const val = opcode.readUInt32BE(4);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -48,6 +52,9 @@ export function opcodeToString(opcode: Buffer): string {
 =======
             return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where]}, ${val});`;
 >>>>>>> 9321594... G_MODIFYVTX
+=======
+            return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where] ? ModifyVtxParams[where] : where}, ${val});`;
+>>>>>>> e8168a78cb5179982d0a83f586e452a70fb4884b
         }
 
         case DisplayOpcodes.G_CULLDL:{
