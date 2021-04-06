@@ -16,8 +16,11 @@ export function opcodeToString(opcode: Buffer): string {
         }
 
         case DisplayOpcodes.G_VTX:{
-            if (true) {
-                return ``;
+            if ((opcode.readUInt32BE() & 0xFFF00F00) == 0x01000000) {
+                const numv = (opcode.readUInt16BE(1) & 0xFF0) >> 4;
+                const vbidx = opcode.readUInt8(3);
+                const vaddr = opcode.readUInt32BE(4);
+                return `gsSPVertex(${vaddr}, ${numv}, ${vbidx});`;
             } else return ``;
         }
 
