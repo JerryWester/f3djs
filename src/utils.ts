@@ -34,27 +34,7 @@ export function opcodeToString(opcode: Buffer): string {
             const where = opcode.readUInt8(1);
             const vbidx = opcode.readUInt16BE(2) / 2;
             const val = opcode.readUInt32BE(4);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where] ? ModifyVtxParams[where] : where}, ${val});`;
-=======
-<<<<<<< HEAD
-            return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where] ? ModifyVtxParams[where] : where}, ${val});`;
-=======
-            return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where]}, ${val});`;
->>>>>>> 9321594... G_MODIFYVTX
->>>>>>> 982721b... G_MODIFYVTX
-=======
-            return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where] ? ModifyVtxParams[where] : where}, ${val});`;
->>>>>>> e879f04... G_MODIFYVTX
-=======
-            return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where]}, ${val});`;
->>>>>>> 9321594... G_MODIFYVTX
-=======
-            return `gsSPModifyVertex(${vbidx}, ${ModifyVtxParams[where] ? ModifyVtxParams[where] : where}, ${val});`;
->>>>>>> e8168a78cb5179982d0a83f586e452a70fb4884b
         }
 
         case DisplayOpcodes.G_CULLDL:{
